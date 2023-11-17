@@ -16,10 +16,10 @@ class NavigationContainer extends StatefulWidget {
 }
 
 class _NavigationContainerState extends State<NavigationContainer> {
-  int selectedIndex = 2;
-  int _PageIndex = 2;
+  int selectedIndex = 0;
+  int _PageIndex = 0;
   bool _showOption = false;
-  int card_click = 2;
+  int card_click = 0;
   PageController get _pageController => FeedRepo.pageController;
 
   @override
