@@ -8,7 +8,6 @@ import 'package:spade_v4/Common/image_properties.dart';
 import 'package:spade_v4/Common/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'filter_screen.dart';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as imageLib;
 

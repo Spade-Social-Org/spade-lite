@@ -19,6 +19,8 @@ class AddReligionScreen extends StatelessWidget {
     'Others...',
   ];
 
+  const AddReligionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

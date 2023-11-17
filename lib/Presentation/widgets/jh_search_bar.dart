@@ -17,7 +17,7 @@ class JHSearchField extends StatelessWidget {
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
-          fillColor: Color(0xFF333333),
+          fillColor: const Color(0xFF333333),
           contentPadding: const EdgeInsets.symmetric(vertical: 12),
           filled: true,
           border: OutlineInputBorder(

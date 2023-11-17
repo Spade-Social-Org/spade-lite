@@ -26,9 +26,9 @@ class _GoogleMapState extends State<GoogleMapScreen>
   int selectedItemIndex = -1;
   int selectedContainerIndex = -1;
   late GoogleMapController? mapController;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
-  Map<String, Marker> _markers = {};
+  final Map<String, Marker> _markers = {};
   Set<Polyline> polylines = {};
   bool loadingLocation = true;
   bool isLocationEnabled = false;
@@ -51,10 +51,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
     _getCurrentLocation();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   Future<void> _loadInitialPosition() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -138,11 +134,11 @@ class _GoogleMapState extends State<GoogleMapScreen>
       );
       addMarker2(
         'USER 2',
-        LatLng(5.973490, 6.862013),
+        const LatLng(5.973490, 6.862013),
       );
       addMarker4(
         'USER 3',
-        LatLng(5.952930, 6.848727),
+        const LatLng(5.952930, 6.848727),
       );
       // addMarker4(
       //   'USER 4',
@@ -150,7 +146,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
       // );
       addMarker5(
         'USER 5',
-        LatLng(5.972808, 6.837499),
+        const LatLng(5.972808, 6.837499),
       );
       // addMarker6(
       //   'USER 6',
@@ -158,15 +154,15 @@ class _GoogleMapState extends State<GoogleMapScreen>
       // );
       addMarker7(
         'USER 7',
-        LatLng(5.961376, 6.834071),
+        const LatLng(5.961376, 6.834071),
       );
       addMarker7(
         'USER 8',
-        LatLng(5.993973, 6.862863),
+        const LatLng(5.993973, 6.862863),
       );
 
       Polyline polyline = Polyline(
-        polylineId: PolylineId('polyline_1'),
+        polylineId: const PolylineId('polyline_1'),
         color: Colors.blue,
         width: 5,
         points: [LatLng(position.latitude, position.longitude)],
@@ -234,7 +230,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
             markers: _markers.values.toSet(),
             initialCameraPosition: _initialPosition != null
                 ? CameraPosition(target: _initialPosition!, zoom: 14)
-                : CameraPosition(target: LatLng(0, 0), zoom: 14),
+                : const CameraPosition(target: LatLng(0, 0), zoom: 14),
           ),
           if (loadingLocation)
             const Center(
@@ -284,7 +280,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                      fillColor: Color(0xFF333333),
+                      fillColor: const Color(0xFF333333),
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
                       filled: true,
                       border: OutlineInputBorder(
@@ -344,23 +340,21 @@ class _GoogleMapState extends State<GoogleMapScreen>
     );
   }
 
-  Set<Circle> _circle = {};
+  final Set<Circle> _circle = {};
 
   void _addCircle(Position position) {
-    if (position != null) {
-      _circle.add(
-        Circle(
-          circleId: const CircleId('circle_1'),
-          center: LatLng(position.latitude, position.longitude),
-          radius: 900,
-          fillColor: Colors.grey.withOpacity(0.5),
-          strokeWidth: 2,
-          strokeColor: Colors.green,
-        ),
-      );
-      setState(() {});
+    _circle.add(
+      Circle(
+        circleId: const CircleId('circle_1'),
+        center: LatLng(position.latitude, position.longitude),
+        radius: 900,
+        fillColor: Colors.grey.withOpacity(0.5),
+        strokeWidth: 2,
+        strokeColor: Colors.green,
+      ),
+    );
+    setState(() {});
     }
-  }
 
   addMarker(String id, LatLng location) async {
     var customMarkerIcon = CustomMarkerIcon(
@@ -593,7 +587,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: images.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -711,7 +705,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          fillColor: Color(0xFF333333),
+                          fillColor: const Color(0xFF333333),
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 12),
                           filled: true,
@@ -905,7 +899,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: restaurantImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -1032,7 +1026,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: restaurantImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -1159,7 +1153,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: restaurantImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -1296,7 +1290,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Color(0xFF333333),
+                              color: const Color(0xFF333333),
                               borderRadius: BorderRadius.circular(20)),
                           height: 29,
                           width: 94,
@@ -1430,7 +1424,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: hotelImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -1557,7 +1551,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: hotelImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -1684,7 +1678,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: hotelImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -1769,7 +1763,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          fillColor: Color(0xFF333333),
+                          fillColor: const Color(0xFF333333),
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 12),
                           filled: true,
@@ -1821,7 +1815,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Color(0xFF333333),
+                              color: const Color(0xFF333333),
                               borderRadius: BorderRadius.circular(20)),
                           height: 29,
                           width: 94,
@@ -1953,7 +1947,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: moviesImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -2079,7 +2073,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: moviesImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -2290,7 +2284,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          fillColor: Color(0xFF333333),
+                          fillColor: const Color(0xFF333333),
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 12),
                           filled: true,
@@ -2342,7 +2336,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Color(0xFF333333),
+                              color: const Color(0xFF333333),
                               borderRadius: BorderRadius.circular(20)),
                           height: 29,
                           width: 94,
@@ -2474,7 +2468,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: museumImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -2600,7 +2594,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: museumImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -2726,7 +2720,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: museumImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -2811,7 +2805,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          fillColor: Color(0xFF333333),
+                          fillColor: const Color(0xFF333333),
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 12),
                           filled: true,
@@ -2863,7 +2857,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Color(0xFF333333),
+                              color: const Color(0xFF333333),
                               borderRadius: BorderRadius.circular(20)),
                           height: 29,
                           width: 94,
@@ -2995,7 +2989,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: clubsImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -3121,7 +3115,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: clubsImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -3247,7 +3241,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: clubsImages.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -3306,7 +3300,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                       shape: BoxShape.rectangle),
                 ),
               ),
-              JHSearchField(),
+              const JHSearchField(),
               const SizedBox(
                 height: 20,
               ),
@@ -3738,7 +3732,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                       shape: BoxShape.rectangle),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               const Center(
