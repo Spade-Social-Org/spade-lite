@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/register_model.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/verify_email_model.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/register_model.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/verify_email_model.dart';
 
 import '../../../../Common/navigator.dart';
 import '../../messages/widget/custom_snackbar.dart';

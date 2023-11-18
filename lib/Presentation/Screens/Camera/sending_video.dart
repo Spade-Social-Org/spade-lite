@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Common/routes/app_routes.dart';
+import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../Common/camera_components/sending_image_video.dart';

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Common/constants.dart';
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Common/theme.dart';
-import 'package:spade_v4/Common/utils/utils.dart';
-import 'package:spade_v4/Presentation/Screens/Home/models/feed_model.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
+import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Common/theme.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
-import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
-import 'package:spade_v4/Presentation/Screens/messages/single/single_message.dart';
+import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:spade_v4/resources/resources.dart';
+import 'package:spade_lite/resources/resources.dart';
 
 class FeedBox extends ConsumerStatefulWidget {
   final Feed feed;

@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart';
-import 'package:spade_v4/Common/api.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/login_model.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/otp_model.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/register_model.dart';
+import 'package:spade_lite/Common/api.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/login_model.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/otp_model.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/register_model.dart';
 
 import '../model/verify_email_model.dart';
 

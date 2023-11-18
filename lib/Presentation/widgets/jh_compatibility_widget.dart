@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spade_v4/Data/Models/discover_service.dart';
-import 'package:spade_v4/Presentation/widgets/jh_activities_widget.dart';
-import 'package:spade_v4/Presentation/widgets/jh_attractiveness_widget.dart';
-import 'package:spade_v4/Presentation/widgets/jh_personality_widget.dart';
-import 'package:spade_v4/Presentation/widgets/jh_value_widget.dart';
+import 'package:spade_lite/Data/Models/discover_service.dart';
+import 'package:spade_lite/Presentation/widgets/jh_activities_widget.dart';
+import 'package:spade_lite/Presentation/widgets/jh_attractiveness_widget.dart';
+import 'package:spade_lite/Presentation/widgets/jh_personality_widget.dart';
+import 'package:spade_lite/Presentation/widgets/jh_value_widget.dart';
 
 class JHCompatibilityWidget extends StatelessWidget {
   final String image;

@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Common/theme.dart';
-import 'package:spade_v4/Common/utils/utils.dart';
+import 'package:spade_lite/Common/theme.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/feed_body.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/story_row.dart';
-import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
-import 'package:spade_v4/resources/resources.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/feed_body.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/story_row.dart';
+import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_lite/resources/resources.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends ConsumerWidget {

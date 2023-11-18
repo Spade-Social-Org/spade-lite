@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Presentation/Screens/messages/provider/socket_provider.dart';
-import 'package:spade_v4/Presentation/Screens/messages/single/message_list.dart';
-import 'package:spade_v4/Presentation/Screens/messages/single/message_textfield.dart';
-import 'package:spade_v4/Presentation/Screens/messages/widget/custom_iconbutton.dart';
+import 'package:spade_lite/Presentation/Screens/messages/provider/socket_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/message_list.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/message_textfield.dart';
+import 'package:spade_lite/Presentation/Screens/messages/widget/custom_iconbutton.dart';
 import 'package:flutter/material.dart';
 import '../provider/message_provider.dart';
 

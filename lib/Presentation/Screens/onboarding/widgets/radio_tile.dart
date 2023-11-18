@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/widgets/questions_enum.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/widgets/questions_enum.dart';
 
 class RadioTileWidget extends StatefulWidget {
   final Text title;

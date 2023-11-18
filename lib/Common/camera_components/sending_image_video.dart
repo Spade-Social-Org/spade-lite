@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:spade_v4/Common/utils/utils.dart';
-import 'package:spade_v4/resources/resources.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/resources/resources.dart';
 import '../theme.dart';
 
 class SendingImageVideoBottomRowWidget extends StatelessWidget {

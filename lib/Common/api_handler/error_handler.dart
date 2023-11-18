@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/src/retry_not_supported_exception.dart';
 
-import 'package:spade_v4/Common/api_handler/api_response.dart';
+import 'package:spade_lite/Common/api_handler/api_response.dart';
 
 Response handleError(DioException e) {
   Response response;

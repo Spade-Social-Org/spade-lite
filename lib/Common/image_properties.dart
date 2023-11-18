@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:giphy_get/giphy_get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:spade_v4/Presentation/Screens/messages/widget/custom_snackbar.dart';
+import 'package:spade_lite/Presentation/Screens/messages/widget/custom_snackbar.dart';
 
 Future<File?> pickImageFromGallery(BuildContext context) async {
   File? image;

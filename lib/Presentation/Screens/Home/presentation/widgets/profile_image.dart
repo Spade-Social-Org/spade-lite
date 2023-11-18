@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Common/theme.dart';
+import 'package:spade_lite/Common/theme.dart';
 
 class OvalProfileImage extends StatelessWidget {
   final String imageUrl;

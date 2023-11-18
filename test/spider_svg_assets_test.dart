@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:spade_v4/resources/resources.dart';
+import 'package:spade_lite/resources/resources.dart';
 
 void main() {
   test('spider_svg_assets assets test', () {

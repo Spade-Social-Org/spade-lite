@@ -1,5 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:spade_v4/Domain/Repository/places_repository.dart';
+import 'package:spade_lite/Domain/Repository/places_repository.dart';
 import '../../Data/Google_api_service/apiservice.dart';
 import '../../Presentation/widgets/jh_logger.dart';
 import '../Entities/place.dart';

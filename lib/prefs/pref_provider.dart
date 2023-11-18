@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spade_v4/Data/Models/user_model.dart';
+import 'package:spade_lite/Data/Models/user_model.dart';
 
 final userAuthChange = Provider((ref) => PrefProvider.getUserToken());
 final userIdProvider = FutureProvider((ref) => PrefProvider.getUserId());
