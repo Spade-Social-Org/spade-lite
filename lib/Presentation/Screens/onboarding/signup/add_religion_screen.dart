@@ -19,7 +19,7 @@ class AddReligionScreen extends StatelessWidget {
     'Others...',
   ];
 
-  const AddReligionScreen({super.key});
+   AddReligionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
