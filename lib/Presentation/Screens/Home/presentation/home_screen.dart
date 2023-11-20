@@ -115,6 +115,15 @@ class HomeScreen extends ConsumerWidget {
                             },
                             child: const Text('Retry'),
                           ),
+                          16.spacingW,
+                          ElevatedButton(
+                            onPressed: () {
+                              ref
+                                  .read(feedProvider.notifier)
+                                  .onCancelCreatePost();
+                            },
+                            child: const Text('Cancel'),
+                          ),
                         ]
                       ],
                     ),
