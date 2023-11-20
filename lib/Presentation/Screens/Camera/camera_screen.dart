@@ -221,29 +221,30 @@ class _CameraScreenState extends ConsumerState<CameraScreen> {
   void takePhoto(BuildContext context) async {
     XFile file = await _cameraController.takePicture();
     if (!mounted) return;
-    final fileName = basename(file.path);
-    var image = imageLib.decodeImage(File(file.path).readAsBytesSync());
-    if (image == null) return;
-    image = imageLib.copyRotate(image, 90);
-    //if (image == null) return;
-    Map? imagefile = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PhotoFilterSelector(
-          title: const Text("Photo Filter Example"),
-          image: image!,
-          filters: photofilters.presetFiltersList,
-          filename: fileName,
-          loader: const Center(child: CircularProgressIndicator()),
-        ),
-      ),
-    );
-    if (!(imagefile != null && imagefile.containsKey('image_filtered'))) return;
-    if (!mounted) return;
+    // final fileName = basename(file.path);
+    // var image = imageLib.decodeImage(File(file.path).readAsBytesSync());
+    // if (image == null) return;
+    // image = imageLib.copyRotate(image, 90);
+    // //if (image == null) return;
+    // Map? imagefile = await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => PhotoFilterSelector(
+    //       title: const Text("Photo Filter Example"),
+    //       image: image!,
+    //       filters: photofilters.presetFiltersList,
+    //       filename: fileName,
+    //       loader: const Center(child: CircularProgressIndicator()),
+    //     ),
+    //   ),
+    // );
+    // if (!(imagefile != null && imagefile.containsKey('image_filtered'))) return;
+    // if (!mounted) return;
     final finalImage = await navigateNamedTo(
         context, Routes.sendingImageViewRoute,
         arguments: {
-          'path': imagefile['image_filtered'].path,
+          // 'path': imagefile['image_filtered'].path,
+          'path': file.path,
           'uId': widget.receiverId,
         });
     if (!mounted) return;

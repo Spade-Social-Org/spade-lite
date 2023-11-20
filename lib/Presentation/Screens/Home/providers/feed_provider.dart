@@ -9,6 +9,7 @@ import 'package:spade_v4/Common/api_handler/api_handler_models.dart';
 import 'package:spade_v4/Common/utils/string_exception.dart';
 import 'package:spade_v4/Presentation/Screens/Home/models/feed_model.dart';
 import 'package:spade_v4/Presentation/Screens/messages/widget/custom_snackbar.dart';
+import 'package:spade_v4/prefs/local_data.dart';
 import 'package:spade_v4/prefs/pref_provider.dart';
 
 final feedProvider = StateNotifierProvider<FeedProvider, FeedRepo>((ref) {
@@ -49,8 +50,18 @@ final storyProvider = StateProvider<FeedModel?>((ref) {
       .values
       .where((element) => element.posterId != int.tryParse(user.value ?? ''))
       .toList();
+  final new2 = [
+    ...newStories.where((element) =>
+        element.gallery?.any(
+            (element) => LocalData.instance.isStoryViewed(element) == false) ??
+        true),
+    ...newStories.where((element) =>
+        element.gallery?.any(
+            (element) => LocalData.instance.isStoryViewed(element) == true) ??
+        false),
+  ];
   return stories.copyWith(
-    data: newStories,
+    data: new2,
   );
 });
 
@@ -141,6 +152,14 @@ class FeedProvider extends StateNotifier<FeedRepo> {
     } else {
       return !action;
     }
+  }
+
+  Future<void> onCancelCreatePost() async {
+    state = state
+      ..onRetryPost = null
+      ..filePath = null
+      ..uploadProgress = null;
+    state = state.copyWith();
   }
 
   Future<void> createPost(
