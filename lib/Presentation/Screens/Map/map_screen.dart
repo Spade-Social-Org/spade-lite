@@ -30,6 +30,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
 
   final Map<String, Marker> _markers = {};
   Set<Polyline> polylines = {};
+  bool _isMarkerZoomed = false;
   bool loadingLocation = true;
   bool isLocationEnabled = false;
   bool trafficEnabled = false;
@@ -194,9 +195,12 @@ class _GoogleMapState extends State<GoogleMapScreen>
 
   void _onMarkerTapped(Marker tappedMarker) {
     print('Marker tapped');
+
+    double targetZoom = _isMarkerZoomed ? 14.0 : 20.0;
+    _isMarkerZoomed = !_isMarkerZoomed;
     setState(() {
       _markers.forEach((key, marker) {
-        _markers[key] = marker.copyWith(visibleParam: false);
+        _markers[key] = marker.copyWith(visibleParam: true);
       });
     });
 
@@ -206,8 +210,9 @@ class _GoogleMapState extends State<GoogleMapScreen>
     });
 
     mapController?.animateCamera(
-      CameraUpdate.newLatLngZoom(tappedMarker.position, 18.0),
+      CameraUpdate.newLatLngZoom(tappedMarker.position, targetZoom),
     );
+    _showBottomSheet();
   }
 
   @override
@@ -220,7 +225,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
             zoomControlsEnabled: false,
             myLocationEnabled: isLocationEnabled,
             myLocationButtonEnabled: false,
-            //trafficEnabled: trafficEnabled,
+            trafficEnabled: trafficEnabled,
             circles: _circle,
             //polylines: polylines,
             onMapCreated: (controller) {
