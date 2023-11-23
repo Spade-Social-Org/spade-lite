@@ -954,91 +954,69 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
       const SizedBox(
         height: 5,
       ),
-      ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: places.length,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            final place = places[index];
 
-            print('Image URL for place ${place.name}: ${place.imageURL}');
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 200,
-                  width: 450,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: NetworkImage(place.imageURL[index]),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Text(
-                    place.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
+      ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: places.length,
+        physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final place = places[index];
+
+          print('Image URL for place ${place.name}: ${place.imageURL}');
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (place.imageURL.isNotEmpty)
+                  buildHorizontalImageList(place.imageURL),
+                const SizedBox(height: 8),
+                Text(
+                  place.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
                   ),
                 ),
-              ),
-            );
-          }),
-      ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: places.length,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            final place = places[index];
-
-            print('Image URL for place ${place.name}: ${place.imageURL}');
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildHorizontalImageList(place.imageURL),
-                  const SizedBox(height: 8),
-                  Text(
-                    place.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
+              ],
+            ),
+          );
+        },
+      )
     ],
   );
 }
 
 Widget buildHorizontalImageList(List<String> imageURL) {
-  return Container(
+  return SizedBox(
     height: 200,
-    width: double.infinity,
-    child: ListView(
+    child: ListView.builder(
       scrollDirection: Axis.horizontal,
-      children: [
-        for (int i = 0; i < imageURL.length; i++)
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Image.network(
-              imageURL[i],
-              height: 200,
-              width: 200,
-              fit: BoxFit.cover,
+      itemCount: imageURL.length,
+      itemBuilder: (context, index) {
+        if (index >= 0 && index < imageURL.length) {
+          final imageUR = imageURL[index];
+          print('Image URL at index $index: $imageURL');
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: NetworkImage(imageUR),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
-      ],
+          );
+        } else {
+          return  SizedBox.shrink();
+        }
+      },
     ),
   );
 }
