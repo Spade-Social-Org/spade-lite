@@ -10,6 +10,7 @@ import 'package:spade_v4/Presentation/Screens/Home/models/feed_model.dart';
 import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
 import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
 import 'package:spade_v4/Common/blurred_background_image.dart';
+import 'package:spade_v4/Presentation/widgets/jh_logger.dart';
 import 'package:spade_v4/prefs/local_data.dart';
 import 'package:spade_v4/resources/resources.dart';
 import 'package:story_view/story_view.dart';
@@ -270,6 +271,7 @@ class _StoryState extends ConsumerState<Story> {
       storyItems: widget.feed.gallery?.map(
             (e) {
               LocalData.instance.setStoryViewed(e);
+
               if (e.endsWith('mp4')) {
                 return StoryItem.pageVideo(
                   e,
