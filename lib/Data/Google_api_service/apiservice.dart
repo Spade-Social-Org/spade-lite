@@ -33,8 +33,18 @@ class GooglePlacesApi {
     }
   }
 
-  String buildPhotoUrl(String photoReference) {
-    return 'https://maps.googleapis.com/maps/api/place/photo?'
-        'maxwidth=150&photoreference=$photoReference&key=$apiKey';
+  // String buildPhotoUrl(String photoReference) {
+  //   return 'https://maps.googleapis.com/maps/api/place/photo?'
+  //       'maxwidth=150&photoreference=$photoReference&key=$apiKey';
+  // }
+  List<String> buildPhotoUrls(List<String>? photoReferences) {
+    if (photoReferences == null || photoReferences.isEmpty) {
+      return [];
+    }
+
+    return photoReferences.map((photoReference) {
+      return 'https://maps.googleapis.com/maps/api/place/photo?'
+          'maxwidth=150&photoreference=$photoReference&key=$apiKey';
+    }).toList();
   }
 }

@@ -2,7 +2,7 @@ class Place {
   final String id;
   final String name;
   final String address;
-  final String imageURL;
+  final List<String> imageURL;
   final List<String> reviews;
   final String openingHours;
 

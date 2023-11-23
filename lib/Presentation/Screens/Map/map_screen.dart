@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -8,6 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spade_lite/Presentation/widgets/jh_calendar.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
 import '../../../Common/theme.dart';
+import '../../../Domain/Entities/place.dart';
+import '../../../Domain/Usecase/get_places_use_case.dart';
+import '../../Bloc/places_bloc.dart';
 import '../../widgets/jh_custom_marker.dart';
 import '../../widgets/jh_loader.dart';
 import '../../widgets/jh_logger.dart';
@@ -212,7 +216,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     mapController?.animateCamera(
       CameraUpdate.newLatLngZoom(tappedMarker.position, targetZoom),
     );
-    _showBottomSheet();
+    _showBottomSheetForCard();
   }
 
   @override
@@ -250,7 +254,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
             left: 20,
             bottom: 40,
             child: GestureDetector(
-              onTap: _showBottomSheet,
+              onTap: _showBottomSheetForCard,
               child: CircleAvatar(
                 backgroundColor: Colors.black,
                 radius: 30,
@@ -503,7 +507,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     setState(() {});
   }
 
-  void _showBottomSheet() {
+  void _showBottomSheetForCard() {
     showModalBottomSheet<void>(
       context: context,
       //isScrollControlled: true,
@@ -631,25 +635,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pop();
-                                switch (index) {
-                                  case 0:
-                                    _RestaurantBottomSheet();
-                                    break;
-                                  case 1:
-                                    // _HotelsBottomSheet();
-                                    break;
-                                  case 2:
-                                    //_MovieBottomSheet();
-                                    break;
-                                  case 3:
-                                    // _ClubsBottomSheet();
-                                    break;
-                                  case 4:
-                                    // _MuseumBottomSheet();
-                                    break;
-                                  default:
-                                    break;
-                                }
+                                _showBottomSheetForSelectedCard(cards[index]);
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
@@ -683,536 +669,376 @@ class _GoogleMapState extends State<GoogleMapScreen>
     );
   }
 
-  void _RestaurantBottomSheet() {
+  void _showBottomSheetForSelectedCard(CardModel card) {
+    BlocProvider.of<PlacesBloc>(context)
+        .add(FetchPlacesEvent(card.placeType, _initialPosition!, null));
     showModalBottomSheet<void>(
-      context: context,
       isScrollControlled: true,
       backgroundColor: Colors.black,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-        top: Radius.circular(30),
-      )),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      context: context,
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
+          initialChildSize: 0.6,
+          minChildSize: 0.2,
+          maxChildSize: 1.0,
           expand: false,
-          initialChildSize: 0.4,
-          minChildSize: 0.1,
-          builder: (BuildContext context, ScrollController) => ListView(
-            controller: ScrollController,
-            children: [
-              const SizedBox(
-                height: 2,
-              ),
-              Center(
-                child: Container(
-                  width: 20 * 7,
-                  height: 6,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      shape: BoxShape.rectangle),
-                ),
-              ),
-              Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: CircleAvatar(
-                      backgroundImage:
-                          AssetImage("assets/images/Ellipse 378.png"),
-                      radius: 30,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 2 * 4,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "Search for Places",
-                          hintStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          fillColor: const Color(0xFF333333),
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 12),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 2.0,
-                            ),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: const Icon(
-                              Icons.search,
-                              color: Colors.white,
-                              weight: 30,
-                              size: 30,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 2),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(left: 2),
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    for (int i = 0; i < 3; i++)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF333333),
-                              borderRadius: BorderRadius.circular(20)),
-                          height: 29,
-                          width: 94,
-                          child: Row(
-                            children: [
-                              Icon(
-                                iconsRow[i],
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                              Text(
-                                text[i].toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                ),
-                child: Text(
-                  'Fusion Vibes Kitchen + Lounge',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 3,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                ),
-                child: Text(
-                  'African, American,Carribbean',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  const Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Text(
-                          'Open  now',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: CustomColors.greenPrimary,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '0.8 miles',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          //_calendarBottomSheet();
-                        },
-                        child: Container(
-                            height: 25,
-                            width: 60 * 2,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Schedule',
-                                style: TextStyle(
-                                  color: CustomColors.black,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset('assets/images/arrowforward.png', width: 18),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            //_calendarBottomSheet();
-                          },
-                          child: Image.asset('assets/images/calendar.png',
-                              width: 18)),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset('assets/images/hearticon.png', width: 18),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: restaurantImages.length,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 90 * 10,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage(restaurantImages[index]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                ),
-                child: Text(
-                  'West African Way',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                ),
-                child: Text(
-                  'African cusine',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  const Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Text(
-                          'Open now',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: CustomColors.greenPrimary,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '1.6 miles',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          // _calendarBottomSheet();
-                        },
-                        child: Container(
-                            height: 25,
-                            width: 60 * 2,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Schedule',
-                                style: TextStyle(
-                                  color: CustomColors.black,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset('assets/images/arrowforward.png', width: 18),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            //_calendarBottomSheet();
-                          },
-                          child: Image.asset('assets/images/calendar.png',
-                              width: 18)),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset('assets/images/hearticon.png', width: 18),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: restaurantImages.length,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 90 * 10,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage(restaurantImages[index]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                ),
-                child: Text(
-                  'West African Way',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 12,
-                ),
-                child: Text(
-                  'African Cusine',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  const Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Text(
-                          'Open now',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: CustomColors.greenPrimary,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '0.8 miles',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          //_calendarBottomSheet();
-                        },
-                        child: Container(
-                            height: 25,
-                            width: 60 * 2,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Schedule',
-                                style: TextStyle(
-                                  color: CustomColors.black,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset('assets/images/arrowforward.png', width: 18),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            // _calendarBottomSheet();
-                          },
-                          child: Image.asset('assets/images/calendar.png',
-                              width: 18)),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset('assets/images/hearticon.png', width: 18),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 250,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: restaurantImages.length,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 90 * 10,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage(restaurantImages[index]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              )
-            ],
-          ),
+          builder: (BuildContext context, ScrollController scrollController) {
+            return BlocBuilder<PlacesBloc, PlacesState>(
+              builder: (context, state) {
+                if (state is PlacesLoadingState) {
+                  return _buildLoadingBottomSheet();
+                } else if (state is PlacesLoadedState) {
+                  return _buildLoadedBottomSheet(
+                      context, state.places, scrollController);
+                } else if (state is PlacesErrorState) {
+                  return _buildErrorBottomSheet(state.message);
+                }
+                return Container();
+              },
+            );
+          },
         );
       },
     );
   }
+}
+
+Widget _buildLoadingBottomSheet() {
+  return Container(
+    padding: const EdgeInsets.all(16),
+    child: const Center(
+      child: CircularProgressIndicator(),
+    ),
+  );
+}
+
+Widget _buildErrorBottomSheet(String errorMessage) {
+  return Container(
+    padding: const EdgeInsets.all(16),
+    child: Center(
+      child: Text('Error: $errorMessage'),
+    ),
+  );
+}
+
+Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
+    ScrollController scrollController) {
+  return ListView(
+    controller: scrollController,
+    children: [
+      const SizedBox(
+        height: 2,
+      ),
+      Center(
+        child: Container(
+          width: 20 * 7,
+          height: 6,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              shape: BoxShape.rectangle),
+        ),
+      ),
+      Row(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: CircleAvatar(
+              backgroundImage: AssetImage("assets/images/Ellipse 378.png"),
+              radius: 30,
+            ),
+          ),
+          const SizedBox(
+            width: 2 * 4,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+                decoration: InputDecoration(
+                  hintText: "Search for Places",
+                  hintStyle: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  fillColor: Color(0xFF333333),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
+                    ),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      weight: 30,
+                      size: 30,
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+      Padding(
+        padding: const EdgeInsets.only(left: 2),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 2),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            for (int i = 0; i < 3; i++)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: const Color(0xFF333333),
+                      borderRadius: BorderRadius.circular(20)),
+                  height: 29,
+                  width: 94,
+                  child: Row(
+                    children: [
+                      Icon(
+                        iconsRow[i],
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                      Text(
+                        text[i].toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: 8,
+      ),
+      const Padding(
+        padding: EdgeInsets.only(
+          left: 12,
+        ),
+        child: Text(
+          'Fusion Vibes Kitchen + Lounge',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
+      ),
+      const SizedBox(
+        height: 3,
+      ),
+      const Padding(
+        padding: EdgeInsets.only(
+          left: 12,
+        ),
+        child: Text(
+          'African, American,Carribbean',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      Row(
+        children: [
+          const Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: Text(
+                  'Open  now',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: CustomColors.greenPrimary,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '0.8 miles',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            width: 14,
+          ),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                    height: 25,
+                    width: 60 * 2,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Schedule',
+                        style: TextStyle(
+                          color: CustomColors.black,
+                          fontSize: 15,
+                        ),
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Image.asset('assets/images/arrowforward.png', width: 18),
+              const SizedBox(
+                width: 5,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Image.asset('assets/images/calendar.png', width: 18)),
+              const SizedBox(
+                width: 5,
+              ),
+              Image.asset('assets/images/hearticon.png', width: 18),
+            ],
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: places.length,
+          physics: BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final place = places[index];
+
+            print('Image URL for place ${place.name}: ${place.imageURL}');
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  height: 200,
+                  width: 450,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: NetworkImage(place.imageURL[index]),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Text(
+                    place.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+      ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: places.length,
+          physics: BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final place = places[index];
+
+            print('Image URL for place ${place.name}: ${place.imageURL}');
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildHorizontalImageList(place.imageURL),
+                  const SizedBox(height: 8),
+                  Text(
+                    place.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+    ],
+  );
+}
+
+Widget buildHorizontalImageList(List<String> imageURL) {
+  return Container(
+    height: 200,
+    width: double.infinity,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        for (int i = 0; i < imageURL.length; i++)
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Image.network(
+              imageURL[i],
+              height: 200,
+              width: 200,
+              fit: BoxFit.cover,
+            ),
+          ),
+      ],
+    ),
+  );
 }

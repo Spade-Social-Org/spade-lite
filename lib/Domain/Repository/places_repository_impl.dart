@@ -8,7 +8,6 @@ class PlacesRepositoryImpl implements PlacesRepository {
   final GooglePlacesApi api;
 
   PlacesRepositoryImpl(this.api);
-
   @override
   Future<List<Place>> getPlaces(String placeType, LatLng location,
       {String? nextPageToken}) async {
@@ -25,19 +24,18 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
         places.addAll(placesJson.map((placeJson) {
           final photos = placeJson['photos'] as List<dynamic>?;
+          final photoReferences = photos
+              ?.map((photo) => photo['photo_reference'] as String)
+              .toList();
 
-          String imageUrl = '';
-
-          if (photos != null && photos.isNotEmpty) {
-            final photoReference = photos[0]['photo_reference'];
-            imageUrl = api.buildPhotoUrl(photoReference);
-          }
+          final imageUrls = api.buildPhotoUrls(photoReferences);
 
           return Place(
             id: placeJson['place_id'],
             name: placeJson['name'],
             address: placeJson['vicinity'],
-            imageURL: imageUrl,
+            imageURL:
+                imageUrls, // Assuming you have imageURLs property in Place class
             reviews: [],
             openingHours: placeJson['opening_hours'] != null
                 ? placeJson['opening_hours']['open_now']
