@@ -6,9 +6,11 @@ import '../model/messages.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageData message;
+  final String image;
   const MessageBubble({
     super.key,
     required this.message,
+    required this.image,
   });
 
   @override
@@ -18,6 +20,12 @@ class MessageBubble extends StatelessWidget {
       if (userId == null) return const SizedBox.shrink();
       return Column(
         children: [
+          Container(
+            height: 200,
+            width: 150,
+            decoration: BoxDecoration(
+                image: DecorationImage(image: NetworkImage(image))),
+          ),
           Row(
               mainAxisAlignment: message.userId == int.parse(userId.value!)
                   ? MainAxisAlignment.end

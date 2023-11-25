@@ -118,6 +118,7 @@ class _FeedBoxState extends ConsumerState<FeedBox> {
               IconButton(
                 onPressed: () => push(SingleMessage(
                     userId: widget.feed.posterId!,
+                    post: widget.feed.gallery![0],
                     username: widget.feed.posterName!)),
                 icon: SvgPicture.asset(
                   SpiderSvgAssets.message,

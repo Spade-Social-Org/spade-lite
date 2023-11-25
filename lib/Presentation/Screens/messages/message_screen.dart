@@ -158,6 +158,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       onTap: () => push(SingleMessage(
                                             userId: e.userId!,
                                             username: e.name!,
+                                            post: '',
                                           )),
                                       indicatorColor: const Color(0xff155332),
                                       timeSent: '5:40'))

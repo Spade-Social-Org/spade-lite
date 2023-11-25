@@ -13,8 +13,14 @@ final messageFutureProvider =
 class SingleMessage extends ConsumerStatefulWidget {
   final int userId;
   final String username;
+  final String post;
+  final String image;
   const SingleMessage(
-      {super.key, required this.userId, required this.username});
+      {super.key,
+      this.image = '',
+      required this.post,
+      required this.userId,
+      required this.username});
 
   @override
   ConsumerState<SingleMessage> createState() => _SingleMessageState();
@@ -111,7 +117,9 @@ class _SingleMessageState extends ConsumerState<SingleMessage> {
                         const Divider(),
                         Expanded(
                           child: MessageList(
-                              data: messages, scrollController: scrollCtrl),
+                              image: widget.image,
+                              data: messages,
+                              scrollController: scrollCtrl),
                         ),
                         const SizedBox(height: 8),
                         MessageTextfield(

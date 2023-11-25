@@ -18,8 +18,11 @@ class JokersList extends StatelessWidget {
         data.length,
         (i) => MaterialButton(
           padding: const EdgeInsets.all(0),
-          onPressed: () => push(
-              SingleMessage(userId: data[i].userId!, username: data[i].name!)),
+          onPressed: () => push(SingleMessage(
+            userId: data[i].userId!,
+            username: data[i].name!,
+            post: '',
+          )),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
