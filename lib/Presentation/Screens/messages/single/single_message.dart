@@ -14,10 +14,9 @@ class SingleMessage extends ConsumerStatefulWidget {
   final int userId;
   final String username;
   final String post;
-  final String image;
+
   const SingleMessage(
       {super.key,
-      this.image = '',
       required this.post,
       required this.userId,
       required this.username});
@@ -117,7 +116,7 @@ class _SingleMessageState extends ConsumerState<SingleMessage> {
                         const Divider(),
                         Expanded(
                           child: MessageList(
-                              image: widget.image,
+                              image: widget.post,
                               data: messages,
                               scrollController: scrollCtrl),
                         ),
