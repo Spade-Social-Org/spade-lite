@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "19020859468",
+    "project_id": "spade-fc163",
+    "storage_bucket": "spade-fc163.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19020859468:android:8b4ec867206cceaa5d8ce9",
+        "android_client_info": {
+          "package_name": "com.spade.spade_v4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSoFR4MG9OCqeD8idJ_k11734U30dSHf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

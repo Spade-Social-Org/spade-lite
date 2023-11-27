@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_v4/Presentation/Screens/onboarding/provider/notif_provider.dart';
+import 'package:spade_v4/core/push_notifications_utils.dart';
 
 import '../Camera/camera_screen.dart';
 import '../Home/presentation/home_screen.dart';
 import '../Map/map_screen.dart';
 import '../messages/message_screen.dart';
 
-class NavigationContainer extends StatefulWidget {
+class NavigationContainer extends ConsumerStatefulWidget {
   const NavigationContainer({super.key});
 
   @override
-  State<NavigationContainer> createState() => _NavigationContainerState();
+  ConsumerState<NavigationContainer> createState() =>
+      _NavigationContainerState();
 }
 
-class _NavigationContainerState extends State<NavigationContainer> {
+class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   int selectedIndex = 0;
   int _PageIndex = 0;
   bool _showOption = false;
   int card_click = 0;
   PageController get _pageController => FeedRepo.pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    NotifHandler.refreshTokens();
+    ref.read(notifProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,41 +136,10 @@ class _NavigationContainerState extends State<NavigationContainer> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _onIconTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-      _PageIndex = index;
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-
   void _onPageChanged(int index) {
     if (_PageIndex != index) {
       setState(() {
         _PageIndex = index;
-      });
-    }
-  }
-
-  void _zoneClick(int index) {
-    if (card_click == index) {
-      setState(() {
-        card_click = 0;
-        _showOption = false;
-      });
-    } else {
-      setState(() {
-        card_click = index;
-        _showOption = false;
       });
     }
   }
