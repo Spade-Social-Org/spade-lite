@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:spade_lite/Presentation/widgets/jh_calendar.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
 import '../../../Common/theme.dart';
 import '../../../Domain/Entities/place.dart';
@@ -962,8 +961,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           final place = places[index];
-
-          print('Image URL for place ${place.name}: ${place.imageURL}');
+          logger.d('Image URL for place ${place.name}: ${place.imageURL}');
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

@@ -33,10 +33,21 @@ class GooglePlacesApi {
     }
   }
 
-  // String buildPhotoUrl(String photoReference) {
-  //   return 'https://maps.googleapis.com/maps/api/place/photo?'
-  //       'maxwidth=150&photoreference=$photoReference&key=$apiKey';
-  // }
+  Future<Map<String, dynamic>> fetchPlaceDetails(String placeId) async {
+    final detailsUrl =
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey';
+
+    final detailsResponse = await httpClient.get(Uri.parse(detailsUrl));
+
+    if (detailsResponse.statusCode == 200) {
+      final detailsData = detailsResponse.body;
+      return json.decode(detailsData) as Map<String, dynamic>;
+    } else {
+      logger.e('Failed to fetch place details with status code: ${detailsResponse.statusCode}');
+      throw Exception('Failed to fetch place details: ${detailsResponse.statusCode}');
+    }
+  }
+
   List<String> buildPhotoUrls(List<String>? photoReferences) {
     if (photoReferences == null || photoReferences.isEmpty) {
       return [];

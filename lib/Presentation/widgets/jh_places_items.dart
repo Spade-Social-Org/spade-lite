@@ -8,51 +8,6 @@ List<dynamic> images = [
   "assets/images/Rectangle 3381.png"
 ];
 
-// List<dynamic> placeImages = [
-//   "assets/images/placeimage.png",
-//   "assets/images/placeimage2.png",
-//   "assets/images/placeimage2.png",
-//   "assets/images/placeimage.png",
-// ];
-//
-// List<dynamic> hotelImages = [
-//   "assets/images/Hotel 1.png",
-//   "assets/images/Hotel 1.png",
-//   "assets/images/Hotel 2.png",
-//   "assets/images/Hotel 2.png",
-// ];
-// List<dynamic> clubsImages = [
-//   "assets/images/club3.png",
-//   "assets/images/club2.png",
-//   "assets/images/club3.png",
-//   "assets/images/club2.png",
-//
-//
-// ];
-
-// List<dynamic> museumImages = [
-//   "assets/images/museum1.png",
-//   "assets/images/museum2.png",
-//   "assets/images/museum2.png",
-//   "assets/images/museum1.png",
-//
-//
-// ];
-//
-// List<dynamic> restaurantImages = [
-//   "assets/images/restaurant.png",
-//   "assets/images/restaurant.png",
-//   "assets/images/restaurant.png",
-//   "assets/images/restaurant.png",
-// ];
-
-// List<dynamic> moviesImages = [
-//   "assets/images/movie1.png",
-//   "assets/images/movie1.png",
-//   "assets/images/movie1.png",
-//   "assets/images/movie1.png",
-// ];
-
 List<String> title = ["Restaurant", "Hotel", "Theatre", "Clubs", "Museum"];
 
 List<String> text = [
