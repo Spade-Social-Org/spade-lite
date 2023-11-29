@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="spade_v4"
+        android:label="spade_lite"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

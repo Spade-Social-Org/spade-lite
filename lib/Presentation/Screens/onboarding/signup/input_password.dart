@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Common/navigator.dart';
+import 'package:spade_lite/Common/navigator.dart';
 
-import 'package:spade_v4/Presentation/Screens/onboarding/widgets/form_labels.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/widgets/form_title.dart';
-import 'package:spade_v4/Presentation/widgets/custom_button.dart';
-import 'package:spade_v4/Presentation/widgets/custom_textfield.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_labels.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_title.dart';
+import 'package:spade_lite/Presentation/widgets/custom_button.dart';
+import 'package:spade_lite/Presentation/widgets/custom_textfield.dart';
 
 import 'input_phone_number_screen.dart';
 

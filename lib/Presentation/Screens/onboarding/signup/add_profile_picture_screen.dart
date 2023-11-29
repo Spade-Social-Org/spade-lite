@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Common/constants.dart';
-import 'package:spade_v4/Common/image_properties.dart';
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Common/utils/utils.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/provider/set_profile_image_provider.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/widgets/form_title.dart';
-import 'package:spade_v4/Presentation/widgets/custom_button.dart';
+import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/Common/image_properties.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/provider/set_profile_image_provider.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_title.dart';
+import 'package:spade_lite/Presentation/widgets/custom_button.dart';
 
 class AddProfilePictureScreen extends ConsumerStatefulWidget {
   const AddProfilePictureScreen({

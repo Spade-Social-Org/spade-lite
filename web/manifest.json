@@ -1,6 +1,6 @@
 {
-    "name": "spade_v4",
-    "short_name": "spade_v4",
+    "name": "spade_lite",
+    "short_name": "spade_lite",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

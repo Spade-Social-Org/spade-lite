@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/prefs/pref_provider.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 
 import '../model/messages.dart';
 

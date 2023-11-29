@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Presentation/widgets/fadein.dart';
+import 'package:spade_lite/Presentation/widgets/fadein.dart';
 
 import '../../../Common/navigator.dart';
 import 'signup/first_name_screen.dart';

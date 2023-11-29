@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/login/login_screen.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/spade_splash_screen.dart';
-import 'package:spade_v4/Presentation/widgets/custom_button.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/login/login_screen.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/spade_splash_screen.dart';
+import 'package:spade_lite/Presentation/widgets/custom_button.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});

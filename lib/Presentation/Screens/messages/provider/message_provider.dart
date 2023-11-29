@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Presentation/Screens/messages/repository/message_repository.dart';
+import 'package:spade_lite/Presentation/Screens/messages/repository/message_repository.dart';
 
 import '../model/chat_model.dart';
 import '../model/messages.dart';

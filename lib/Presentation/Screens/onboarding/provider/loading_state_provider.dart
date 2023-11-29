@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Common/api.dart';
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Presentation/widgets/loading_dialog.dart';
+import 'package:spade_lite/Common/api.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Presentation/widgets/loading_dialog.dart';
 
 import '../../messages/widget/custom_snackbar.dart';
 

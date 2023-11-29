@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Presentation/Screens/messages/single/single_message.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 
 import '../model/user_matches_response_model.dart';
 

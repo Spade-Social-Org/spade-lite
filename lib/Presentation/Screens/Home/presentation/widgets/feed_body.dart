@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spade_v4/Common/constants.dart';
-import 'package:spade_v4/Common/utils/utils.dart';
-import 'package:spade_v4/Presentation/Screens/Home/models/feed_model.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/feed_box.dart';
-import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/feed_box.dart';
+import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
 
 class FeedBody extends ConsumerStatefulWidget {
   const FeedBody({super.key});

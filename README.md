@@ -1,4 +1,4 @@
-# spade_v4
+# spade_lite
 
 A new Flutter project.
 

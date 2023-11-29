@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:spade_v4/prefs/pref_provider.dart';
-import 'package:spade_v4/Presentation/Screens/messages/model/chat_model.dart';
-import 'package:spade_v4/Presentation/Screens/messages/model/messages.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/model/chat_model.dart';
+import 'package:spade_lite/Presentation/Screens/messages/model/messages.dart';
 
 import '../model/user_matches_response_model.dart';
 

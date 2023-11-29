@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:spade_v4/Presentation/Screens/messages/provider/message_provider.dart';
-import 'package:spade_v4/Presentation/Screens/messages/single/single_message.dart';
+import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 
-import 'package:spade_v4/prefs/pref_provider.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 
 import '../../../../Common/api.dart';
 import '../model/messages.dart';
