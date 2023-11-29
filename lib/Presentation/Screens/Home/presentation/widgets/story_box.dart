@@ -8,9 +8,11 @@ import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
 class StoryBox extends ConsumerWidget {
   final Feed feed;
   final bool isLoad;
+  final Color? borderColor;
   const StoryBox({
     super.key,
     required this.feed,
+    this.borderColor,
     this.isLoad = false,
   });
 
@@ -34,10 +36,10 @@ class StoryBox extends ConsumerWidget {
           Container(
             height: 46,
             width: 46,
-            decoration: const ShapeDecoration(
+            decoration: ShapeDecoration(
               shape: CircleBorder(
                 side: BorderSide(
-                  color: CustomColors.greenPrimary,
+                  color: borderColor ?? CustomColors.greenPrimary,
                   width: 2,
                 ),
               ),

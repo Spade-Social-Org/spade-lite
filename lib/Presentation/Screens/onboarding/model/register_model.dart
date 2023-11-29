@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class RegisterModel {
   final String? email;
   final String? password;
   final String? name;
   final String? phoneNumber;
   final String? country;
+  final String? username;
   final String? city;
   final String? state;
   final String? postalCode;
@@ -13,6 +15,7 @@ class RegisterModel {
     this.name,
     this.phoneNumber,
     this.country,
+    this.username,
     this.city,
     this.state,
     this.postalCode,
@@ -23,6 +26,7 @@ class RegisterModel {
         "password": password,
         "name": name,
         "phone_number": phoneNumber,
+        "username": username,
         "country": country,
         "city": city,
         "state": state,
@@ -31,7 +35,31 @@ class RegisterModel {
 
   @override
   String toString() {
-    return 'RegisterModel(email: $email, password: $password, name: $name, phoneNumber: $phoneNumber, country: $country, city: $city, state: $state, postalCode: $postalCode)';
+    return 'RegisterModel(email: $email, password: $password, name: $name, phoneNumber: $phoneNumber, country: $country, username: $username, city: $city, state: $state, postalCode: $postalCode)';
+  }
+
+  RegisterModel copyWith({
+    String? email,
+    String? password,
+    String? name,
+    String? phoneNumber,
+    String? country,
+    String? username,
+    String? city,
+    String? state,
+    String? postalCode,
+  }) {
+    return RegisterModel(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      name: name ?? this.name,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      country: country ?? this.country,
+      username: username ?? this.username,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      postalCode: postalCode ?? this.postalCode,
+    );
   }
 }
 
