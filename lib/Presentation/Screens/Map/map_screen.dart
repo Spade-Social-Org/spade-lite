@@ -104,7 +104,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  fillColor: const Color(0xFF333333),
+                  fillColor: Color(0xFF333333),
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                   filled: true,
                   border: OutlineInputBorder(
@@ -158,7 +158,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                       color: const Color(0xFF333333),
                       borderRadius: BorderRadius.circular(20)),
                   height: 29,
-                  width: 94,
+                  width: 90,
                   child: Row(
                     children: [
                       Icon(
@@ -181,114 +181,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
           ],
         ),
       ),
-      const SizedBox(
-        height: 8,
-      ),
-      const Padding(
-        padding: EdgeInsets.only(
-          left: 12,
-        ),
-        child: Text(
-          'Fusion Vibes Kitchen + Lounge',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 3,
-      ),
-      const Padding(
-        padding: EdgeInsets.only(
-          left: 12,
-        ),
-        child: Text(
-          'African, American,Carribbean',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Row(
-        children: [
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 12),
-                child: Text(
-                  'Open  now',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: CustomColors.greenPrimary,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '0.8 miles',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            width: 14,
-          ),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                    height: 25,
-                    width: 60 * 2,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Schedule',
-                        style: TextStyle(
-                          color: CustomColors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                    )),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Image.asset('assets/images/arrowforward.png', width: 18),
-              const SizedBox(
-                width: 5,
-              ),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Image.asset('assets/images/calendar.png', width: 18)),
-              const SizedBox(
-                width: 5,
-              ),
-              Image.asset('assets/images/hearticon.png', width: 18),
-            ],
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
+
       ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: places.length,
@@ -302,17 +195,112 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
+                 Padding(
+                  padding: EdgeInsets.only(
+                    left: 12,
+                  ),
+                  child: Text(
+                    place.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 3,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 12,
+                  ),
+                  child: Text(
+                    'African, American,Carribbean',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text(
+                            'Open  now',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: CustomColors.greenPrimary,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '0.8 miles',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 14,
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                              height: 25,
+                              width: 60 * 2,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Schedule',
+                                  style: TextStyle(
+                                    color: CustomColors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Image.asset('assets/images/arrowforward.png', width: 16),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Image.asset('assets/images/calendar.png', width: 16)),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Image.asset('assets/images/hearticon.png', width: 17),
+                      ],
+                    ),
+                  ],
+                ),
                 if (place.imageURL.isNotEmpty)
                   buildHorizontalImageList(place.imageURL),
                 const SizedBox(height: 8),
-                Text(
-                  place.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
               ],
             ),
           );
@@ -991,11 +979,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             CalenderScreen()));
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -1015,21 +998,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              color: Colors.white38,
-                              borderRadius: BorderRadius.circular(20)),
-                          height: 30,
-                          width: 60,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: SvgPicture.asset(
-                              "assets/svgs/saved.svg",
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
                       ],
                     )
                   ],
