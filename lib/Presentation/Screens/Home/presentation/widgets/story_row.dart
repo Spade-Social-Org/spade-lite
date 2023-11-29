@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:spade_v4/Common/constants.dart';
-import 'package:spade_v4/Common/routes/app_routes.dart';
-import 'package:spade_v4/Common/theme.dart';
-import 'package:spade_v4/Common/utils/utils.dart';
-import 'package:spade_v4/Presentation/Screens/Home/models/feed_model.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/story_page_view.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/user_story_page.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
-import 'package:spade_v4/Presentation/Screens/Home/presentation/widgets/story_box.dart';
+import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/Common/routes/app_routes.dart';
+import 'package:spade_lite/Common/theme.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/story_page_view.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/user_story_page.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/story_box.dart';
 
-import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
-import 'package:spade_v4/prefs/local_data.dart';
+import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_lite/prefs/local_data.dart';
 
 class StoryRow extends ConsumerStatefulWidget implements PreferredSizeWidget {
   @override

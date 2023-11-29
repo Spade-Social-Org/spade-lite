@@ -29,7 +29,7 @@ Widget buildHorizontalImageList(List<String> imageURL) {
       itemBuilder: (context, index) {
         if (index >= 0 && index < imageURL.length) {
           final imageUR = imageURL[index];
-          print('Image URL at index $index: $imageURL');
+          logger.d('Image URL at index $index: $imageURL');
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
