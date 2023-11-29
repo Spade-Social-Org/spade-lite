@@ -143,10 +143,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
         'USER 3',
         const LatLng(5.952930, 6.848727),
       );
-      // addMarker4(
-      //   'USER 4',
-      //   LatLng(5.9601322, 6.8475589),
-      // );
       addMarker5(
         'USER 5',
         const LatLng(5.972808, 6.837499),
