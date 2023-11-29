@@ -15,39 +15,43 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
     do {
       final data =
-          await api.fetchPlaces(placeType, location, pageToken: nextPageToken);
+      await api.fetchPlaces(placeType, location, pageToken: nextPageToken);
       logger.d('API Response Data: $data');
 
       // ignore: unnecessary_null_comparison
       if (data != null && data.containsKey('results')) {
         final placesJson = data['results'] as List<dynamic>;
 
-        places.addAll(placesJson.map((placeJson) {
-          final photos = placeJson['photos'] as List<dynamic>?;
-          final photoReferences = photos
-              ?.map((photo) => photo['photo_reference'] as String)
-              .toList();
+        places.addAll(await Future.wait(placesJson.map((placeJson) async {
+          final details = await api.fetchPlaceDetails(placeJson['place_id']);
+          logger.d('API Response Data: $details');
+          final placeDetails = details['result'] as Map<String, dynamic>;
+          logger.d('API Response Data: $placeDetails');
 
-          final imageUrls = api.buildPhotoUrls(photoReferences);
+          final photoReferences = placeDetails['photos'] as List<dynamic>?;
+          logger.d('API Response Data: $photoReferences');
+
+          final imageUrls = api.buildPhotoUrls(photoReferences
+              ?.map((photo) => photo['photo_reference'] as String)
+              ?.toList());
 
           return Place(
-            id: placeJson['place_id'],
-            name: placeJson['name'],
-            address: placeJson['vicinity'],
-            imageURL:
-                imageUrls, // Assuming you have imageURLs property in Place class
+            id: placeDetails['place_id'],
+            name: placeDetails['name'],
+            address: placeDetails['vicinity'],
+            imageURL: imageUrls,
             reviews: [],
-            openingHours: placeJson['opening_hours'] != null
-                ? placeJson['opening_hours']['open_now']
-                    ? 'Open now'
-                    : 'Closed'
+            openingHours: placeDetails['opening_hours'] != null
+                ? placeDetails['opening_hours']['open_now']
+                ? 'Open now'
+                : 'Closed'
                 : 'Unknown',
           );
-        }));
+        })));
 
         nextPageToken = data['next_page_token'];
       } else {
-        print('Invalid or missing API response data');
+        logger.d('Invalid or missing API response data');
         break;
       }
     } while (nextPageToken != null);

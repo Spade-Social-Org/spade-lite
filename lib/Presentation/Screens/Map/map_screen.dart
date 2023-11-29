@@ -45,7 +45,7 @@ Widget buildHorizontalImageList(List<String> imageURL) {
             ),
           );
         } else {
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         }
       },
     ),
@@ -296,8 +296,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           final place = places[index];
-
-          print('Image URL for place ${place.name}: ${place.imageURL}');
+          logger.d('Image URL for place ${place.name}: ${place.imageURL}');
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -360,144 +359,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   final Set<Circle> _circle = {};
 
   List<DiscoverUserModel> userSpade = [];
-
-  Future<void> addMarker(String id, LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 365.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(title: 'ME', snippet: ''),
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      icon: await customMarkerIcon.createMarkerIcon(),
-    );
-    _markers[id] = marker;
-    setState(() {});
-  }
-
-  Future<void> addMarker2(String id, LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 366.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(title: 'Mr Josh', snippet: 'Hello friend'),
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      icon: await customMarkerIcon.createMarkerIcon(),
-    );
-    _markers[id] = marker;
-    setState(() {});
-  }
-
-  Future<void> addMarker3(String id, LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 367.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(title: 'Mr Josh', snippet: 'Hello friend'),
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      icon: await customMarkerIcon.createMarkerIcon(),
-    );
-    _markers[id] = marker;
-    setState(() {});
-  }
-
-  Future<void> addMarker4(String id, LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 372.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(title: 'Mr Josh', snippet: 'Hello friend'),
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      icon: await customMarkerIcon.createMarkerIcon(),
-    );
-    _markers[id] = marker;
-    setState(() {});
-  }
-
-  Future<void> addMarker5(String id, LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 378.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(title: 'Mr Josh', snippet: 'Hello friend'),
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      icon: await customMarkerIcon.createMarkerIcon(),
-    );
-    _markers[id] = marker;
-    setState(() {});
-  }
-
-  Future<void> addMarker6(String id, LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 379.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(title: 'Mr Josh', snippet: 'Hello friend'),
-      onTap: () {
-        _onMarkerTapped(_markers[id]!);
-      },
-      icon: await customMarkerIcon.createMarkerIcon(),
-    );
-    _markers[id] = marker;
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -678,8 +539,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
 
         return Marker(
           position: LatLng(latitude, longitude),
-          markerId:
-              MarkerId(user.name!), // Use a unique identifier for the marker
+          markerId: MarkerId(user.name!),
           icon: await customMarkerIcon.createMarkerIcon(),
           onTap: () {
             _onMarkerTapped(_markers[user.name]!);
@@ -693,8 +553,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
             (marker).markerId.value: marker
         };
       });
-
-      // Rest of the code...
     });
   }
 
@@ -762,11 +620,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
         //isLocationEnabled = true;
       });
       _addCircle(position);
-      double markerOffset = 0.0002;
-      addMarker(
-        'USER',
-        LatLng(position.latitude + markerOffset, position.longitude),
-      );
 
       Polyline polyline = Polyline(
         polylineId: const PolylineId('polyline_1'),

@@ -5,8 +5,7 @@ class Place {
   final List<String> imageURL;
   final List<String> reviews;
   final String openingHours;
-
-  Place({
+  Place( {
     required this.id,
     required this.name,
     required this.address,
@@ -25,6 +24,7 @@ class Place {
               address == other.address &&
               imageURL == other.imageURL &&
               reviews == other.reviews &&
+
               openingHours == other.openingHours;
 
   @override
