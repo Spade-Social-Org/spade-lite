@@ -8,7 +8,6 @@ import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/story_page_view.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
-import 'package:spade_lite/Common/blurred_background_image.dart';
 import 'package:spade_lite/resources/resources.dart';
 import 'package:story_view/story_view.dart';
 

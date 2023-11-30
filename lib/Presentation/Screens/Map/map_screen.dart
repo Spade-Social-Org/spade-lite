@@ -45,7 +45,7 @@ Widget buildHorizontalImageList(List<String> imageURL) {
             ),
           );
         } else {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         }
       },
     ),
@@ -104,7 +104,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  fillColor: Color(0xFF333333),
+                  fillColor: const Color(0xFF333333),
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                   filled: true,
                   border: OutlineInputBorder(
@@ -197,7 +197,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
               children: [
 
                  Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 12,
                   ),
                   child: Text(

@@ -3,13 +3,9 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:photofilters/photofilters.dart' as photofilters;
 import 'package:spade_lite/Common/image_properties.dart';
 import 'package:spade_lite/Common/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'filter_screen.dart';
-import 'package:path/path.dart';
-import 'package:image/image.dart' as imageLib;
 
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
 import '../../../Common/camera_components/camera_appbar.dart';

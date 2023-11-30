@@ -4,11 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/model/register_model.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/signup/add_username_screen.dart';
-import 'package:spade_lite/Presentation/Screens/onboarding/signup/verify_email.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_title.dart';
 import 'package:spade_lite/Presentation/widgets/custom_button.dart';
 
-import '../provider/onboarding_provider.dart';
 
 class AddLocationScreen extends StatefulWidget {
   final String name;

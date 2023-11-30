@@ -33,7 +33,7 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
           final imageUrls = api.buildPhotoUrls(photoReferences
               ?.map((photo) => photo['photo_reference'] as String)
-              ?.toList());
+              .toList());
 
           return Place(
             id: placeDetails['place_id'],

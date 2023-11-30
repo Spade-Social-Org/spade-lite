@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/constants.dart';
 import 'package:spade_lite/Common/image_properties.dart';
-import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/provider/set_profile_image_provider.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_title.dart';
