@@ -20,7 +20,9 @@ class NavigationContainer extends ConsumerStatefulWidget {
 
 class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   int selectedIndex = 0;
-  int pageIndex = 0;
+  int _PageIndex = 0;
+  bool _showOption = false;
+  int card_click = 0;
   PageController get _pageController => FeedRepo.pageController;
 
   @override
@@ -74,6 +76,11 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
                 useLegacyColorScheme: true,
                 type: BottomNavigationBarType.fixed,
                 currentIndex: selectedIndex,
+                onTap: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
                 backgroundColor: Colors.black,
                 selectedItemColor: Colors.white,
                 unselectedItemColor: Colors.grey,
@@ -124,9 +131,9 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   }
 
   void _onPageChanged(int index) {
-    if (pageIndex != index) {
+    if (_PageIndex != index) {
       setState(() {
-        pageIndex = index;
+        _PageIndex = index;
       });
     }
   }
