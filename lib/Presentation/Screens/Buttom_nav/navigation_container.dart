@@ -20,9 +20,7 @@ class NavigationContainer extends ConsumerStatefulWidget {
 
 class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   int selectedIndex = 0;
-  int _PageIndex = 0;
-  bool _showOption = false;
-  int card_click = 0;
+  int pageIndex = 0;
   PageController get _pageController => FeedRepo.pageController;
 
   @override
@@ -131,9 +129,9 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   }
 
   void _onPageChanged(int index) {
-    if (_PageIndex != index) {
+    if (pageIndex != index) {
       setState(() {
-        _PageIndex = index;
+        pageIndex = index;
       });
     }
   }
