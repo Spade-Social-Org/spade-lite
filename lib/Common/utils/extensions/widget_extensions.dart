@@ -7,9 +7,13 @@ extension WidgetSpacing on num {
   SizedBox get spacingH => SizedBox(height: toDouble());
 }
 
-extension WidgetVisibility on Widget {
+extension WidgetExtensions on Widget {
   Widget get visible => this;
   Widget get invisible => const SizedBox.shrink();
+  Widget rounded(double radius) => ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: this,
+      );
 }
 
 extension WidgetPadding on Widget {
