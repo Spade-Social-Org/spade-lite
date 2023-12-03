@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:spade_v4/Common/routes/app_routes.dart';
+import 'package:spade_v4/Presentation/Screens/messages/provider/message_provider.dart';
+import 'package:spade_v4/Presentation/Screens/messages/single/single_message.dart';
+import 'package:spade_v4/Presentation/Screens/notifications/presentation/notification_screen.dart';
 import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
@@ -34,13 +38,29 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
           actions: [
             CustomIconButton(
-                imageValue: 'Camera',
-                onTap: () {},
-                size: 25,
-                color: Colors.grey),
+              imageValue: 'bell',
+              onTap: () {
+                pushTo(context, const NotificationScreen());
+              },
+              size: 23,
+              color: Colors.grey,
+            ),
             CustomIconButton(
-                imageValue: 'person-group', onTap: () {}, size: 23),
-            CustomIconButton(imageValue: 'more-vert', onTap: () {}, size: 25)
+              imageValue: 'Camera',
+              onTap: () {},
+              size: 23,
+              color: Colors.grey,
+            ),
+            CustomIconButton(
+              imageValue: 'person-group',
+              onTap: () {},
+              size: 23,
+            ),
+            CustomIconButton(
+              imageValue: 'more-vert',
+              onTap: () {},
+              size: 25,
+            ),
           ],
         ),
         body: SingleChildScrollView(
