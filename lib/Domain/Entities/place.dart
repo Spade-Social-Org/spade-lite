@@ -5,27 +5,29 @@ class Place {
   final List<String> imageURL;
   final List<String> reviews;
   final String openingHours;
-  Place( {
+  final double distance;
+  Place({
     required this.id,
     required this.name,
     required this.address,
     required this.imageURL,
     required this.reviews,
     required this.openingHours,
+    required this.distance,
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Place &&
-              runtimeType == other.runtimeType &&
-              id == other.id &&
-              name == other.name &&
-              address == other.address &&
-              imageURL == other.imageURL &&
-              reviews == other.reviews &&
-
-              openingHours == other.openingHours;
+      other is Place &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          address == other.address &&
+          imageURL == other.imageURL &&
+          reviews == other.reviews &&
+          openingHours == other.openingHours &&
+          distance == other.distance;
 
   @override
   int get hashCode =>
@@ -34,5 +36,6 @@ class Place {
       address.hashCode ^
       imageURL.hashCode ^
       reviews.hashCode ^
-      openingHours.hashCode;
+      openingHours.hashCode ^
+      distance.hashCode;
 }

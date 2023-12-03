@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:spade_lite/Domain/Repository/places_repository.dart';
+import 'package:geolocator/geolocator.dart';
 import '../../Data/Google_api_service/apiservice.dart';
 import '../../Presentation/widgets/jh_logger.dart';
 import '../Entities/place.dart';
@@ -12,6 +13,8 @@ class PlacesRepositoryImpl implements PlacesRepository {
   Future<List<Place>> getPlaces(String placeType, LatLng location,
       {String? nextPageToken}) async {
     final places = <Place>[];
+    final userLocation = await _getUserLocation();
+
 
     do {
       final data =
@@ -46,6 +49,12 @@ class PlacesRepositoryImpl implements PlacesRepository {
                 ? 'Open now'
                 : 'Closed'
                 : 'Unknown',
+            distance : _calculateDistance(
+                location.latitude,
+                location.longitude,
+                placeDetails['geometry']['location']['lat'] as double,
+                placeDetails['geometry']['location']['lng'] as double,
+              ),
           );
         })));
 
@@ -58,4 +67,22 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
     return places;
   }
+}
+
+
+Future<LatLng> _getUserLocation() async {
+  final position = await Geolocator.getCurrentPosition(
+    desiredAccuracy: LocationAccuracy.high,
+  );
+
+  return LatLng(position.latitude, position.longitude);
+}
+
+double _calculateDistance(
+    double userLat,
+    double userLng,
+    double placeLat,
+    double placeLng,
+    ) {
+  return Geolocator.distanceBetween(userLat, userLng, placeLat, placeLng) / 1609.34;
 }
