@@ -1,19 +1,14 @@
-import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:spade_v4/Common/api.dart';
-import 'package:spade_v4/Common/api_handler/api_client_config.dart';
-import 'package:spade_v4/Common/api_handler/api_handler_models.dart';
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Common/utils/string_exception.dart';
-import 'package:spade_v4/Presentation/Screens/Buttom_nav/navigation_container.dart';
-import 'package:spade_v4/Presentation/Screens/Home/models/feed_model.dart';
-import 'package:spade_v4/Presentation/Screens/messages/widget/custom_snackbar.dart';
-import 'package:spade_v4/Presentation/widgets/loading_dialog.dart';
-import 'package:spade_v4/prefs/local_data.dart';
-import 'package:spade_v4/prefs/pref_provider.dart';
+import 'package:spade_lite/Common/api.dart';
+import 'package:spade_lite/Common/api_handler/api_client_config.dart';
+import 'package:spade_lite/Common/api_handler/api_handler_models.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Presentation/Screens/Buttom_nav/navigation_container.dart';
+import 'package:spade_lite/Presentation/Screens/messages/widget/custom_snackbar.dart';
+import 'package:spade_lite/Presentation/widgets/loading_dialog.dart';
 
 final profileImageProvider =
     NotifierProvider<ProfileImageProvider, ProfileImageRepo>(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/widgets/discover_image.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/widgets/discover_image.dart';
 
 class DiscoverPeople extends StatefulWidget {
   const DiscoverPeople({super.key});

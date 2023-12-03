@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.spade" "\0"
-            VALUE "FileDescription", "spade_v4" "\0"
+            VALUE "FileDescription", "spade_lite" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "spade_v4" "\0"
+            VALUE "InternalName", "spade_lite" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.spade. All rights reserved." "\0"
-            VALUE "OriginalFilename", "spade_v4.exe" "\0"
-            VALUE "ProductName", "spade_v4" "\0"
+            VALUE "OriginalFilename", "spade_lite.exe" "\0"
+            VALUE "ProductName", "spade_lite" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

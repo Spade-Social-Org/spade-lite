@@ -30,7 +30,7 @@ if (flutterVersionName == null) {
 // apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace "com.spade.spade_v4"
+    namespace "com.spade.spade_lite"
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
@@ -49,7 +49,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.spade.spade_v4"
+        applicationId "com.spade.spade_lite"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 21

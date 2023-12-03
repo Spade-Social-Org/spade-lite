@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Presentation/Screens/Home/providers/feed_provider.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/provider/notif_provider.dart';
-import 'package:spade_v4/core/push_notifications_utils.dart';
+import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/provider/notif_provider.dart';
+import 'package:spade_lite/core/push_notifications_utils.dart';
 
 import '../Camera/camera_screen.dart';
 import '../Home/presentation/home_screen.dart';
@@ -21,9 +20,7 @@ class NavigationContainer extends ConsumerStatefulWidget {
 
 class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   int selectedIndex = 0;
-  int _PageIndex = 0;
-  bool _showOption = false;
-  int card_click = 0;
+  int pageIndex = 0;
   PageController get _pageController => FeedRepo.pageController;
 
   @override
@@ -79,12 +76,7 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
                 currentIndex: selectedIndex,
                 onTap: (index) {
                   setState(() {
-                    if (selectedIndex == 2 && index == 2) {
-                      _showOption = true;
-                    } else {
-                      _showOption = false;
-                      selectedIndex = index;
-                    }
+                    selectedIndex = index;
                   });
                 },
                 backgroundColor: Colors.black,
@@ -113,7 +105,7 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset(
-                      selectedIndex == 3
+                      selectedIndex == 2
                           ? "assets/images/global-light.png"
                           : "assets/images/global.png",
                       width: 24,
@@ -137,9 +129,9 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   }
 
   void _onPageChanged(int index) {
-    if (_PageIndex != index) {
+    if (pageIndex != index) {
       setState(() {
-        _PageIndex = index;
+        pageIndex = index;
       });
     }
   }

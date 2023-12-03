@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Common/api.dart';
-import 'package:spade_v4/Common/api_handler/api_client_config.dart';
-import 'package:spade_v4/Common/api_handler/api_handler_models.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/changed_user_model.dart';
+import 'package:spade_lite/Common/api.dart';
+import 'package:spade_lite/Common/api_handler/api_client_config.dart';
+import 'package:spade_lite/Common/api_handler/api_handler_models.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/changed_user_model.dart';
 
 final notifProvider = StateNotifierProvider<NotifProvider, NotifService>((ref) {
   return NotifProvider(ref, NotifService());

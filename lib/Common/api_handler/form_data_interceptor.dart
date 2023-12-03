@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:spade_v4/Common/api_handler/talker.dart';
+import 'package:spade_lite/Common/api_handler/talker.dart';
 // coverage:ignore-file
 
 ///This interceptor to print form data content of the request body

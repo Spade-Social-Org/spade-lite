@@ -1,4 +1,4 @@
-package com.spade.spade_v4;
+package com.spade.spade_lite;
 
 import io.flutter.embedding.android.FlutterActivity;
 

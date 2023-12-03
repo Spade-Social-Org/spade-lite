@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Presentation/Screens/messages/provider/message_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 
 import 'aces_grid.dart';
 import 'jokers_list.dart';

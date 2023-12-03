@@ -2,7 +2,7 @@
 // coverage:ignore-file
 import 'package:dio/dio.dart';
 import 'package:duration/duration.dart';
-import 'package:spade_v4/Common/api_handler/talker.dart';
+import 'package:spade_lite/Common/api_handler/talker.dart';
 
 ///This Interceptor is used check the response time from the server for each request
 class TimeResponseInterceptor extends Interceptor {

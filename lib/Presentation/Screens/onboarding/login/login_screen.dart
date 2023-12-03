@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
 
-import 'package:spade_v4/Common/navigator.dart';
-import 'package:spade_v4/Presentation/Screens/Buttom_nav/navigation_container.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/model/login_model.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/provider/onboarding_provider.dart';
-import 'package:spade_v4/Presentation/Screens/onboarding/widgets/form_labels.dart';
-import 'package:spade_v4/Presentation/widgets/custom_button.dart';
-import 'package:spade_v4/Presentation/widgets/custom_textfield.dart';
-import 'package:spade_v4/prefs/pref_provider.dart';
+import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Presentation/Screens/Buttom_nav/navigation_container.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/model/login_model.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/provider/onboarding_provider.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_labels.dart';
+import 'package:spade_lite/Presentation/widgets/custom_button.dart';
+import 'package:spade_lite/Presentation/widgets/custom_textfield.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 
 import '../spade_splash_screen.dart';
 

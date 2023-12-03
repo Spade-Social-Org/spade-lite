@@ -3,14 +3,14 @@ import 'dart:developer';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:spade_v4/Common/api.dart';
-import 'package:spade_v4/Common/api_handler/bad_certificate_fixer.dart';
-import 'package:spade_v4/Common/api_handler/default_time_response_interceptor.dart';
-import 'package:spade_v4/Common/api_handler/error_handler.dart';
-import 'package:spade_v4/Common/api_handler/form_data_interceptor.dart';
-import 'package:spade_v4/Common/api_handler/talker.dart';
-import 'package:spade_v4/Common/constants.dart';
-import 'package:spade_v4/prefs/pref_provider.dart';
+import 'package:spade_lite/Common/api.dart';
+import 'package:spade_lite/Common/api_handler/bad_certificate_fixer.dart';
+import 'package:spade_lite/Common/api_handler/default_time_response_interceptor.dart';
+import 'package:spade_lite/Common/api_handler/error_handler.dart';
+import 'package:spade_lite/Common/api_handler/form_data_interceptor.dart';
+import 'package:spade_lite/Common/api_handler/talker.dart';
+import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 class BackendService {
