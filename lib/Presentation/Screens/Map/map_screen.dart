@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/discovery_repo.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
-
 import '../../../Common/theme.dart';
 import '../../../Domain/Entities/place.dart';
 import '../../Bloc/places_bloc.dart';
@@ -20,37 +18,46 @@ import '../../widgets/jh_loader.dart';
 import '../../widgets/jh_logger.dart';
 import '../../widgets/jh_search_bar.dart';
 
-Widget buildHorizontalImageList(List<String> imageURL) {
+Widget buildHorizontalImageList(List<String> imageURLs) {
   return SizedBox(
     height: 200,
-    child: ListView.builder(
+    child: imageURLs.isNotEmpty
+        ? ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: imageURL.length,
+      itemCount: imageURLs.length,
       itemBuilder: (context, index) {
-        if (index >= 0 && index < imageURL.length) {
-          final imageUR = imageURL[index];
-          logger.d('Image URL at index $index: $imageURL');
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: NetworkImage(imageUR),
-                  fit: BoxFit.cover,
-                ),
+        final imageURL = imageURLs[index];
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                image: NetworkImage(imageURL),
+                fit: BoxFit.cover,
               ),
             ),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
+          ),
+        );
       },
+    )
+        : Center(
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.grey,
+        ),
+        child: const Text(
+          'No image available',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
     ),
   );
 }
+
 
 Widget _buildErrorBottomSheet(String errorMessage) {
   return Container(
@@ -104,7 +111,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  fillColor: const Color(0xFF333333),
+                  fillColor: Color(0xFF333333),
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                   filled: true,
                   border: OutlineInputBorder(
@@ -181,7 +188,6 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
           ],
         ),
       ),
-
       ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: places.length,
@@ -195,9 +201,8 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                 Padding(
-                  padding: const EdgeInsets.only(
+                Padding(
+                  padding: EdgeInsets.only(
                     left: 12,
                   ),
                   child: Text(
@@ -212,12 +217,12 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                 const SizedBox(
                   height: 3,
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(
                     left: 12,
                   ),
                   child: Text(
-                    'African, American,Carribbean',
+                    place.address,
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -228,24 +233,26 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                 ),
                 Row(
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 12),
                           child: Text(
-                            'Open  now',
+                            '${place.openingHours}',
                             style: TextStyle(
                               fontSize: 14,
-                              color: CustomColors.greenPrimary,
+                              color: place.openingHours == 'Open now'
+                                  ? CustomColors.greenPrimary
+                                  : Colors.grey,
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          '0.8 miles',
-                          style: TextStyle(
+                          '${place.distance.toStringAsFixed(2)} miles',
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.white,
                           ),
@@ -279,9 +286,10 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                               )),
                         ),
                         const SizedBox(
-                          width: 5,
+                          width: 3,
                         ),
-                        Image.asset('assets/images/arrowforward.png', width: 16),
+                        Image.asset('assets/images/arrowforward.png',
+                            width: 14),
                         const SizedBox(
                           width: 5,
                         ),
@@ -289,18 +297,21 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                             onTap: () {
                               Navigator.of(context).pop();
                             },
-                            child: Image.asset('assets/images/calendar.png', width: 16)),
+                            child: Image.asset('assets/images/calendar.png',
+                                width: 12)),
                         const SizedBox(
                           width: 5,
                         ),
-                        Image.asset('assets/images/hearticon.png', width: 17),
+                        Image.asset('assets/images/hearticon.png', width: 12),
                       ],
                     ),
                   ],
                 ),
-                if (place.imageURL.isNotEmpty)
-                  buildHorizontalImageList(place.imageURL),
-                const SizedBox(height: 8),
+               if (place.imageURL.isNotEmpty)
+                 buildHorizontalImageList(place.imageURL),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           );
@@ -309,6 +320,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
     ],
   );
 }
+
 
 Widget _buildLoadingBottomSheet() {
   return Container(
@@ -978,8 +990,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {
-                          },
+                          onTap: () {},
                           child: Container(
                             decoration: BoxDecoration(
                                 border:
