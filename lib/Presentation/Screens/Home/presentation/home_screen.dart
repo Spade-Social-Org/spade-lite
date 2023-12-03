@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/theme.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/feed_body.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/story_row.dart';
@@ -30,7 +32,7 @@ class HomeScreen extends ConsumerWidget {
             return [
               SliverAppBar(
                 titleSpacing: 0,
-                title: feedAppBar(),
+                title: feedAppBar(context),
                 backgroundColor: Colors.black,
                 elevation: 0,
                 scrolledUnderElevation: 0,
@@ -138,7 +140,7 @@ class HomeScreen extends ConsumerWidget {
   }
 
   @widgetFactory
-  Widget feedAppBar() {
+  Widget feedAppBar(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -153,10 +155,15 @@ class HomeScreen extends ConsumerWidget {
           height: 18.75,
         ),
         10.spacingW,
-        Image.asset(
-          SpiderImageAssets.mdiBellNotificationOutline,
-          width: 18.75,
-          height: 18.75,
+        InkWell(
+          onTap: () {
+            pushTo(context, const NotificationScreen());
+          },
+          child: Image.asset(
+            SpiderImageAssets.mdiBellNotificationOutline,
+            width: 18.75,
+            height: 18.75,
+          ),
         ),
       ],
     ).pOnly(l: 20, r: 20);

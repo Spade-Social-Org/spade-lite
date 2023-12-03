@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_v4/Common/routes/app_routes.dart';
-import 'package:spade_v4/Presentation/Screens/messages/provider/message_provider.dart';
-import 'package:spade_v4/Presentation/Screens/messages/single/single_message.dart';
-import 'package:spade_v4/Presentation/Screens/notifications/presentation/notification_screen.dart';
+import 'package:spade_lite/Common/routes/app_routes.dart';
+import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
+import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
 import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
