@@ -64,8 +64,8 @@ class NotificationData {
   String? type;
   bool? isRead;
   int? userId;
-  List<ENotification>? messageNotifications;
-  List<ENotification>? likeNotifications;
+  List<Likenotification>? messagenotifications;
+  List<Likenotification>? likenotifications;
 
   NotificationData({
     this.id,
@@ -74,8 +74,8 @@ class NotificationData {
     this.type,
     this.isRead,
     this.userId,
-    this.messageNotifications,
-    this.likeNotifications,
+    this.messagenotifications,
+    this.likenotifications,
   });
 
   NotificationData copyWith({
@@ -85,8 +85,8 @@ class NotificationData {
     String? type,
     bool? isRead,
     int? userId,
-    List<ENotification>? messageNotifications,
-    List<ENotification>? likeNotifications,
+    List<Likenotification>? messagenotifications,
+    List<Likenotification>? likenotifications,
   }) =>
       NotificationData(
         id: id ?? this.id,
@@ -95,8 +95,8 @@ class NotificationData {
         type: type ?? this.type,
         isRead: isRead ?? this.isRead,
         userId: userId ?? this.userId,
-        messageNotifications: messageNotifications ?? this.messageNotifications,
-        likeNotifications: likeNotifications ?? this.likeNotifications,
+        messagenotifications: messagenotifications ?? this.messagenotifications,
+        likenotifications: likenotifications ?? this.likenotifications,
       );
 
   factory NotificationData.fromJson(Map<String, dynamic> json) =>
@@ -111,14 +111,14 @@ class NotificationData {
         type: json["type"],
         isRead: json["is_read"],
         userId: json["user_id"],
-        messageNotifications: json["messageNotifications"] == null
+        messagenotifications: json["messagenotifications"] == null
             ? []
-            : List<ENotification>.from(json["messageNotifications"]!
-                .map((x) => ENotification.fromJson(x))),
-        likeNotifications: json["likeNotifications"] == null
+            : List<Likenotification>.from(json["messagenotifications"]!
+                .map((x) => Likenotification.fromJson(x))),
+        likenotifications: json["likenotifications"] == null
             ? []
-            : List<ENotification>.from(json["likeNotifications"]!
-                .map((x) => ENotification.fromJson(x))),
+            : List<Likenotification>.from(json["likenotifications"]!
+                .map((x) => Likenotification.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -128,96 +128,85 @@ class NotificationData {
         "type": type,
         "is_read": isRead,
         "user_id": userId,
-        "messageNotifications": messageNotifications == null
+        "messagenotifications": messagenotifications == null
             ? []
-            : List<dynamic>.from(messageNotifications!.map((x) => x.toJson())),
-        "likeNotifications": likeNotifications == null
+            : List<dynamic>.from(messagenotifications!.map((x) => x.toJson())),
+        "likenotifications": likenotifications == null
             ? []
-            : List<dynamic>.from(likeNotifications!.map((x) => x.toJson())),
+            : List<dynamic>.from(likenotifications!.map((x) => x.toJson())),
       };
 }
 
-class ENotification {
+class Likenotification {
   int? id;
+  int? likerId;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? likerId;
-  int? notificationId;
   String? description;
+  int? notificationId;
   String? senderImageUrl;
   List<String>? sendImageGallery;
-  int? senderId;
-  int? messageId;
 
-  ENotification({
+  Likenotification({
     this.id,
+    this.likerId,
     this.createdAt,
     this.updatedAt,
-    this.likerId,
-    this.notificationId,
     this.description,
+    this.notificationId,
     this.senderImageUrl,
     this.sendImageGallery,
-    this.senderId,
-    this.messageId,
   });
 
-  ENotification copyWith({
+  Likenotification copyWith({
     int? id,
+    int? likerId,
     DateTime? createdAt,
     DateTime? updatedAt,
-    int? likerId,
-    int? notificationId,
     String? description,
+    int? notificationId,
     String? senderImageUrl,
     List<String>? sendImageGallery,
-    int? senderId,
-    int? messageId,
   }) =>
-      ENotification(
+      Likenotification(
         id: id ?? this.id,
+        likerId: likerId ?? this.likerId,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
-        likerId: likerId ?? this.likerId,
-        notificationId: notificationId ?? this.notificationId,
         description: description ?? this.description,
+        notificationId: notificationId ?? this.notificationId,
         senderImageUrl: senderImageUrl ?? this.senderImageUrl,
         sendImageGallery: sendImageGallery ?? this.sendImageGallery,
-        senderId: senderId ?? this.senderId,
-        messageId: messageId ?? this.messageId,
       );
 
-  factory ENotification.fromJson(Map<String, dynamic> json) => ENotification(
+  factory Likenotification.fromJson(Map<String, dynamic> json) =>
+      Likenotification(
         id: json["id"],
+        likerId: json["liker_id"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
-        likerId: json["liker_Id"],
-        notificationId: json["notification_id"],
         description: json["description"],
+        notificationId: json["notification_id"],
         senderImageUrl: json["sender_image_url"],
         sendImageGallery: json["send_image_gallery"] == null
             ? []
             : List<String>.from(json["send_image_gallery"]!.map((x) => x)),
-        senderId: json["sender_Id"],
-        messageId: json["message_id"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "liker_id": likerId,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
-        "liker_Id": likerId,
-        "notification_id": notificationId,
         "description": description,
+        "notification_id": notificationId,
         "sender_image_url": senderImageUrl,
         "send_image_gallery": sendImageGallery == null
             ? []
             : List<dynamic>.from(sendImageGallery!.map((x) => x)),
-        "sender_Id": senderId,
-        "message_id": messageId,
       };
 }

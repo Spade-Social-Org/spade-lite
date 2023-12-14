@@ -2,6 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/Common/theme.dart';
+import 'package:spade_lite/Common/utils/extensions/date_extensions.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Common/utils/extensions/date_extensions.dart';
 import 'package:spade_lite/Common/utils/extensions/widget_extensions.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/models/notifications_model.dart';
@@ -91,9 +94,9 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                 ),
                 15.spacingH,
                 for (final notif in entry.value)
-                  for (final notifData in <ENotification>[
-                    ...(notif.likeNotifications ?? []),
-                    ...(notif.messageNotifications ?? []),
+                  for (final notifData in <Likenotification>[
+                    ...(notif.likenotifications ?? []),
+                    ...(notif.messagenotifications ?? []),
                   ])
                     Container(
                       width: double.infinity,
@@ -101,9 +104,10 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 20),
                       margin: const EdgeInsets.only(bottom: 10),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.white,
-                        boxShadow: [
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: const [
                           BoxShadow(
                             color: Color(0x3FC1C1C1),
                             blurRadius: 2.79,

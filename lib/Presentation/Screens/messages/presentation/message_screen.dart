@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:spade_lite/Common/routes/app_routes.dart';
+import 'package:spade_lite/Common/utils/utils.dart';
+import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
+import 'package:spade_lite/Presentation/Screens/messages/presentation/group_screen.dart';
+import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
+import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
 import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
+import '../group/group_message.dart';
+import '../likes/message_likes.dart';
+import '../widget/custom_iconbutton.dart';
+import '../widget/message_card.dart';
+import '../widget/message_tabs.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
-import 'group/group_message.dart';
-import 'likes/message_likes.dart';
-import 'widget/custom_iconbutton.dart';
-import 'widget/message_card.dart';
-import 'widget/message_tabs.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -65,30 +72,40 @@ class _MessageScreenState extends State<MessageScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               const Padding(
-                padding: EdgeInsets.only(left: 16, bottom: 16),
+                padding: EdgeInsets.only(left: 16),
                 child: Text(
                   'Top 5 picks',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(
-                    5,
-                    (i) => Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      AssetImage('assets/images/avatar.png')),
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(color: Colors.green)),
-                        )),
+              16.spacingH,
+              SizedBox(
+                height: 50,
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        pushTo(context, const ChatScreen());
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/avatar.png'),
+                          ),
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.green),
+                        ),
+                      ).pOnly(r: 16),
+                    );
+                  },
+                ),
               ),
               const SizedBox(height: 20),
               Padding(
@@ -127,7 +144,7 @@ class _MessageScreenState extends State<MessageScreen> {
                         imageValue: 'grid',
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (ctx) => const GroupMessage())),
+                                builder: (ctx) => const GroupScreen())),
                         size: 20),
                     CustomIconButton(
                         imageValue: 'list',

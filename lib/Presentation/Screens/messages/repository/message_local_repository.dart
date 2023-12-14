@@ -1,7 +1,7 @@
 import 'package:get_storage/get_storage.dart';
 
-import '../model/chat_model.dart';
-import '../model/messages.dart';
+import '../models/chat_model.dart';
+import '../models/messages.dart';
 
 class MessageLocalRepository {
   static final box = GetStorage();

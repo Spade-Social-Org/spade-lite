@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../model/messages.dart';
+import '../models/messages.dart';
 import '../widget/message_bubble.dart';
 
 class MessageList extends StatelessWidget {

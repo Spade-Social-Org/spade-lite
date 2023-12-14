@@ -8,7 +8,7 @@ import 'package:spade_lite/core/push_notifications_utils.dart';
 import '../Camera/camera_screen.dart';
 import '../Home/presentation/home_screen.dart';
 import '../Map/map_screen.dart';
-import '../messages/message_screen.dart';
+import '../messages/presentation/message_screen.dart';
 
 class NavigationContainer extends ConsumerStatefulWidget {
   const NavigationContainer({super.key});

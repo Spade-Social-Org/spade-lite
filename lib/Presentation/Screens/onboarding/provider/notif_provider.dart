@@ -43,7 +43,7 @@ class NotifService {
   Future<ResponseModel> updateUserProfile(ChangedUserModel user) async {
     Response response = await _apiService.runCall(
       _apiService.dio.post(
-        '${AppEndpoints.baseUrl}/api/user/profile/update',
+        '${AppEndpoints.baseUrl}/api/v1/users/profile/update',
         data: user.toJson(),
       ),
     );

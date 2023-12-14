@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/prefs/pref_provider.dart';
 
-import '../model/messages.dart';
+import '../models/messages.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageData message;
