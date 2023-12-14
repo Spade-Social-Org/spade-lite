@@ -2,14 +2,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/constants.dart';
-<<<<<<< HEAD
 import 'package:spade_lite/Common/theme.dart';
 import 'package:spade_lite/Common/utils/extensions/date_extensions.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
-=======
 import 'package:spade_lite/Common/utils/extensions/date_extensions.dart';
 import 'package:spade_lite/Common/utils/extensions/widget_extensions.dart';
->>>>>>> 5dc9a54fda600fd74282bf0361a6e29df6bcee8c
 import 'package:spade_lite/Presentation/Screens/notifications/models/notifications_model.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/providers/notification_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
