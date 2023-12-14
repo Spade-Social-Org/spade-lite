@@ -102,9 +102,10 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 20),
                       margin: const EdgeInsets.only(bottom: 10),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.white,
-                        boxShadow: [
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: const [
                           BoxShadow(
                             color: Color(0x3FC1C1C1),
                             blurRadius: 2.79,

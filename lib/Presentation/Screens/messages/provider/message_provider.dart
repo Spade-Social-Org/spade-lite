@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Presentation/Screens/messages/repository/message_repository.dart';
 
-import '../model/chat_model.dart';
-import '../model/messages.dart';
-import '../model/user_matches_response_model.dart';
+import '../models/chat_model.dart';
+import '../models/messages.dart';
+import '../models/user_matches_response_model.dart';
 import '../repository/message_local_repository.dart';
 
 final chatListFutureProvider =

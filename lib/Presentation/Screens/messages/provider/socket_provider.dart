@@ -8,7 +8,7 @@ import 'package:spade_lite/Presentation/Screens/messages/single/single_message.d
 import 'package:spade_lite/prefs/pref_provider.dart';
 
 import '../../../../Common/api.dart';
-import '../model/messages.dart';
+import '../models/messages.dart';
 
 final socketProvider = StateNotifierProvider<SocketProvider, SocketModel>(
     (ref) => SocketProvider(ref));
