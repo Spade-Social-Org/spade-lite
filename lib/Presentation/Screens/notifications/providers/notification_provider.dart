@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http_parser/http_parser.dart';
+<<<<<<< HEAD
 
 import 'package:spade_lite/Common/api.dart';
 import 'package:spade_lite/Common/api_handler/api_client_config.dart';
@@ -17,6 +18,12 @@ import 'package:spade_lite/Presentation/Screens/notifications/models/notificatio
 import 'package:spade_lite/Presentation/widgets/loading_dialog.dart';
 import 'package:spade_lite/prefs/local_data.dart';
 import 'package:spade_lite/prefs/pref_provider.dart';
+=======
+import 'package:spade_lite/Common/api.dart';
+import 'package:spade_lite/Common/api_handler/api_client_config.dart';
+import 'package:spade_lite/Common/api_handler/api_handler_models.dart';
+import 'package:spade_lite/Presentation/Screens/notifications/models/notifications_model.dart';
+>>>>>>> 5dc9a54fda600fd74282bf0361a6e29df6bcee8c
 
 final notificationsProvider =
     StateNotifierProvider<NotificationsProvider, NotificationsRepo>(

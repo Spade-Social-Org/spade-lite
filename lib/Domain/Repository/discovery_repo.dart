@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/prefs/pref_provider.dart';
 
+import 'package:geolocator/geolocator.dart';
+
 class DiscoverRepo {
   List<DiscoverUserModel> allProduct = [];
 
@@ -13,8 +15,13 @@ class DiscoverRepo {
     print("checkout in progress!");
     String? token = await PrefProvider.getUserToken();
 
-    final body = jsonEncode(
-        {"longitude": 7.0, "latitude": 4.0, "type": "single_searching"});
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    double latitude = position.latitude;
+    double longitude = position.longitude;
+
+    final body = jsonEncode({"longitude": longitude, "latitude": latitude});
     final response = await http.post(
       Uri.parse(
         'https://spade-backend-v3-production.up.railway.app/api/v1/users/discover',

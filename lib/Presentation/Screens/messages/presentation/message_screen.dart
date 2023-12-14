@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+<<<<<<< HEAD:lib/Presentation/Screens/messages/presentation/message_screen.dart
 import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
@@ -7,14 +8,26 @@ import 'package:spade_lite/Presentation/Screens/messages/presentation/group_scre
 import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
+=======
+>>>>>>> 5dc9a54fda600fd74282bf0361a6e29df6bcee8c:lib/Presentation/Screens/messages/message_screen.dart
 import 'package:spade_lite/Common/navigator.dart';
+import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
+<<<<<<< HEAD:lib/Presentation/Screens/messages/presentation/message_screen.dart
 import '../group/group_message.dart';
 import '../likes/message_likes.dart';
 import '../widget/custom_iconbutton.dart';
 import '../widget/message_card.dart';
 import '../widget/message_tabs.dart';
+=======
+import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
+import 'group/group_message.dart';
+import 'likes/message_likes.dart';
+import 'widget/custom_iconbutton.dart';
+import 'widget/message_card.dart';
+import 'widget/message_tabs.dart';
+>>>>>>> 5dc9a54fda600fd74282bf0361a6e29df6bcee8c:lib/Presentation/Screens/messages/message_screen.dart
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});

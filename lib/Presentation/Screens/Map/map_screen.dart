@@ -23,41 +23,40 @@ Widget buildHorizontalImageList(List<String> imageURLs) {
     height: 200,
     child: imageURLs.isNotEmpty
         ? ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: imageURLs.length,
-      itemBuilder: (context, index) {
-        final imageURL = imageURLs[index];
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: NetworkImage(imageURL),
-                fit: BoxFit.cover,
+            scrollDirection: Axis.horizontal,
+            itemCount: imageURLs.length,
+            itemBuilder: (context, index) {
+              final imageURL = imageURLs[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: NetworkImage(imageURL),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : Center(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey,
+              ),
+              child: const Text(
+                'No image available',
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
-        );
-      },
-    )
-        : Center(
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.grey,
-        ),
-        child: const Text(
-          'No image available',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    ),
   );
 }
-
 
 Widget _buildErrorBottomSheet(String errorMessage) {
   return Container(
@@ -307,8 +306,8 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     ),
                   ],
                 ),
-               if (place.imageURL.isNotEmpty)
-                 buildHorizontalImageList(place.imageURL),
+                if (place.imageURL.isNotEmpty)
+                  buildHorizontalImageList(place.imageURL),
                 const SizedBox(
                   height: 10,
                 ),
@@ -320,7 +319,6 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
     ],
   );
 }
-
 
 Widget _buildLoadingBottomSheet() {
   return Container(
@@ -359,7 +357,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   final Set<Circle> _circle = {};
 
   List<DiscoverUserModel> userSpade = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -498,7 +495,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     try {
       userSpade = await DiscoverRepo().checkoutUsers();
       debugPrint("userSp =======> ${userSpade.toString()}");
-      // Now you can use userSp in your UI
+      // Now you can use userSpade in your UI
       setState(() {
         // Update your UI if necessary
       });
@@ -511,7 +508,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
   @override
   void initState() {
     super.initState();
-    fetchUsers();
+    // fetchUsers();
 
     ///Load map theme
     DefaultAssetBundle.of(context)
