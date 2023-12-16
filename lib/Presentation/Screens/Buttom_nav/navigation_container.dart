@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
-import 'package:spade_lite/Presentation/Screens/Map/map_screen.dart';
-
-import '../Camera/camera_screen.dart';
-import '../Home/presentation/home_screen.dart';
-import '../messages/message_screen.dart';
-=======
 import 'package:spade_lite/Presentation/Screens/onboarding/provider/notif_provider.dart';
 import 'package:spade_lite/core/push_notifications_utils.dart';
 
