@@ -17,9 +17,9 @@ import 'package:spade_lite/Presentation/widgets/custom_textfield.dart';
 class AddUsernameScreen extends ConsumerStatefulWidget {
   final RegisterModel registerModel;
   const AddUsernameScreen({
-    Key? key,
+    super.key,
     required this.registerModel,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<AddUsernameScreen> createState() => _AddUsernameScreenState();

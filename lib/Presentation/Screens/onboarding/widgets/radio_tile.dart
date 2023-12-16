@@ -8,12 +8,12 @@ class RadioTileWidget extends StatefulWidget {
   final dynamic groupValue;
   final Function(Question1Enum?)? onChanged;
   const RadioTileWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.value,
     required this.groupValue,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<RadioTileWidget> createState() => _RadioTileWidgetState();

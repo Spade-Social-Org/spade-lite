@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class QProgess extends StatelessWidget {
   final int index;
   const QProgess({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

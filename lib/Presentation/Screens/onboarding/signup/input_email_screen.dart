@@ -14,11 +14,11 @@ class InputEmailScreen extends StatefulWidget {
   final String phoneNumber;
 
   const InputEmailScreen({
-    Key? key,
+    super.key,
     required this.name,
     required this.password,
     required this.phoneNumber,
-  }) : super(key: key);
+  });
 
   @override
   State<InputEmailScreen> createState() => _InputEmailScreenState();

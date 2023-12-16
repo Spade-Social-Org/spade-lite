@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 class SearchPlaces extends StatefulWidget {
-  const SearchPlaces({Key? key}) : super(key: key);
+  const SearchPlaces({super.key});
 
   @override
   State<SearchPlaces> createState() => _SearchPlacesState();

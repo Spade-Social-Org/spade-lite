@@ -50,7 +50,7 @@ Widget buildHorizontalImageList(List<String> imageURLs) {
           )
         : Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.grey,
@@ -116,7 +116,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  fillColor: Color(0xFF333333),
+                  fillColor: const Color(0xFF333333),
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                   filled: true,
                   border: OutlineInputBorder(
@@ -207,7 +207,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 12,
                   ),
                   child: Text(
@@ -223,12 +223,12 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                   height: 3,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     left: 12,
                   ),
                   child: Text(
                     place.address,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -241,9 +241,9 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 12),
+                          padding: const EdgeInsets.only(left: 12),
                           child: Text(
-                            '${place.openingHours}',
+                            place.openingHours,
                             style: TextStyle(
                               fontSize: 14,
                               color: place.openingHours == 'Open now'
@@ -336,7 +336,7 @@ Widget _buildLoadingBottomSheet() {
 }
 
 class GoogleMapScreen extends StatefulWidget {
-  const GoogleMapScreen({Key? key}) : super(key: key);
+  const GoogleMapScreen({super.key});
 
   @override
   State<GoogleMapScreen> createState() => _GoogleMapState();
@@ -587,7 +587,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     });
     _loadInitialPosition();
     _getCurrentLocation();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // Assuming generateRandomUsers returns a List<User> with random user data
       // final List<User> userList = generateRandomUsers(5);
@@ -608,7 +608,8 @@ class _GoogleMapState extends State<GoogleMapScreen>
           markerId: MarkerId(user.name!),
           icon: await customMarkerIcon.createMarkerIcon(),
           onTap: () {
-            _onMarkerTapped(_markers[user.name]!);
+            _onMarkerTapped(_markers
+                .firstWhere((marker) => marker.markerId.value == user.name));
           },
         );
       });
@@ -617,7 +618,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
         _markers = {
           for (var marker in await Future.wait(newmarkers))
             (marker).markerId.value: marker
-        };
+        } as Set<Marker>;
       });
     });
   }

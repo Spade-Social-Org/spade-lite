@@ -5,10 +5,10 @@ class TxtFormField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   const TxtFormField({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   State<TxtFormField> createState() => _TxtFormFieldState();
