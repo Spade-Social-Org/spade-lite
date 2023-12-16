@@ -1,4 +1,8 @@
 import 'dart:async';
+
+import 'dart:ui';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,9 +10,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/discovery_repo.dart';
+import 'package:spade_lite/Presentation/Screens/Map/map.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
 import '../../../Common/theme.dart';
 import '../../../Domain/Entities/place.dart';
@@ -344,7 +350,9 @@ class _GoogleMapState extends State<GoogleMapScreen>
   late GoogleMapController? mapController;
   final TextEditingController _searchController = TextEditingController();
 
-  Map<String, Marker> _markers = {};
+  final Map<String, Marker> markers = {};
+  Set<Marker> _markers = {};
+
   Set<Polyline> polylines = {};
   bool loadingLocation = true;
   bool _isMarkerZoomed = false;
@@ -357,8 +365,34 @@ class _GoogleMapState extends State<GoogleMapScreen>
   final Set<Circle> _circle = {};
 
   List<DiscoverUserModel> userSpade = [];
+
+  Future<void> addMarker(LatLng location) async {
+    var customMarkerIcon = CustomMarkerIcon(
+      position: location,
+      onTap: () {
+        _onMarkerTapped(_markers as Marker);
+      },
+      size: 120,
+      imagePath: 'assets/images/Ellipse 365.png',
+      backgroundColor: Colors.grey.withOpacity(0.5),
+    );
+    var marker = Marker(
+      markerId: const MarkerId("USER"),
+      position: location,
+      infoWindow: const InfoWindow(title: 'ME', snippet: ''),
+      onTap: () {
+        _onMarkerTapped(_markers as Marker);
+      },
+      icon: await customMarkerIcon.createMarkerIcon(),
+    );
+    setState(() {
+      _markers.add(marker);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    createMarkers(context, "User");
     return Scaffold(
       body: Stack(
         children: [
@@ -371,15 +405,15 @@ class _GoogleMapState extends State<GoogleMapScreen>
             circles: _circle,
             //polylines: polylines,
             onMapCreated: (controller) {
-              controller.setMapStyle(mapTheme);
               mapController = controller;
+              mapController!.setMapStyle(MapStyle().aubergine);
 
               /// After fetching the location this [SETSTATE] we set the isLocationEnabled to true meaning the button is on
               setState(() {
                 isLocationEnabled = true;
               });
             },
-            markers: _markers.values.toSet(),
+            markers: _markers,
             initialCameraPosition: _initialPosition != null
                 ? CameraPosition(target: _initialPosition!, zoom: 14)
                 : const CameraPosition(target: LatLng(0, 0), zoom: 14),
@@ -491,6 +525,41 @@ class _GoogleMapState extends State<GoogleMapScreen>
     );
   }
 
+  createMarkers(BuildContext context, String id) {
+    userSpade.forEach((contact) async {
+      double latitude = double.parse(contact.latitude.toString());
+      double longitude = double.parse(contact.longitude.toString());
+
+      double targetZoom = _isMarkerZoomed ? 14.0 : 20.0;
+      _isMarkerZoomed = !_isMarkerZoomed;
+
+      Marker marker = Marker(
+        markerId: MarkerId(contact.name.toString()),
+        position: LatLng(latitude, longitude),
+        icon: await _getIcon(context, "assets/images/marker-3.png", 80),
+        onTap: () {
+          mapController?.animateCamera(
+            CameraUpdate.newLatLngZoom(LatLng(latitude, longitude), targetZoom),
+          );
+          _showBottomSheet(
+            name: contact.name,
+            imageString: contact.gallery![0],
+            location:
+                "${contact.country.toString()} ${contact.distance.toString()}",
+          );
+        },
+        infoWindow: InfoWindow(
+          title: contact.name,
+          snippet: 'Street 6 . 2min ago',
+        ),
+      );
+
+      setState(() {
+        _markers.add(marker);
+      });
+    });
+  }
+
   void fetchUsers() async {
     try {
       userSpade = await DiscoverRepo().checkoutUsers();
@@ -518,7 +587,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     });
     _loadInitialPosition();
     _getCurrentLocation();
-
+    
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // Assuming generateRandomUsers returns a List<User> with random user data
       // final List<User> userList = generateRandomUsers(5);
@@ -565,6 +634,13 @@ class _GoogleMapState extends State<GoogleMapScreen>
       ),
     );
     setState(() {});
+  }
+
+  //other users
+
+  Future<Uint8List> _getBytesFromNetwork(String url) async {
+    final http.Response response = await http.get(Uri.parse(url));
+    return response.bodyBytes;
   }
 
   void _getCurrentLocation() async {
@@ -617,6 +693,11 @@ class _GoogleMapState extends State<GoogleMapScreen>
         //isLocationEnabled = true;
       });
       _addCircle(position);
+      double markerOffset = 0.0002;
+      // createMarkers(context, "user");
+      addMarker(
+        LatLng(position.latitude + markerOffset, position.longitude),
+      );
 
       Polyline polyline = Polyline(
         polylineId: const PolylineId('polyline_1'),
@@ -635,6 +716,61 @@ class _GoogleMapState extends State<GoogleMapScreen>
         loadingLocation = false;
       });
     }
+  }
+
+  Future<BitmapDescriptor> _getIcon(
+      BuildContext context, String icon, double size) async {
+    final Completer<BitmapDescriptor> bitmapIcon =
+        Completer<BitmapDescriptor>();
+    final ImageConfiguration config =
+        createLocalImageConfiguration(context, size: Size(size, size));
+
+    if (icon.startsWith('http') || icon.startsWith('https')) {
+      final Uint8List markerIcon = await _getBytesFromNetwork(icon);
+      if (markerIcon.isNotEmpty) {
+        final ByteData byteData =
+            ByteData.view(Uint8List.fromList(markerIcon).buffer);
+        final Codec codec = await instantiateImageCodec(
+          byteData.buffer.asUint8List(),
+          targetWidth: size.toInt(),
+          targetHeight: size.toInt(),
+        );
+        final FrameInfo fi = await codec.getNextFrame();
+        final BitmapDescriptor bitmap =
+            BitmapDescriptor.fromBytes(Uint8List.fromList(
+          (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+              .buffer
+              .asUint8List(),
+        ));
+        bitmapIcon.complete(bitmap);
+      } else {
+        // Handle the case where markerIcon is empty (e.g., network request failed)
+        // You can provide a default image or handle it based on your use case.
+        // For now, I'll complete with a default marker.
+        const BitmapDescriptor defaultBitmap = BitmapDescriptor.defaultMarker;
+        bitmapIcon.complete(defaultBitmap);
+      }
+    } else {
+      AssetImage(icon)
+          .resolve(config)
+          .addListener(ImageStreamListener((ImageInfo image, bool sync) async {
+        final ByteData? bytes =
+            await image.image.toByteData(format: ImageByteFormat.png);
+        if (bytes != null) {
+          final BitmapDescriptor bitmap =
+              BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
+          bitmapIcon.complete(bitmap);
+        } else {
+          // Handle the case where bytes is null
+          // You can provide a default image or handle it based on your use case.
+          // For now, I'll complete with a default marker.
+          const BitmapDescriptor defaultBitmap = BitmapDescriptor.defaultMarker;
+          bitmapIcon.complete(defaultBitmap);
+        }
+      }));
+    }
+
+    return await bitmapIcon.future;
   }
 
   Future<void> _loadInitialPosition() async {
@@ -656,20 +792,19 @@ class _GoogleMapState extends State<GoogleMapScreen>
     double targetZoom = _isMarkerZoomed ? 14.0 : 20.0;
     _isMarkerZoomed = !_isMarkerZoomed;
     setState(() {
-      _markers.forEach((key, marker) {
-        _markers[key] = marker.copyWith(visibleParam: true);
-      });
+      for (var marker in _markers) {
+        _markers = marker.copyWith(visibleParam: true) as Set<Marker>;
+      }
     });
 
     setState(() {
-      _markers[tappedMarker.markerId.value] =
-          tappedMarker.copyWith(visibleParam: true);
+      _markers = tappedMarker.copyWith(visibleParam: true) as Set<Marker>;
     });
 
     mapController?.animateCamera(
       CameraUpdate.newLatLngZoom(tappedMarker.position, targetZoom),
     );
-    _showBottomSheet();
+    //_showBottomSheet();
   }
 
   void _searchLocation() async {
@@ -697,7 +832,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     }
   }
 
-  void _showBottomSheet() {
+  void _showBottomSheet({String? name, String? imageString, String? location}) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -721,23 +856,27 @@ class _GoogleMapState extends State<GoogleMapScreen>
                       decoration: BoxDecoration(
                         border: Border.all(width: 3.5, color: Colors.green),
                         borderRadius: BorderRadius.circular(40),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(imageString!),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Sophie',
-                          style: TextStyle(
+                        Text(
+                          name!,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
-                        const Text(
-                          'Nirmala Girls HSS, Dallas - 16m ago',
-                          style: TextStyle(
+                        Text(
+                          '${location!} - 16m ago',
+                          style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
