@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
 import 'package:spade_lite/Common/navigator.dart';
-import 'package:spade_lite/Presentation/Screens/Buttom_nav/navigation_container.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/model/otp_model.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/provider/onboarding_provider.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/signup/add_profile_picture_screen.dart';
 
 import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_labels.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_title.dart';
@@ -111,7 +111,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                           if (form.currentState!.validate()) {
                             provider.verifyOTP(otp.text.trim()).then((value) {
                               if (value.statusCode == 'SUCCESS') {
-                                pushAndRemoveUntil(const NavigationContainer());
+                                push(const AddProfilePictureScreen());
                               }
                             });
                           }

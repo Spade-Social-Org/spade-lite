@@ -9,6 +9,7 @@ import 'package:spade_lite/Common/api_handler/api_handler_models.dart';
 import 'package:spade_lite/Common/utils/string_exception.dart';
 import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/custom_snackbar.dart';
+import 'package:spade_lite/prefs/local_data.dart';
 import 'package:spade_lite/prefs/pref_provider.dart';
 
 final feedProvider = StateNotifierProvider<FeedProvider, FeedRepo>((ref) {
@@ -49,58 +50,20 @@ final storyProvider = StateProvider<FeedModel?>((ref) {
       .values
       .where((element) => element.posterId != int.tryParse(user.value ?? ''))
       .toList();
+  final new2 = [
+    ...newStories.where((element) =>
+        element.gallery?.any(
+            (element) => LocalData.instance.isStoryViewed(element) == false) ??
+        true),
+    ...newStories.where((element) =>
+        element.gallery?.any(
+            (element) => LocalData.instance.isStoryViewed(element) == true) ??
+        false),
+  ];
   return stories.copyWith(
-    data: newStories,
+    data: new2,
   );
 });
-
-final testMap = {
-  "statusCode": "SUCCESS",
-  "message": "",
-  "data": [
-    {
-      "gallery": [
-        "https://res.cloudinary.com/doxvfxn3n/image/upload/v1697371315/pjjyh7pa7ep15x3ojgpj.png"
-      ],
-      "description": "wefwdcweverr",
-      "id": 227,
-      "created_at": "2023-10-15T12:01:55.078Z",
-      "poster_name": "Abimbola Idunnuoluwa",
-    },
-    {
-      "gallery": [
-        "https://res.cloudinary.com/doxvfxn3n/image/upload/v1697371315/pjjyh7pa7ep15x3ojgpj.png"
-      ],
-      "description": "wefwdcweverr",
-      "id": 227,
-      "created_at": "2023-10-15T12:01:55.078Z",
-      "poster_name": "Abimbola Idunnuoluwa",
-    },
-    {
-      "gallery": [
-        "https://res.cloudinary.com/doxvfxn3n/image/upload/v1697371299/gw6h91blsqgzfpqgzgbu.png"
-      ],
-      "description": "wefwdcweverr",
-      "id": 226,
-      "created_at": "2023-10-15T12:01:38.472Z",
-      "poster_name": "Abimbola Idunnuoluwa",
-    }
-  ],
-  "meta": {
-    "total": 2,
-    "perPage": 15,
-    "currentPage": 1,
-    "totalPages": 1,
-    "first":
-        "https://spade-backend-v3-production.up.railway.app/api/v1/post/user/feeds?pageSize=15&page=1",
-    "last":
-        "https://spade-backend-v3-production.up.railway.app/api/v1/post/user/feeds?pageSize=15&page=1",
-    "prev":
-        "https://spade-backend-v3-production.up.railway.app/api/v1/post/user/feeds?pageSize=15&page=1",
-    "next":
-        "https://spade-backend-v3-production.up.railway.app/api/v1/post/user/feeds?pageSize=15&page=1"
-  }
-};
 
 final userStoryProvider = StateProvider<List<Feed>?>((ref) {
   final stories = ref.watch(feedProvider).storyModel;
@@ -141,6 +104,14 @@ class FeedProvider extends StateNotifier<FeedRepo> {
     } else {
       return !action;
     }
+  }
+
+  Future<void> onCancelCreatePost() async {
+    state = state
+      ..onRetryPost = null
+      ..filePath = null
+      ..uploadProgress = null;
+    state = state.copyWith();
   }
 
   Future<void> createPost(

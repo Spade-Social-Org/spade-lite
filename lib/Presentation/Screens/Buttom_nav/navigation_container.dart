@@ -7,20 +7,34 @@ import 'package:spade_lite/Presentation/Screens/Map/map_screen.dart';
 import '../Camera/camera_screen.dart';
 import '../Home/presentation/home_screen.dart';
 import '../messages/message_screen.dart';
+=======
+import 'package:spade_lite/Presentation/Screens/onboarding/provider/notif_provider.dart';
+import 'package:spade_lite/core/push_notifications_utils.dart';
 
-class NavigationContainer extends StatefulWidget {
+import '../Camera/camera_screen.dart';
+import '../Home/presentation/home_screen.dart';
+import '../Map/map_screen.dart';
+import '../messages/presentation/message_screen.dart';
+
+class NavigationContainer extends ConsumerStatefulWidget {
   const NavigationContainer({super.key});
 
   @override
-  State<NavigationContainer> createState() => _NavigationContainerState();
+  ConsumerState<NavigationContainer> createState() =>
+      _NavigationContainerState();
 }
 
-class _NavigationContainerState extends State<NavigationContainer> {
+class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   int selectedIndex = 0;
-  int _PageIndex = 0;
-  bool _showOption = false;
-  int card_click = 0;
+  int pageIndex = 0;
   PageController get _pageController => FeedRepo.pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    NotifHandler.refreshTokens();
+    ref.read(notifProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +82,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
                 currentIndex: selectedIndex,
                 onTap: (index) {
                   setState(() {
-                    if (selectedIndex == 2 && index == 2) {
-                      _showOption = true;
-                    } else {
-                      _showOption = false;
-                      selectedIndex = index;
-                    }
+                    selectedIndex = index;
                   });
                 },
                 backgroundColor: Colors.black,
@@ -102,7 +111,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset(
-                      selectedIndex == 3
+                      selectedIndex == 2
                           ? "assets/images/global-light.png"
                           : "assets/images/global.png",
                       width: 24,
@@ -125,41 +134,10 @@ class _NavigationContainerState extends State<NavigationContainer> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _onIconTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-      _PageIndex = index;
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-
   void _onPageChanged(int index) {
-    if (_PageIndex != index) {
+    if (pageIndex != index) {
       setState(() {
-        _PageIndex = index;
-      });
-    }
-  }
-
-  void _zoneClick(int index) {
-    if (card_click == index) {
-      setState(() {
-        card_click = 0;
-        _showOption = false;
-      });
-    } else {
-      setState(() {
-        card_click = index;
-        _showOption = false;
+        pageIndex = index;
       });
     }
   }

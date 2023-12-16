@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 
-import '../model/user_matches_response_model.dart';
+import '../models/user_matches_response_model.dart';
 
 class JokersList extends StatelessWidget {
   final List<UserMatchesResponseData> data;

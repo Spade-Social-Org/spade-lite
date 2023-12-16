@@ -4,11 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:spade_lite/Common/constants.dart';
 import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/theme.dart';
+import 'package:spade_lite/Common/utils/extensions/date_extensions.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/profile_image.dart';
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
 import 'package:spade_lite/Common/blurred_background_image.dart';
+import 'package:spade_lite/prefs/local_data.dart';
 import 'package:spade_lite/resources/resources.dart';
 import 'package:story_view/story_view.dart';
 
@@ -111,9 +113,16 @@ class _StoryPageViewState extends ConsumerState<StoryPageView>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ProfileImage(
-                          imageUrl: stories[index].posterImage ??
-                              AppConstants.defaultImage,
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ProfileImage(
+                              imageUrl: stories[index].posterImage ??
+                                  AppConstants.defaultImage,
+                            ),
+                            4.spacingW,
+                            Text(stories[index].createdAt?.formatTime ?? ''),
+                          ],
                         ),
                         const Spacer(),
                         IconButton(
@@ -258,18 +267,26 @@ class _StoryState extends ConsumerState<Story> {
   Widget build(BuildContext context) {
     return StoryView(
       controller: widget.storyController,
-      storyItems: widget.feed.gallery
-              ?.map(
-                (e) => StoryItem(
-                  BlurBackgroundImage(
-                    imageUrl: e,
-                    height: double.infinity,
-                    width: double.infinity,
-                  ),
-                  duration: const Duration(seconds: 3),
+      storyItems: widget.feed.gallery?.map(
+            (e) {
+              LocalData.instance.setStoryViewed(e);
+
+              if (e.endsWith('mp4')) {
+                return StoryItem.pageVideo(
+                  e,
+                  controller: widget.storyController,
+                );
+              }
+              return StoryItem(
+                BlurBackgroundImage(
+                  imageUrl: e,
+                  height: double.infinity,
+                  width: double.infinity,
                 ),
-              )
-              .toList() ??
+                duration: const Duration(seconds: 3),
+              );
+            },
+          ).toList() ??
           [],
       onVerticalSwipeComplete: (p0) {
         switch (p0) {

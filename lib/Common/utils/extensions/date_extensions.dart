@@ -13,4 +13,5 @@ extension DateExtension on DateTime {
       DateFormat('dd/MM/yyyy HH:mm:ss').format(this);
   String get formatTimeOnlyWithSecondsAndDate24WithDash =>
       DateFormat('dd-MM-yyyy HH:mm:ss').format(this);
+  DateTime get stripTime => DateTime(year, month, day);
 }

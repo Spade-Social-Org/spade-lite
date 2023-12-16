@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/model/register_model.dart';
-import 'package:spade_lite/Presentation/Screens/onboarding/signup/verify_email.dart';
+import 'package:spade_lite/Presentation/Screens/onboarding/signup/add_username_screen.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_title.dart';
 import 'package:spade_lite/Presentation/widgets/custom_button.dart';
 
-import '../provider/onboarding_provider.dart';
 
 class AddLocationScreen extends StatefulWidget {
   final String name;
@@ -119,14 +118,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                             state: state,
                             postalCode: postalCode.text.trim());
 
-                        ref
-                            .read(onboardingProvider)
-                            .register(model)
-                            .then((value) {
-                          if (value.statusCode == 'SUCCESS') {
-                            push(VerifyEmail(userId: value.data!.userId!));
-                          }
-                        });
+                        push(AddUsernameScreen(registerModel: model));
                       });
                 }),
                 const SizedBox(height: 20),

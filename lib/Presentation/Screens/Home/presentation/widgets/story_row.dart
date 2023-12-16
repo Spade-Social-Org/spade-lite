@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:spade_lite/Common/constants.dart';
 import 'package:spade_lite/Common/routes/app_routes.dart';
+import 'package:spade_lite/Common/theme.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Presentation/Screens/Home/models/feed_model.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/story_page_view.dart';
@@ -11,6 +12,7 @@ import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/profil
 import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/story_box.dart';
 
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
+import 'package:spade_lite/prefs/local_data.dart';
 
 class StoryRow extends ConsumerStatefulWidget implements PreferredSizeWidget {
   @override
@@ -161,6 +163,12 @@ class _FeedBodyState extends ConsumerState<StoryRow> {
               },
               child: StoryBox(
                 feed: stories.data![index - 1],
+                borderColor: stories.data![index - 1].gallery?.any((element) =>
+                            LocalData.instance.isStoryViewed(element) ==
+                            false) ??
+                        false
+                    ? CustomColors.greenPrimary
+                    : Colors.grey,
               ).pOnly(r: 15),
             );
           }

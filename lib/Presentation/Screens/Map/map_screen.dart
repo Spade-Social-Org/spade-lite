@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'dart:ui';
 import 'dart:ui' as ui;
 
@@ -15,7 +16,6 @@ import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/discovery_repo.dart';
 import 'package:spade_lite/Presentation/Screens/Map/map.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
-
 import '../../../Common/theme.dart';
 import '../../../Domain/Entities/place.dart';
 import '../../Bloc/places_bloc.dart';
@@ -24,35 +24,43 @@ import '../../widgets/jh_loader.dart';
 import '../../widgets/jh_logger.dart';
 import '../../widgets/jh_search_bar.dart';
 
-Widget buildHorizontalImageList(List<String> imageURL) {
+Widget buildHorizontalImageList(List<String> imageURLs) {
   return SizedBox(
     height: 200,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: imageURL.length,
-      itemBuilder: (context, index) {
-        if (index >= 0 && index < imageURL.length) {
-          final imageUR = imageURL[index];
-          print('Image URL at index $index: $imageURL');
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
+    child: imageURLs.isNotEmpty
+        ? ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: imageURLs.length,
+            itemBuilder: (context, index) {
+              final imageURL = imageURLs[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: NetworkImage(imageURL),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : Center(
             child: Container(
-              width: 100,
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: NetworkImage(imageUR),
-                  fit: BoxFit.cover,
-                ),
+                color: Colors.grey,
+              ),
+              child: const Text(
+                'No image available',
+                style: TextStyle(color: Colors.white),
               ),
             ),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    ),
+          ),
   );
 }
 
@@ -108,7 +116,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  fillColor: const Color(0xFF333333),
+                  fillColor: Color(0xFF333333),
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
                   filled: true,
                   border: OutlineInputBorder(
@@ -162,7 +170,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
                       color: const Color(0xFF333333),
                       borderRadius: BorderRadius.circular(20)),
                   height: 29,
-                  width: 94,
+                  width: 90,
                   child: Row(
                     children: [
                       Icon(
@@ -185,114 +193,6 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
           ],
         ),
       ),
-      const SizedBox(
-        height: 8,
-      ),
-      const Padding(
-        padding: EdgeInsets.only(
-          left: 12,
-        ),
-        child: Text(
-          'Fusion Vibes Kitchen + Lounge',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 3,
-      ),
-      const Padding(
-        padding: EdgeInsets.only(
-          left: 12,
-        ),
-        child: Text(
-          'African, American,Carribbean',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Row(
-        children: [
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 12),
-                child: Text(
-                  'Open  now',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: CustomColors.greenPrimary,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '0.8 miles',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            width: 14,
-          ),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                    height: 25,
-                    width: 60 * 2,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Schedule',
-                        style: TextStyle(
-                          color: CustomColors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                    )),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Image.asset('assets/images/arrowforward.png', width: 18),
-              const SizedBox(
-                width: 5,
-              ),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Image.asset('assets/images/calendar.png', width: 18)),
-              const SizedBox(
-                width: 5,
-              ),
-              Image.asset('assets/images/hearticon.png', width: 18),
-            ],
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
       ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: places.length,
@@ -300,23 +200,122 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           final place = places[index];
-
-          print('Image URL for place ${place.name}: ${place.imageURL}');
+          logger.d('Image URL for place ${place.name}: ${place.imageURL}');
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 12,
+                  ),
+                  child: Text(
+                    place.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 3,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 12,
+                  ),
+                  child: Text(
+                    place.address,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text(
+                            '${place.openingHours}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: place.openingHours == 'Open now'
+                                  ? CustomColors.greenPrimary
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${place.distance.toStringAsFixed(2)} miles',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 14,
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                              height: 25,
+                              width: 60 * 2,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Schedule',
+                                  style: TextStyle(
+                                    color: CustomColors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        Image.asset('assets/images/arrowforward.png',
+                            width: 14),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Image.asset('assets/images/calendar.png',
+                                width: 12)),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Image.asset('assets/images/hearticon.png', width: 12),
+                      ],
+                    ),
+                  ],
+                ),
                 if (place.imageURL.isNotEmpty)
                   buildHorizontalImageList(place.imageURL),
-                const SizedBox(height: 8),
-                Text(
-                  place.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),
@@ -565,7 +564,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     try {
       userSpade = await DiscoverRepo().checkoutUsers();
       debugPrint("userSp =======> ${userSpade.toString()}");
-      // Now you can use userSp in your UI
+      // Now you can use userSpade in your UI
       setState(() {
         // Update your UI if necessary
       });
@@ -578,7 +577,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
   @override
   void initState() {
     super.initState();
-    fetchUsers();
+    // fetchUsers();
 
     ///Load map theme
     DefaultAssetBundle.of(context)
@@ -588,6 +587,39 @@ class _GoogleMapState extends State<GoogleMapScreen>
     });
     _loadInitialPosition();
     _getCurrentLocation();
+    
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // Assuming generateRandomUsers returns a List<User> with random user data
+      // final List<User> userList = generateRandomUsers(5);
+
+      final newmarkers = userSpade.map((user) async {
+        double latitude = double.parse(user.latitude.toString());
+        double longitude = double.parse(user.longitude.toString());
+        var customMarkerIcon = CustomMarkerIcon(
+          size: 160,
+          imagePath: user.gallery![0],
+          backgroundColor: Colors.grey.withOpacity(0.5),
+          onTap: () {},
+          position: LatLng(latitude, longitude),
+        );
+
+        return Marker(
+          position: LatLng(latitude, longitude),
+          markerId: MarkerId(user.name!),
+          icon: await customMarkerIcon.createMarkerIcon(),
+          onTap: () {
+            _onMarkerTapped(_markers[user.name]!);
+          },
+        );
+      });
+
+      setState(() async {
+        _markers = {
+          for (var marker in await Future.wait(newmarkers))
+            (marker).markerId.value: marker
+        };
+      });
+    });
   }
 
   void _addCircle(Position position) {
@@ -1094,13 +1126,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             CalenderScreen()));
-                          },
+                          onTap: () {},
                           child: Container(
                             decoration: BoxDecoration(
                                 border:
@@ -1119,21 +1145,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              color: Colors.white38,
-                              borderRadius: BorderRadius.circular(20)),
-                          height: 30,
-                          width: 60,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: SvgPicture.asset(
-                              "assets/svgs/saved.svg",
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
                       ],
                     )
                   ],

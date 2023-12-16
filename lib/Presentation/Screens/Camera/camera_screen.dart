@@ -3,13 +3,9 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:photofilters/photofilters.dart' as photofilters;
 import 'package:spade_lite/Common/image_properties.dart';
 import 'package:spade_lite/Common/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'filter_screen.dart';
-import 'package:path/path.dart';
-import 'package:image/image.dart' as imageLib;
 
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
 import '../../../Common/camera_components/camera_appbar.dart';
@@ -221,29 +217,30 @@ class _CameraScreenState extends ConsumerState<CameraScreen> {
   void takePhoto(BuildContext context) async {
     XFile file = await _cameraController.takePicture();
     if (!mounted) return;
-    final fileName = basename(file.path);
-    var image = imageLib.decodeImage(File(file.path).readAsBytesSync());
-    if (image == null) return;
-    image = imageLib.copyRotate(image, 90);
-    //if (image == null) return;
-    Map? imagefile = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PhotoFilterSelector(
-          title: const Text("Photo Filter Example"),
-          image: image!,
-          filters: photofilters.presetFiltersList,
-          filename: fileName,
-          loader: const Center(child: CircularProgressIndicator()),
-        ),
-      ),
-    );
-    if (!(imagefile != null && imagefile.containsKey('image_filtered'))) return;
-    if (!mounted) return;
+    // final fileName = basename(file.path);
+    // var image = imageLib.decodeImage(File(file.path).readAsBytesSync());
+    // if (image == null) return;
+    // image = imageLib.copyRotate(image, 90);
+    // //if (image == null) return;
+    // Map? imagefile = await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => PhotoFilterSelector(
+    //       title: const Text("Photo Filter Example"),
+    //       image: image!,
+    //       filters: photofilters.presetFiltersList,
+    //       filename: fileName,
+    //       loader: const Center(child: CircularProgressIndicator()),
+    //     ),
+    //   ),
+    // );
+    // if (!(imagefile != null && imagefile.containsKey('image_filtered'))) return;
+    // if (!mounted) return;
     final finalImage = await navigateNamedTo(
         context, Routes.sendingImageViewRoute,
         arguments: {
-          'path': imagefile['image_filtered'].path,
+          // 'path': imagefile['image_filtered'].path,
+          'path': file.path,
           'uId': widget.receiverId,
         });
     if (!mounted) return;
