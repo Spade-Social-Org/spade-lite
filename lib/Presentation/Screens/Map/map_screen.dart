@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'dart:ui';
 import 'dart:ui' as ui;
@@ -577,7 +578,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
   @override
   void initState() {
     super.initState();
-    // fetchUsers();
+    fetchUsers();
 
     ///Load map theme
     DefaultAssetBundle.of(context)
