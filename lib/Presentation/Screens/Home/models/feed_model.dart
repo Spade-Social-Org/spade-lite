@@ -53,7 +53,7 @@ class FeedModel {
 }
 
 class Feed {
-  List<String>? gallery;
+  Set<String>? gallery;
   String? description;
   int? id;
   DateTime? createdAt;
@@ -78,7 +78,7 @@ class Feed {
   });
 
   Feed copyWith({
-    List<String>? gallery,
+    Set<String>? gallery,
     String? description,
     int? id,
     DateTime? createdAt,
@@ -105,8 +105,8 @@ class Feed {
 
   factory Feed.fromJson(Map<String, dynamic> json) => Feed(
         gallery: json["gallery"] == null
-            ? []
-            : List<String>.from(json["gallery"]!.map((x) => x)),
+            ? {}
+            : Set<String>.from(json["gallery"]!.map((x) => x)),
         description: json["description"],
         id: json["id"],
         createdAt: json["created_at"] == null
@@ -138,7 +138,7 @@ class Feed {
   bool operator ==(covariant Feed other) {
     if (identical(this, other)) return true;
 
-    return listEquals(other.gallery, gallery) &&
+    return setEquals(other.gallery, gallery) &&
         other.description == description &&
         other.id == id &&
         other.createdAt == createdAt &&

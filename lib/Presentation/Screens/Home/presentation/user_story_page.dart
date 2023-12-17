@@ -38,14 +38,14 @@ class _StoryPageViewState extends ConsumerState<UserStoryPageView> {
         description: stories.first.description,
         id: stories.first.id,
         likedPost: stories.first.likedPost,
-        gallery: [],
+        gallery: {},
         numberOfLikes: stories.first.numberOfLikes,
       ),
       (value, element) => value.copyWith(
-        gallery: [
+        gallery: {
           ...value.gallery ?? [],
           ...element.gallery ?? [],
-        ],
+        },
       ),
     );
     if (data == null) return const Scaffold();

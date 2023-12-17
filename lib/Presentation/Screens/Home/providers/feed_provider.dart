@@ -21,7 +21,7 @@ final storyProvider = StateProvider<FeedModel?>((ref) {
   final user = ref.watch(userIdProvider);
   if (stories == null) return null;
   final newStories = groupBy<Feed, String>(
-          stories.data ?? [], (p0) => '${p0.posterName}${p0.posterImage}')
+          stories.data ?? [], (p0) => '${p0.posterId}')
       .map(
         (key, value) => MapEntry(
           key,
@@ -35,14 +35,14 @@ final storyProvider = StateProvider<FeedModel?>((ref) {
               description: value.first.description,
               id: value.first.id,
               likedPost: value.first.likedPost,
-              gallery: [],
+              gallery: {},
               numberOfLikes: value.first.numberOfLikes,
             ),
             (value, element) => value.copyWith(
-              gallery: [
+              gallery: {
                 ...value.gallery ?? [],
                 ...element.gallery ?? [],
-              ],
+              },
             ),
           ),
         ),

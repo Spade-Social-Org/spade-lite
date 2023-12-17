@@ -13,6 +13,7 @@ import 'package:spade_lite/Presentation/Screens/messages/single/single_message.d
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spade_lite/resources/resources.dart';
+import 'package:video_player/video_player.dart';
 
 class FeedBox extends ConsumerStatefulWidget {
   final Feed feed;
@@ -190,23 +191,26 @@ class _GalleryState extends State<Gallery> {
               });
             },
           ),
-          items: widget.feed.gallery
-                  ?.map(
-                    (e) => Container(
-                      width: double.infinity,
-                      height: 260,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(e),
-                          fit: BoxFit.cover,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+          items: widget.feed.gallery?.map(
+                (e) {
+                  if (e.endsWith('mp4')) {
+                    return FeedVideo(videoUrl: e);
+                  }
+                  return Container(
+                    width: double.infinity,
+                    height: 260,
+                    decoration: ShapeDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(e),
+                        fit: BoxFit.cover,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  )
-                  .toList() ??
+                  );
+                },
+              ).toList() ??
               [],
         ),
         if ((widget.feed.gallery?.length ?? 0) > 1)
@@ -232,6 +236,81 @@ class _GalleryState extends State<Gallery> {
             ),
           ),
       ],
+    );
+  }
+}
+
+class FeedVideo extends StatefulWidget {
+  final String videoUrl;
+  const FeedVideo({
+    super.key,
+    required this.videoUrl,
+  });
+
+  @override
+  State<FeedVideo> createState() => _FeedVideoState();
+}
+
+class _FeedVideoState extends State<FeedVideo> {
+  late VideoPlayerController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.networkUrl(
+      Uri.parse(
+        widget.videoUrl,
+      ),
+    )..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 260,
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Center(
+        child: _controller.value.isInitialized
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _controller.value.isPlaying
+                            ? _controller.pause()
+                            : _controller.play();
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.3),
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      child: Icon(
+                        _controller.value.isPlaying
+                            ? Icons.pause_rounded
+                            : Icons.play_arrow_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : const CircularProgressIndicator.adaptive(),
+      ),
     );
   }
 }
