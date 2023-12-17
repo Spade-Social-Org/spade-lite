@@ -83,7 +83,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       onTap: () {
                         pushTo(context, const GroupChatScreen());
                       },
-                      child: const GroupedAvatar().pOnly(r: 16),
+                      child: const GroupedAvatar().pOnly(r: 32),
                     );
                   },
                 ),
