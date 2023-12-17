@@ -11,8 +11,8 @@ import 'package:spade_lite/Presentation/widgets/custom_button.dart';
 
 class AddProfilePictureScreen extends ConsumerStatefulWidget {
   const AddProfilePictureScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<AddProfilePictureScreen> createState() =>

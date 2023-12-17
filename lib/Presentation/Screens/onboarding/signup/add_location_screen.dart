@@ -14,12 +14,12 @@ class AddLocationScreen extends StatefulWidget {
   final String phoneNumber;
   final String email;
   const AddLocationScreen({
-    Key? key,
+    super.key,
     required this.name,
     required this.password,
     required this.phoneNumber,
     required this.email,
-  }) : super(key: key);
+  });
 
   @override
   State<AddLocationScreen> createState() => _AddLocationScreenState();

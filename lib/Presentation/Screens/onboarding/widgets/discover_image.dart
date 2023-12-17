@@ -9,14 +9,14 @@ class DiscoverImage extends StatefulWidget {
   final Color color;
   final Function(bool)? onchange;
   const DiscoverImage({
-    Key? key,
+    super.key,
     required this.image,
     required this.imageTile,
     required this.imageDesc,
     required this.isSwitched,
     required this.color,
     required this.onchange,
-  }) : super(key: key);
+  });
 
   @override
   State<DiscoverImage> createState() => _DiscoverImageState();

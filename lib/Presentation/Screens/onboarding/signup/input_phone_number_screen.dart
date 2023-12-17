@@ -14,10 +14,10 @@ class InputPhoneNumberScreen extends StatefulWidget {
   final String name;
   final String password;
   const InputPhoneNumberScreen({
-    Key? key,
+    super.key,
     required this.name,
     required this.password,
-  }) : super(key: key);
+  });
 
   @override
   State<InputPhoneNumberScreen> createState() => _InputPhoneNumberScreenState();

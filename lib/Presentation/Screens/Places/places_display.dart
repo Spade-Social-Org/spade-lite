@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PlacesDisplay extends StatefulWidget {
 
-  const PlacesDisplay({Key? key}) : super(key: key);
+  const PlacesDisplay({super.key});
 
   @override
   State<PlacesDisplay> createState() => _PlacesDisplayState();

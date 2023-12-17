@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class OrderNow extends StatefulWidget {
-  const OrderNow({Key? key}) : super(key: key);
+  const OrderNow({super.key});
 
   @override
   State<OrderNow> createState() => _OrderNowState();

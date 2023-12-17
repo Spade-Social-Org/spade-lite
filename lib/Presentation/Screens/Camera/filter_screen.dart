@@ -66,13 +66,13 @@ class PhotoFilterSelector extends StatefulWidget {
   final String filename;
 
   const PhotoFilterSelector({
-    Key? key,
+    super.key,
     required this.title,
     required this.filters,
     required this.image,
     this.loader = const Center(child: CircularProgressIndicator()),
     required this.filename,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _PhotoFilterSelectorState();

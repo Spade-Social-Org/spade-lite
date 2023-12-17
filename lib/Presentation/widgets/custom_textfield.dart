@@ -29,7 +29,7 @@ class CustomTextfield extends StatelessWidget {
   final String? labelText;
 
   const CustomTextfield({
-    Key? key,
+    super.key,
     this.hintText,
     this.validator,
     this.obscureText = false,
@@ -56,7 +56,7 @@ class CustomTextfield extends StatelessWidget {
     this.prefixIcon,
     this.hintStyle,
     this.labelText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

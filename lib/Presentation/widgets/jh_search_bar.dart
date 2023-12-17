@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class JHSearchField extends StatelessWidget {
-  const JHSearchField({Key? key}) : super(key: key);
+  const JHSearchField({super.key});
 
   @override
   Widget build(BuildContext context) {

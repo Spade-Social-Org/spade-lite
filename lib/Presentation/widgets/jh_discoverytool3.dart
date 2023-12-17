@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class JHDiscoveryTool3 extends StatelessWidget {
   const JHDiscoveryTool3({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class JHDiscoveryTool3 extends StatelessWidget {
 
 class Button extends StatelessWidget {
   final String name;
-  const Button({Key? key, required this.name}) : super(key: key);
+  const Button({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +78,7 @@ class Button extends StatelessWidget {
 class card2 extends StatelessWidget {
   final String name;
   final String image;
-  const card2({Key? key, required this.name, required this.image})
-      : super(key: key);
+  const card2({super.key, required this.name, required this.image});
 
   @override
   Widget build(BuildContext context) {

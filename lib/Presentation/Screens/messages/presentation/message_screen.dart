@@ -8,15 +8,10 @@ import 'package:spade_lite/Presentation/Screens/messages/provider/message_provid
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
 import 'package:spade_lite/Common/navigator.dart';
-import 'package:spade_lite/Common/routes/app_routes.dart';
-import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
-import '../group/group_message.dart';
 import '../likes/message_likes.dart';
 import '../widget/custom_iconbutton.dart';
 import '../widget/message_card.dart';
 import '../widget/message_tabs.dart';
-import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});

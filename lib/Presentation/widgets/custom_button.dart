@@ -15,7 +15,7 @@ class CustomButton extends StatelessWidget {
   final bool isLoading;
 
   const CustomButton(
-      {Key? key,
+      {super.key,
       this.onPressed,
       this.textColor,
       this.text,
@@ -27,8 +27,7 @@ class CustomButton extends StatelessWidget {
       this.radius = 12,
       this.isLoading = false,
       this.textSize,
-      this.textAlign = Alignment.center})
-      : super(key: key);
+      this.textAlign = Alignment.center});
 
   @override
   Widget build(BuildContext context) {

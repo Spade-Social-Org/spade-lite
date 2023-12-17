@@ -14,7 +14,7 @@ import 'package:spade_lite/prefs/pref_provider.dart';
 import '../spade_splash_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();

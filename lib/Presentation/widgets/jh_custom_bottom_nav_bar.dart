@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class JHCustomerNavigationBar extends StatefulWidget {
   const JHCustomerNavigationBar({
-    Key? key,
+    super.key,
     required this.selectedPageIndex,
     required this.onIconTap,
-  }) : super(key: key);
+  });
 
   final int selectedPageIndex;
   final Function onIconTap;

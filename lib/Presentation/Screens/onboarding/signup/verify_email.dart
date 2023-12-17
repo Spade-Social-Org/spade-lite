@@ -14,7 +14,7 @@ import '../provider/loading_state_provider.dart';
 
 class VerifyEmail extends StatefulWidget {
   final int userId;
-  const VerifyEmail({Key? key, required this.userId}) : super(key: key);
+  const VerifyEmail({super.key, required this.userId});
 
   @override
   State<VerifyEmail> createState() => _VerifyEmailState();

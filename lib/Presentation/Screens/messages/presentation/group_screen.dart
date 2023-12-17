@@ -2,21 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
-import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/group_chat_screen.dart';
-import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/create_group_bottomsheet.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/grouped_avatar.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
-import 'package:spade_lite/Common/navigator.dart';
-import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import '../group/group_message.dart';
 import '../likes/message_likes.dart';
 import '../widget/custom_iconbutton.dart';
-import '../widget/message_card.dart';
-import '../widget/message_tabs.dart';
 
 class GroupScreen extends StatefulWidget {
   const GroupScreen({super.key});

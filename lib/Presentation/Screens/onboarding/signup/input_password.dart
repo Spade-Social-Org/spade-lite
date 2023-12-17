@@ -13,9 +13,9 @@ import 'input_phone_number_screen.dart';
 class InputPassword extends StatefulWidget {
   final String name;
   const InputPassword({
-    Key? key,
+    super.key,
     required this.name,
-  }) : super(key: key);
+  });
 
   @override
   State<InputPassword> createState() => _InputPasswordState();

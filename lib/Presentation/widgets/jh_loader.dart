@@ -6,10 +6,10 @@ class JHLoadingSpinner extends StatelessWidget {
   final double size;
 
   const JHLoadingSpinner({
-    Key? key,
+    super.key,
     this.color = Colors.white,
     this.size = 250.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
