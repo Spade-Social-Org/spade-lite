@@ -59,9 +59,9 @@ class _FeedBodyState extends ConsumerState<StoryRow> {
                   description: 'adcaecdqwe wexwexewx cecwsxw c3ec',
                   posterImage: AppConstants.defaultImage,
                   posterName: 'Spider',
-                  gallery: [
+                  gallery: {
                     AppConstants.defaultImage,
-                  ],
+                  },
                 ),
               ).pOnly(r: 20),
             );
@@ -144,9 +144,9 @@ class _FeedBodyState extends ConsumerState<StoryRow> {
                     description: 'adcaecdqwe wexwexewx cecwsxw c3ec',
                     posterImage: AppConstants.defaultImage,
                     posterName: 'Spider',
-                    gallery: [
+                    gallery: {
                       AppConstants.defaultImage,
-                    ],
+                    },
                   ),
                 ).pOnly(r: 20),
               ).alignCenter;

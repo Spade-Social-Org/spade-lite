@@ -129,23 +129,16 @@ class _MessageScreenState extends State<MessageScreen> {
                     )),
                     const SizedBox(width: 8),
                     CustomIconButton(
-                        imageValue: 'spade-small',
-                        color: Colors.grey,
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (ctx) => const MesssageLikes())),
-                        size: 22),
-                    CustomIconButton(
                         imageValue: 'grid',
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (ctx) => const GroupScreen())),
                         size: 20),
-                    CustomIconButton(
+                    /* CustomIconButton(
                         imageValue: 'list',
                         color: isSelected ? indicatorColor() : Colors.grey,
                         onTap: () => setState(() => isSelected = !isSelected),
-                        size: 20)
+                        size: 20) */
                   ],
                 ),
               ),

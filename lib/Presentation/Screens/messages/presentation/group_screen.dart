@@ -83,7 +83,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       onTap: () {
                         pushTo(context, const GroupChatScreen());
                       },
-                      child: const GroupedAvatar().pOnly(r: 16),
+                      child: const GroupedAvatar().pOnly(r: 32),
                     );
                   },
                 ),
@@ -94,44 +94,33 @@ class _GroupScreenState extends State<GroupScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: SizedBox(
-                      height: 45,
-                      child: TextField(
-                        readOnly: true,
-                        decoration: InputDecoration(
-                            fillColor: const Color(0xfff5f5f5),
-                            filled: true,
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Image.asset('assets/images/search.png'),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(50)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(50))),
+                      child: SizedBox(
+                        height: 45,
+                        child: TextField(
+                          readOnly: true,
+                          decoration: InputDecoration(
+                              fillColor: const Color(0xfff5f5f5),
+                              filled: true,
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Image.asset('assets/images/search.png'),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(50)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(50))),
+                        ),
                       ),
-                    )),
+                    ),
                     const SizedBox(width: 8),
-                    CustomIconButton(
-                        imageValue: 'spade-small',
-                        color: Colors.grey,
-                        onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (ctx) => const MesssageLikes())),
-                        size: 22),
                     CustomIconButton(
                         imageValue: 'grid',
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (ctx) => const GroupMessage())),
                         size: 20),
-                    CustomIconButton(
-                        imageValue: 'list',
-                        color: isSelected ? indicatorColor() : Colors.grey,
-                        onTap: () => setState(() => isSelected = !isSelected),
-                        size: 20)
                   ],
                 ),
               ),

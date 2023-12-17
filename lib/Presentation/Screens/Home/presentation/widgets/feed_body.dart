@@ -45,9 +45,9 @@ class _FeedBodyState extends ConsumerState<FeedBody> {
                 description: 'adcaecdqwe wexwexewx cecwsxw c3ec',
                 posterImage: AppConstants.defaultImage,
                 posterName: 'Spider',
-                gallery: [
+                gallery: {
                   AppConstants.defaultImage,
-                ],
+                },
               ),
             ).pOnly(b: 20),
           );
