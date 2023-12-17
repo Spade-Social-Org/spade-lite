@@ -51,9 +51,19 @@ class _LoginScreenState extends State<LoginScreen> {
       return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
           body: SingleChildScrollView(
-            child: Padding(
+            child: Container(
+              color: Colors.black,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 key: form,
@@ -64,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       'A different experience...',
                       style: TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
                           letterSpacing: 3),
@@ -78,6 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: email,
                             textCapitalization: TextCapitalization.none,
                             keyboardType: TextInputType.emailAddress,
+                            fillColor: Colors.black,
+                            focusedBorderSide:
+                                const BorderSide(color: Colors.white),
+                            enabledBorderSide:
+                                const BorderSide(color: Colors.white),
+                            textStyle: const TextStyle(color: Colors.white),
                             validator: ValidationBuilder()
                                 .email('Field is required')
                                 .maxLength(50)
@@ -89,6 +106,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextfield(
                           controller: password,
                           hintText: 'Password',
+                          fillColor: Colors.black,
+                          focusedBorderSide:
+                              const BorderSide(color: Colors.white),
+                          enabledBorderSide:
+                              const BorderSide(color: Colors.white),
+                          textStyle: const TextStyle(color: Colors.white),
                           validator: (value) =>
                               value!.isEmpty ? 'Field is required' : null,
                           obscureText: obscureText,
@@ -113,10 +136,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Checkbox.adaptive(
-                                  value: isChecked,
-                                  onChanged: (val) =>
-                                      setState(() => isChecked = val!)),
-                              const Text('Remember me'),
+                                value: isChecked,
+                                onChanged: (val) =>
+                                    setState(() => isChecked = val!),
+                                visualDensity: const VisualDensity(
+                                    horizontal: -4,
+                                    vertical:
+                                        -4), // Reduce space between checkbox and text
+                              ),
+                              const Text(
+                                'Remember me',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ],
                           ),
                         ),
@@ -124,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextButton(
                             child: const Text(
                               'Forgot Password',
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () {})
                       ],
@@ -159,16 +190,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: CustomButton(
                           height: 40,
                           onPressed: () => push(const SpadeSplashScreen()),
+                          hasBorderside: const BorderSide(color: Colors.black),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'Don\'t have an account?',
-                              ),
+                              Text('Don\'t have an account?',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.white,
+                                  )),
                               SizedBox(width: 4),
                               Text('Create Account',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
+                                    color: Colors.white,
                                   ))
                             ],
                           )),

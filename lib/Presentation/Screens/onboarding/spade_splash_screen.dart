@@ -37,7 +37,7 @@ class _SpadeSplashScreenState extends State<SpadeSplashScreen>
   @override
   Widget build(BuildContext context) {
     return Dialog.fullscreen(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(

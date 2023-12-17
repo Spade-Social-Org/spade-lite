@@ -6,8 +6,6 @@ import 'package:spade_lite/Presentation/Screens/messages/presentation/group_chat
 import 'package:spade_lite/Presentation/Screens/messages/widget/create_group_bottomsheet.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/grouped_avatar.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
-import '../group/group_message.dart';
-import '../likes/message_likes.dart';
 import '../widget/custom_iconbutton.dart';
 
 class GroupScreen extends StatefulWidget {
@@ -119,7 +117,7 @@ class _GroupScreenState extends State<GroupScreen> {
                         imageValue: 'grid',
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (ctx) => const GroupMessage())),
+                                builder: (ctx) => const GroupChatScreen())),
                         size: 20),
                   ],
                 ),

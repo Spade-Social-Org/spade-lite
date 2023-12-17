@@ -27,6 +27,8 @@ class CustomTextfield extends StatelessWidget {
   final bool? readOnly;
   final String? initialValue;
   final String? labelText;
+  final BorderSide? focusedBorderSide;
+  final BorderSide? enabledBorderSide;
 
   const CustomTextfield({
     super.key,
@@ -56,6 +58,8 @@ class CustomTextfield extends StatelessWidget {
     this.prefixIcon,
     this.hintStyle,
     this.labelText,
+    this.focusedBorderSide,
+    this.enabledBorderSide,
   });
 
   @override
@@ -89,26 +93,31 @@ class CustomTextfield extends StatelessWidget {
         hintStyle:
             hintStyle ?? const TextStyle(fontSize: 14, color: Colors.grey),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(10)),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide:
+              focusedBorderSide ?? const BorderSide(color: Colors.black),
           borderRadius: BorderRadius.circular(10),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: enabledBorderSide ??
+              const BorderSide(
+                  color: Colors.black), // Set border color as white
+          borderRadius: BorderRadius.circular(10),
+        ),
+        fillColor: fillColor,
         errorBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.red),
           borderRadius: BorderRadius.circular(10),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: const BorderSide(color: Colors.red),
           borderRadius: BorderRadius.circular(10),
         ),
-        fillColor: fillColor,
         filled: filled,
         hintText: hintText,
       ),
       style: textStyle ??
-          const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
     );
   }
 }

@@ -13,7 +13,8 @@ class FormLabel extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8),
       child: Text(
         formLabel,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        style: const TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
       ),
     );
   }

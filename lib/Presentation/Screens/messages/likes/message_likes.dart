@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../group/group_message.dart';
+import 'package:spade_lite/Presentation/Screens/messages/presentation/group_chat_screen.dart';
 import '../widget/custom_iconbutton.dart';
 import 'message_likes_tab.dart';
 
@@ -116,7 +116,7 @@ class _MesssageLikesState extends State<MesssageLikes> {
                                           onTap: () => Navigator.of(context)
                                               .push(MaterialPageRoute(
                                                   builder: (ctx) =>
-                                                      const GroupMessage())),
+                                                      const GroupChatScreen())),
                                           size: 20),
                                       CustomIconButton(
                                           imageValue: 'list',
