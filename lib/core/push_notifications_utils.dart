@@ -8,7 +8,6 @@ class NotifHandler {
         FlutterLocalNotificationsPlugin();
 
     RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
 
     // If `onMessage` is triggered with a notification, construct our own
     // local notification to show to users using the created channel.
@@ -44,18 +43,6 @@ class NotifHandler {
   static Future<void> refreshTokens() async {
     FirebaseMessaging.instance.setAutoInitEnabled(true);
 
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: true,
-      badge: true,
-      carPlay: false,
-      criticalAlert: true,
-      provisional: true,
-      sound: true,
-    );
-
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
 
@@ -64,11 +51,9 @@ class NotifHandler {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    String? token = await FirebaseMessaging.instance.getToken();
-
     // Save the initial token to the database
 
-// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
 
@@ -140,7 +125,6 @@ Future<void> handleNotifMessage(RemoteMessage message) async {
       FlutterLocalNotificationsPlugin();
 
   RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
 
   // If `onMessage` is triggered with a notification, construct our own
   // local notification to show to users using the created channel.

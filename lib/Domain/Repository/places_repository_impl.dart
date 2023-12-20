@@ -13,12 +13,10 @@ class PlacesRepositoryImpl implements PlacesRepository {
   Future<List<Place>> getPlaces(String placeType, LatLng location,
       {String? nextPageToken}) async {
     final places = <Place>[];
-    final userLocation = await _getUserLocation();
-
 
     do {
       final data =
-      await api.fetchPlaces(placeType, location, pageToken: nextPageToken);
+          await api.fetchPlaces(placeType, location, pageToken: nextPageToken);
       logger.d('API Response Data: $data');
 
       // ignore: unnecessary_null_comparison
@@ -46,15 +44,15 @@ class PlacesRepositoryImpl implements PlacesRepository {
             reviews: [],
             openingHours: placeDetails['opening_hours'] != null
                 ? placeDetails['opening_hours']['open_now']
-                ? 'Open now'
-                : 'Closed'
+                    ? 'Open now'
+                    : 'Closed'
                 : 'Unknown',
-            distance : _calculateDistance(
-                location.latitude,
-                location.longitude,
-                placeDetails['geometry']['location']['lat'] as double,
-                placeDetails['geometry']['location']['lng'] as double,
-              ),
+            distance: _calculateDistance(
+              location.latitude,
+              location.longitude,
+              placeDetails['geometry']['location']['lat'] as double,
+              placeDetails['geometry']['location']['lng'] as double,
+            ),
           );
         })));
 
@@ -69,20 +67,12 @@ class PlacesRepositoryImpl implements PlacesRepository {
   }
 }
 
-
-Future<LatLng> _getUserLocation() async {
-  final position = await Geolocator.getCurrentPosition(
-    desiredAccuracy: LocationAccuracy.high,
-  );
-
-  return LatLng(position.latitude, position.longitude);
-}
-
 double _calculateDistance(
-    double userLat,
-    double userLng,
-    double placeLat,
-    double placeLng,
-    ) {
-  return Geolocator.distanceBetween(userLat, userLng, placeLat, placeLng) / 1609.34;
+  double userLat,
+  double userLng,
+  double placeLat,
+  double placeLng,
+) {
+  return Geolocator.distanceBetween(userLat, userLng, placeLat, placeLng) /
+      1609.34;
 }

@@ -16,6 +16,8 @@ import 'Presentation/Screens/Camera/camera_screen.dart';
 import 'injection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sentry/sentry.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,22 @@ Future<void> main() async {
       ),
     ),
   );
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://4804fd399b108cc26d2543b6e5000083@o4506428705079296.ingest.sentry.io/4506428712222720';
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(const MyApp()),
+  );
+  try {
+    throw Exception('This method intentionally fails!');
+  } catch (exception, stackTrace) {
+    await Sentry.captureException(
+      exception,
+      stackTrace: stackTrace,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

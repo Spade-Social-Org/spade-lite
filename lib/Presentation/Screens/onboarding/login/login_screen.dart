@@ -51,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
+          backgroundColor: Colors.black,
           appBar: AppBar(
             backgroundColor: Colors.black,
             leading: IconButton(
