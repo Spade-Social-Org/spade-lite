@@ -51,14 +51,6 @@ Future<void> main() async {
     },
     appRunner: () => runApp(const MyApp()),
   );
-  try {
-    throw Exception('This method intentionally fails!');
-  } catch (exception, stackTrace) {
-    await Sentry.captureException(
-      exception,
-      stackTrace: stackTrace,
-    );
-  }
 }
 
 class MyApp extends StatelessWidget {
