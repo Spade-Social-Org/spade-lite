@@ -14,8 +14,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/discovery_repo.dart';
+import 'package:spade_lite/Domain/Repository/get_user_repo.dart';
 import 'package:spade_lite/Presentation/Screens/Map/map.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
+import 'package:spade_lite/Presentation/widgets/rounded_marker.dart';
 import '../../../Common/theme.dart';
 import '../../../Domain/Entities/place.dart';
 import '../../Bloc/places_bloc.dart';
@@ -24,6 +26,7 @@ import '../../widgets/jh_loader.dart';
 import '../../widgets/jh_logger.dart';
 import '../../widgets/jh_search_bar.dart';
 import 'package:sentry/sentry.dart';
+import 'package:widget_to_marker/widget_to_marker.dart';
 
 Widget buildHorizontalImageList(List<String> imageURLs) {
   return SizedBox(
@@ -94,8 +97,8 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
       ),
       Row(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 8),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
             child: CircleAvatar(
               backgroundImage: AssetImage("assets/images/Ellipse 378.png"),
               radius: 30,
@@ -366,17 +369,9 @@ class _GoogleMapState extends State<GoogleMapScreen>
   final Set<Circle> _circle = {};
 
   List<DiscoverUserModel> userSpade = [];
+  DiscoverUserModel? user;
 
-  Future<void> addMarker(LatLng location) async {
-    var customMarkerIcon = CustomMarkerIcon(
-      position: location,
-      onTap: () {
-        _onMarkerTapped(_markers as Marker);
-      },
-      size: 120,
-      imagePath: 'assets/images/Ellipse 365.png',
-      backgroundColor: Colors.grey.withOpacity(0.5),
-    );
+  Future<void> addMarker(LatLng location, String url, String type) async {
     var marker = Marker(
       markerId: const MarkerId("USER"),
       position: location,
@@ -384,7 +379,8 @@ class _GoogleMapState extends State<GoogleMapScreen>
       onTap: () {
         _onMarkerTapped(_markers as Marker);
       },
-      icon: await customMarkerIcon.createMarkerIcon(),
+      icon: await RoundedMarker(imageUrl: url, type: type).toBitmapDescriptor(
+          logicalSize: const Size(200, 200), imageSize: const Size(400, 400)),
     );
     setState(() {
       _markers.add(marker);
@@ -504,7 +500,8 @@ class _GoogleMapState extends State<GoogleMapScreen>
             top: 36,
             right: 20,
             child: InkWell(
-              onTap: _toggleLocation,
+              onTap: () =>
+                  _toggleLocation(user?.gallery?[0], user?.relationshipType),
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -537,7 +534,11 @@ class _GoogleMapState extends State<GoogleMapScreen>
       Marker marker = Marker(
         markerId: MarkerId(contact.name.toString()),
         position: LatLng(latitude, longitude),
-        icon: await _getIcon(context, "assets/images/marker-3.png", 80),
+        icon: await RoundedMarker(
+                imageUrl: contact.gallery![0], type: contact.relationshipType!)
+            .toBitmapDescriptor(
+                logicalSize: const Size(200, 200),
+                imageSize: const Size(400, 400)),
         onTap: () {
           mapController?.animateCamera(
             CameraUpdate.newLatLngZoom(LatLng(latitude, longitude), targetZoom),
@@ -578,9 +579,32 @@ class _GoogleMapState extends State<GoogleMapScreen>
     }
   }
 
+  void fetchUser() async {
+    try {
+      user = await GetUser().getUser();
+      debugPrint("Spade User: =======> ${user.toString()}");
+      print('user after fetch: $user'); // Add this line
+      // Now you can use user in your UI
+      setState(() {
+        // Update your UI if necessary
+      });
+      if (user != null) {
+        _loadInitialPosition(user?.gallery?[0], user?.relationshipType);
+        _getCurrentLocation(user?.gallery?[0], user?.relationshipType);
+      }
+    } catch (error, stackTrace) {
+      // Handle the error
+      await Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchUser();
     fetchUsers();
 
     ///Load map theme
@@ -589,8 +613,11 @@ class _GoogleMapState extends State<GoogleMapScreen>
         .then((value) {
       mapTheme = value;
     });
-    _loadInitialPosition();
-    _getCurrentLocation();
+
+    if (user != null) {
+      _loadInitialPosition(user?.gallery?[0], user?.relationshipType);
+      _getCurrentLocation(user?.gallery?[0], user?.relationshipType);
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // Assuming generateRandomUsers returns a List<User> with random user data
@@ -599,18 +626,15 @@ class _GoogleMapState extends State<GoogleMapScreen>
       final newmarkers = userSpade.map((user) async {
         double latitude = double.parse(user.latitude.toString());
         double longitude = double.parse(user.longitude.toString());
-        var customMarkerIcon = CustomMarkerIcon(
-          size: 160,
-          imagePath: user.gallery![0],
-          backgroundColor: Colors.grey.withOpacity(0.5),
-          onTap: () {},
-          position: LatLng(latitude, longitude),
-        );
 
         return Marker(
           position: LatLng(latitude, longitude),
           markerId: MarkerId(user.name!),
-          icon: await customMarkerIcon.createMarkerIcon(),
+          icon: await RoundedMarker(
+                  imageUrl: user.gallery![0], type: user.relationshipType!)
+              .toBitmapDescriptor(
+                  logicalSize: const Size(200, 200),
+                  imageSize: const Size(400, 400)),
           onTap: () {
             _onMarkerTapped(_markers
                 .firstWhere((marker) => marker.markerId.value == user.name));
@@ -648,7 +672,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     return response.bodyBytes;
   }
 
-  void _getCurrentLocation() async {
+  void _getCurrentLocation(String? imageUrl, String? type) async {
     try {
       /// Request location permissions explicitly
       LocationPermission permission = await Geolocator.requestPermission();
@@ -700,9 +724,13 @@ class _GoogleMapState extends State<GoogleMapScreen>
       _addCircle(position);
       double markerOffset = 0.0002;
       // createMarkers(context, "user");
-      addMarker(
-        LatLng(position.latitude + markerOffset, position.longitude),
-      );
+      if (imageUrl != null && type != null) {
+        addMarker(LatLng(position.latitude + markerOffset, position.longitude),
+            imageUrl, type);
+      } else {
+        addMarker(LatLng(position.latitude + markerOffset, position.longitude),
+            "assets/images/Ellipse 378.png", "single_searching");
+      }
 
       Polyline polyline = Polyline(
         polylineId: const PolylineId('polyline_1'),
@@ -778,7 +806,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     return await bitmapIcon.future;
   }
 
-  Future<void> _loadInitialPosition() async {
+  Future<void> _loadInitialPosition(String? imageUrl, String? type) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     double? cachedLatitude = prefs.getDouble('latitude');
     double? cachedLongitude = prefs.getDouble('longitude');
@@ -788,7 +816,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
         _initialPosition = LatLng(cachedLatitude, cachedLongitude);
       });
     }
-    _getCurrentLocation();
+    _getCurrentLocation(imageUrl, type);
   }
 
   void _onMarkerTapped(Marker tappedMarker) {
@@ -1088,10 +1116,13 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage:
-                          AssetImage("assets/images/Ellipse 378.png"),
-                      radius: 40,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: CircleAvatar(
+                        backgroundImage:
+                            AssetImage("assets/images/Ellipse 378.png"),
+                        radius: 30,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Row(
@@ -1245,13 +1276,13 @@ class _GoogleMapState extends State<GoogleMapScreen>
     );
   }
 
-  void _toggleLocation() {
+  void _toggleLocation(String? imageUrl, String? type) {
     setState(() {
       isLocationEnabled = !isLocationEnabled;
     });
 
     if (isLocationEnabled) {
-      _getCurrentLocation();
+      _getCurrentLocation(imageUrl, type);
     } else {
       _initialPosition = null;
     }
