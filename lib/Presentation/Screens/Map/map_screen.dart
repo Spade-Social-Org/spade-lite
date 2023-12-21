@@ -23,6 +23,7 @@ import '../../widgets/jh_custom_marker.dart';
 import '../../widgets/jh_loader.dart';
 import '../../widgets/jh_logger.dart';
 import '../../widgets/jh_search_bar.dart';
+import 'package:sentry/sentry.dart';
 
 Widget buildHorizontalImageList(List<String> imageURLs) {
   return SizedBox(
@@ -568,9 +569,12 @@ class _GoogleMapState extends State<GoogleMapScreen>
       setState(() {
         // Update your UI if necessary
       });
-    } catch (error) {
+    } catch (error, stackTrace) {
       // Handle the error
-      print("Error fetching users: $error");
+      await Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -788,8 +792,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   }
 
   void _onMarkerTapped(Marker tappedMarker) {
-    print('Marker tapped');
-
     double targetZoom = _isMarkerZoomed ? 14.0 : 20.0;
     _isMarkerZoomed = !_isMarkerZoomed;
     setState(() {
@@ -828,8 +830,12 @@ class _GoogleMapState extends State<GoogleMapScreen>
           );
         });
       }
-    } catch (e) {
-      print("Error searching location: $e");
+    } catch (error, stackTrace) {
+      // Handle the error
+      await Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
     }
   }
 

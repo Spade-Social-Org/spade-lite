@@ -24,7 +24,6 @@ class AuthRepository {
         .post(Uri.parse("${baseUrl}auth/signup"), body: model.toJson())
         .timeout(const Duration(seconds: 60));
     final data = jsonDecode(response.body);
-    print(data);
     return RegisterResponseModel.fromJson(data);
   }
 
@@ -34,7 +33,6 @@ class AuthRepository {
             headers: {...customHeader}, body: jsonEncode(model.toMap()))
         .timeout(const Duration(seconds: 60));
     final data = jsonDecode(response.body);
-    print(data);
     return ResponseModel.fromJson(data);
   }
 
@@ -43,7 +41,6 @@ class AuthRepository {
         .post(Uri.parse("${baseUrl}auth/otp/verify"), body: model.toMap())
         .timeout(const Duration(seconds: 60));
     final data = jsonDecode(response.body);
-    print(data);
     return ResponseModel.fromJson(data);
   }
 }

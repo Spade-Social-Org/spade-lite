@@ -12,7 +12,6 @@ class DiscoverRepo {
 
   //checkout users
   Future<List<DiscoverUserModel>> checkoutUsers() async {
-    print("checkout in progress!");
     String? token = await PrefProvider.getUserToken();
 
     Position position = await Geolocator.getCurrentPosition(

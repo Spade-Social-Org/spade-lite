@@ -83,6 +83,7 @@ dependencies:
   url_launcher: ^6.1.11
   video_player: ^2.7.1
   video_thumbnail: ^0.5.3
+  sentry: ^7.14.0
 
 dev_dependencies:
   custom_lint: ^0.5.3

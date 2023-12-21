@@ -24,11 +24,8 @@ class SocketProvider extends StateNotifier<SocketModel> {
         'https://spade-backend-v3-production.up.railway.app/',
         IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
             {...customHeader, 'authorization': 'Bearer $token'}).build());
-    socket.onConnect((data) {
-      print('connected');
-    });
+    socket.onConnect((data) {});
     socket.on('message.private', (data) {
-      print(data);
       streamSocket.addResponse;
       ref.invalidate(messageFutureProvider);
       ref.invalidate(chatListFutureProvider);

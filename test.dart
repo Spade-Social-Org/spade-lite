@@ -7,5 +7,4 @@ void main() {
     5
   ];
   list.firstWhere((element) => element is List).add(12);
-  print(list);
 }

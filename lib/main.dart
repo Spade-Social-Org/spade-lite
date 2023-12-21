@@ -17,7 +17,6 @@ import 'injection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:sentry/sentry.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
