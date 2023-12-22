@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_validator/form_validator.dart';
 
 import 'package:spade_lite/Common/navigator.dart';
-import 'package:spade_lite/Presentation/Screens/Buttom_nav/navigation_container.dart';
+import 'package:spade_lite/Presentation/Screens/Bottom_nav/navigation_container.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/model/login_model.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/provider/onboarding_provider.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/widgets/form_labels.dart';

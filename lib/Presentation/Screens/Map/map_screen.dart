@@ -21,7 +21,6 @@ import 'package:spade_lite/Presentation/widgets/rounded_marker.dart';
 import '../../../Common/theme.dart';
 import '../../../Domain/Entities/place.dart';
 import '../../Bloc/places_bloc.dart';
-import '../../widgets/jh_custom_marker.dart';
 import '../../widgets/jh_loader.dart';
 import '../../widgets/jh_logger.dart';
 import '../../widgets/jh_search_bar.dart';
@@ -78,7 +77,7 @@ Widget _buildErrorBottomSheet(String errorMessage) {
 }
 
 Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
-    ScrollController scrollController) {
+    ScrollController scrollController, DiscoverUserModel? user) {
   return ListView(
     controller: scrollController,
     children: [
@@ -100,7 +99,7 @@ Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/Ellipse 378.png"),
+              backgroundImage: NetworkImage(user!.gallery![0]),
               radius: 30,
             ),
           ),
@@ -423,7 +422,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
             left: 20,
             bottom: 40,
             child: GestureDetector(
-              onTap: _showBottomSheetForCard,
+              onTap: () => _showBottomSheetForCard(user),
               child: CircleAvatar(
                 backgroundColor: Colors.black,
                 radius: 30,
@@ -1016,7 +1015,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pop();
-                                _showBottomSheetForCard();
+                                _showBottomSheetForCard(user);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -1083,7 +1082,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
     );
   }
 
-  void _showBottomSheetForCard() {
+  void _showBottomSheetForCard(DiscoverUserModel? user) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -1116,75 +1115,125 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: user?.relationshipType == "single_searching"
+                              ? Colors.green
+                              : Colors
+                                  .red, // Change this to your desired border color
+                          width:
+                              3.0, // Change this to your desired border width
+                        ),
+                      ),
                       child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage("assets/images/Ellipse 378.png"),
+                        backgroundImage: user?.gallery?[0] == null
+                            ? null
+                            : NetworkImage(user!.gallery![0]),
                         radius: 30,
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
+                    const SizedBox(width: 20),
+                    Expanded(
+                        child: Container(
+                            padding: EdgeInsets.all(
+                                12.5), // Set your desired padding
                             decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.white, width: 2),
-                                color: Colors.white38,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 30,
-                            width: 60,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Image.asset(
-                                "assets/images/Vector (2).png",
-                                height: 10,
-                              ),
+                              color: Color(
+                                  0xFF2F2F2F), // Set your desired background color
+                              borderRadius: BorderRadius.circular(
+                                  15), // Set your desired border radius
                             ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              color: Colors.white38,
-                              borderRadius: BorderRadius.circular(20)),
-                          height: 30,
-                          width: 60,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: SvgPicture.asset(
-                              "assets/svgs/like.svg",
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.white, width: 2),
-                                color: Colors.white38,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 30,
-                            width: 60,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SvgPicture.asset(
-                                "assets/svgs/calendar.svg",
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                      ],
-                    )
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.white, width: 2),
+                                        color: Colors.white38,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    height: 30,
+                                    width: 60,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 3.5),
+                                      child: Image.asset(
+                                        "assets/images/Vector (2).png",
+                                        height: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.white, width: 2),
+                                        color: Colors.white38,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    height: 30,
+                                    width: 60,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 3.5),
+                                      child: SvgPicture.asset(
+                                        "assets/svgs/like.svg",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.white, width: 2),
+                                        color: Colors.white38,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    height: 30,
+                                    width: 60,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 3.5),
+                                      child: SvgPicture.asset(
+                                        "assets/svgs/calendar.svg",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.white, width: 2),
+                                        color: Colors.white38,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    height: 30,
+                                    width: 60,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 3.5),
+                                      child: SvgPicture.asset(
+                                        "assets/svgs/bookmark.svg",
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ))),
                   ],
                 ),
                 const SizedBox(height: 15),
@@ -1192,7 +1241,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                   height: 200,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: images.length,
+                      itemCount: cards.length,
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
@@ -1203,27 +1252,28 @@ class _GoogleMapState extends State<GoogleMapScreen>
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).pop();
-                                  _showBottomSheetForSelectedCard(cards[index]);
+                                  _showBottomSheetForSelectedCard(
+                                      cards[index], user);
                                 },
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Container(
-                                    color: Colors.white,
-                                    height: 130,
-                                    width: 130,
-                                    child: Image.asset(
-                                      images[index],
-                                      fit: BoxFit.fill,
-                                    ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.asset(
+                                    images[index],
+                                    fit: BoxFit.fill,
+                                    width: 125,
+                                    height: 125,
                                   ),
                                 ),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 10,
                               ),
                               Text(
                                 title[index],
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),
@@ -1238,7 +1288,8 @@ class _GoogleMapState extends State<GoogleMapScreen>
     );
   }
 
-  void _showBottomSheetForSelectedCard(CardModel card) {
+  void _showBottomSheetForSelectedCard(
+      CardModel card, DiscoverUserModel? user) {
     BlocProvider.of<PlacesBloc>(context)
         .add(FetchPlacesEvent(card.placeType, _initialPosition!, null));
     showModalBottomSheet<void>(
@@ -1263,7 +1314,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                   return _buildLoadingBottomSheet();
                 } else if (state is PlacesLoadedState) {
                   return _buildLoadedBottomSheet(
-                      context, state.places, scrollController);
+                      context, state.places, scrollController, user);
                 } else if (state is PlacesErrorState) {
                   return _buildErrorBottomSheet(state.message);
                 }

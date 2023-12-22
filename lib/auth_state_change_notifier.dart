@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'Presentation/Screens/Buttom_nav/navigation_container.dart';
+import 'Presentation/Screens/Bottom_nav/navigation_container.dart';
 import 'Presentation/Screens/messages/provider/socket_provider.dart';
 import 'Presentation/Screens/onboarding/landing_screen.dart';
 import 'prefs/pref_provider.dart';

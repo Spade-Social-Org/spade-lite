@@ -86,32 +86,39 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
                     const TextStyle(fontWeight: FontWeight.bold),
                 items: [
                   BottomNavigationBarItem(
-                    icon: Image.asset(
+                    icon: Center(
+                      child: Image.asset(
                         selectedIndex == 0
                             ? "assets/images/spade-light.png"
                             : "assets/images/spade-small.png",
-                        height: 24),
-                    label: "",
+                        height: 24,
+                      ),
+                    ),
+                    label: "Feed",
                   ),
                   BottomNavigationBarItem(
-                    icon: Image.asset(
-                      selectedIndex == 1
-                          ? "assets/images/message-light.png"
-                          : "assets/images/message.png",
-                      width: 24,
-                      height: 24,
+                    icon: Center(
+                      child: Image.asset(
+                        selectedIndex == 1
+                            ? "assets/images/message-light.png"
+                            : "assets/images/message.png",
+                        width: 24,
+                        height: 24,
+                      ),
                     ),
-                    label: "",
+                    label: "Messages",
                   ),
                   BottomNavigationBarItem(
-                    icon: Image.asset(
-                      selectedIndex == 2
-                          ? "assets/images/global-light.png"
-                          : "assets/images/global.png",
-                      width: 24,
-                      height: 24,
+                    icon: Center(
+                      child: Image.asset(
+                        selectedIndex == 2
+                            ? "assets/images/global-light.png"
+                            : "assets/images/global.png",
+                        width: 24,
+                        height: 24,
+                      ),
                     ),
-                    label: "",
+                    label: "Maps",
                   ),
                 ],
               ),

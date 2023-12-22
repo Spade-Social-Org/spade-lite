@@ -85,6 +85,7 @@ dependencies:
   video_thumbnail: ^0.5.3
   sentry: ^7.14.0
   widget_to_marker: ^1.0.4
+  http_parser: ^4.0.2
 
 dev_dependencies:
   custom_lint: ^0.5.3

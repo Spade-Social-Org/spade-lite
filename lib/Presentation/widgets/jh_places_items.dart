@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 List<dynamic> images = [
-  "assets/images/Rectangle 3382.png",
-  "assets/images/Rectangle 3384.png",
   "assets/images/Rectangle 3381.png",
+  "assets/images/Rectangle 3382.png",
   "assets/images/Rectangle 3383.png",
-  "assets/images/Rectangle 3381.png"
+  "assets/images/Rectangle 3384.png",
 ];
 
 // List<dynamic> placeImages = [
@@ -53,7 +52,7 @@ List<dynamic> images = [
 //   "assets/images/movie1.png",
 // ];
 
-List<String> title = ["Restaurant", "Hotel", "Theatre", "Clubs", "Museum"];
+List<String> title = ["Food & Drinks", "Movies", "Activities", "Lodging"];
 
 List<String> text = [
   "Favourite",
@@ -133,19 +132,30 @@ List<Friend> friend = [
   const Friend("assets/images/Ellipse 368.png", Colors.green),
 ];
 
-
 class CardModel {
   final String title;
   final String image;
   final String placeType;
 
-  CardModel({required this.title, required this.image, required this.placeType});
+  CardModel(
+      {required this.title, required this.image, required this.placeType});
 }
 
 final List<CardModel> cards = [
-  CardModel(title: 'Restaurants', image: 'assets/images/Rectangle 3382.png', placeType: 'restaurant'),
-  CardModel(title: 'Hotels', image: 'assets/images/Rectangle 3384.png', placeType: 'hotel'),
-  CardModel(title: 'Movies', image: 'assets/images/Rectangle 3381.png', placeType: 'movie_theater'),
-  CardModel(title: 'Clubs', image: 'assets/images/Rectangle 3383.png', placeType: 'night_club'),
-  CardModel(title: 'Museum', image: 'assets/images/Rectangle 3381.png', placeType: 'museum'),
+  CardModel(
+      title: 'Food & Drinks',
+      image: "assets/images/Rectangle 3381.png",
+      placeType: 'restaurant'),
+  CardModel(
+      title: 'Movies',
+      image: "assets/images/Rectangle 3382.png",
+      placeType: 'movie_theater'),
+  CardModel(
+      title: 'Activities',
+      image: "assets/images/Rectangle 3383.png",
+      placeType: 'museum'),
+  CardModel(
+      title: 'Lodging',
+      image: "assets/images/Rectangle 3384.png",
+      placeType: 'hotel'),
 ];

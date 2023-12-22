@@ -6,7 +6,7 @@ import 'package:spade_lite/Common/api.dart';
 import 'package:spade_lite/Common/api_handler/api_client_config.dart';
 import 'package:spade_lite/Common/api_handler/api_handler_models.dart';
 import 'package:spade_lite/Common/navigator.dart';
-import 'package:spade_lite/Presentation/Screens/Buttom_nav/navigation_container.dart';
+import 'package:spade_lite/Presentation/Screens/Bottom_nav/navigation_container.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/custom_snackbar.dart';
 import 'package:spade_lite/Presentation/widgets/loading_dialog.dart';
 

@@ -6,7 +6,7 @@ void loadingDialog() => showDialog(
       barrierDismissible: false,
       builder: (BuildContext dialogContext) {
         return Container(
-          color: Colors.white,
+          color: Colors.black,
           child: Center(child: Image.asset("assets/images/ShuffleE.gif")),
         );
       },
