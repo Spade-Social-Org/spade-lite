@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
 class JHSearchField extends StatelessWidget {
-  const JHSearchField({super.key});
+  final TextEditingController searchController;
+  final void Function() searchLocation;
+
+  const JHSearchField({
+    super.key,
+    required this.searchController,
+    required this.searchLocation,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: TextField(
+        controller: searchController,
         style: const TextStyle(
           color: Colors.white,
         ),
@@ -38,10 +46,13 @@ class JHSearchField extends StatelessWidget {
               weight: 30,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: searchLocation,
           ),
         ),
         textAlign: TextAlign.center,
+        onSubmitted: (_) {
+          searchLocation();
+        },
       ),
     );
   }

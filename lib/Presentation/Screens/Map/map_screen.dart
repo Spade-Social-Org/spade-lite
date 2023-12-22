@@ -76,259 +76,6 @@ Widget _buildErrorBottomSheet(String errorMessage) {
   );
 }
 
-Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
-    ScrollController scrollController, DiscoverUserModel? user) {
-  return ListView(
-    controller: scrollController,
-    children: [
-      const SizedBox(
-        height: 2,
-      ),
-      Center(
-        child: Container(
-          width: 20 * 7,
-          height: 6,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              shape: BoxShape.rectangle),
-        ),
-      ),
-      Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(user!.gallery![0]),
-              radius: 30,
-            ),
-          ),
-          const SizedBox(
-            width: 2 * 4,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-                decoration: InputDecoration(
-                  hintText: "Search for Places",
-                  hintStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  fillColor: const Color(0xFF333333),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
-                      width: 2.0,
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      weight: 30,
-                      size: 30,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ],
-      ),
-      Padding(
-        padding: const EdgeInsets.only(left: 2),
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(left: 2),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            for (int i = 0; i < 3; i++)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF333333),
-                      borderRadius: BorderRadius.circular(20)),
-                  height: 29,
-                  width: 90,
-                  child: Row(
-                    children: [
-                      Icon(
-                        iconsRow[i],
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                      Text(
-                        text[i].toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-      ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: places.length,
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final place = places[index];
-          logger.d('Image URL for place ${place.name}: ${place.imageURL}');
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 12,
-                  ),
-                  child: Text(
-                    place.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 12,
-                  ),
-                  child: Text(
-                    place.address,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: Text(
-                            place.openingHours,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: place.openingHours == 'Open now'
-                                  ? CustomColors.greenPrimary
-                                  : Colors.grey,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${place.distance.toStringAsFixed(2)} miles',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 14,
-                    ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                              height: 25,
-                              width: 60 * 2,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Schedule',
-                                  style: TextStyle(
-                                    color: CustomColors.black,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        Image.asset('assets/images/arrowforward.png',
-                            width: 14),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Image.asset('assets/images/calendar.png',
-                                width: 12)),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Image.asset('assets/images/hearticon.png', width: 12),
-                      ],
-                    ),
-                  ],
-                ),
-                if (place.imageURL.isNotEmpty)
-                  buildHorizontalImageList(place.imageURL),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          );
-        },
-      )
-    ],
-  );
-}
-
 Widget _buildLoadingBottomSheet() {
   return Container(
     padding: const EdgeInsets.all(16),
@@ -347,11 +94,13 @@ class GoogleMapScreen extends StatefulWidget {
 
 class _GoogleMapState extends State<GoogleMapScreen>
     with SingleTickerProviderStateMixin {
+  TextEditingController _searchController = TextEditingController();
+  LatLng? _searchedLocation;
+  late GoogleMapController? mapController;
+
   String mapTheme = '';
   int selectedItemIndex = -1;
   int selectedContainerIndex = -1;
-  late GoogleMapController? mapController;
-  final TextEditingController _searchController = TextEditingController();
 
   final Map<String, Marker> markers = {};
   Set<Marker> _markers = {};
@@ -363,7 +112,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   bool trafficEnabled = false;
   late Geolocator geolocator;
   LatLng? _initialPosition;
-  LatLng? _searchedLocation;
 
   final Set<Circle> _circle = {};
 
@@ -384,6 +132,262 @@ class _GoogleMapState extends State<GoogleMapScreen>
     setState(() {
       _markers.add(marker);
     });
+  }
+
+  void _searchLocation() async {
+    String searchText = _searchController.text;
+    if (searchText.isEmpty) return;
+    print("Search Text: $searchText");
+    try {
+      List<Location> locations = await locationFromAddress(searchText);
+      if (locations.isNotEmpty) {
+        setState(() {
+          _searchedLocation =
+              LatLng(locations.first.latitude, locations.first.longitude);
+          mapController?.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: _searchedLocation!,
+                zoom: 14,
+              ),
+            ),
+          );
+        });
+      }
+    } catch (error, stackTrace) {
+      // Handle the error
+      await Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  Widget _buildLoadedBottomSheet(BuildContext context, List<Place> places,
+      ScrollController scrollController, DiscoverUserModel? user) {
+    return ListView(
+      controller: scrollController,
+      children: [
+        const SizedBox(
+          height: 2,
+        ),
+        Center(
+          child: Container(
+            width: 20 * 7,
+            height: 6,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                shape: BoxShape.rectangle),
+          ),
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(user!.gallery![0]),
+                radius: 30,
+              ),
+            ),
+            const SizedBox(
+              width: 2 * 4,
+            ),
+            Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Search',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          print('Search button pressed');
+                        },
+                      ),
+                    ),
+                  )),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 2),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 2),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              for (int i = 0; i < 3; i++)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF333333),
+                        borderRadius: BorderRadius.circular(20)),
+                    height: 29,
+                    width: 90,
+                    child: Row(
+                      children: [
+                        Icon(
+                          iconsRow[i],
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        Text(
+                          text[i].toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: places.length,
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final place = places[index];
+            logger.d('Image URL for place ${place.name}: ${place.imageURL}');
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 12,
+                    ),
+                    child: Text(
+                      place.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 12,
+                    ),
+                    child: Text(
+                      place.address,
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Text(
+                              place.openingHours,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: place.openingHours == 'Open now'
+                                    ? CustomColors.greenPrimary
+                                    : Colors.grey,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '${place.distance.toStringAsFixed(2)} miles',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 14,
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                                height: 25,
+                                width: 60 * 2,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'Schedule',
+                                    style: TextStyle(
+                                      color: CustomColors.black,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                )),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Image.asset('assets/images/arrowforward.png',
+                              width: 14),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Image.asset('assets/images/calendar.png',
+                                  width: 12)),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Image.asset('assets/images/hearticon.png', width: 12),
+                        ],
+                      ),
+                    ],
+                  ),
+                  if (place.imageURL.isNotEmpty)
+                    buildHorizontalImageList(place.imageURL),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            );
+          },
+        )
+      ],
+    );
   }
 
   @override
@@ -477,14 +481,13 @@ class _GoogleMapState extends State<GoogleMapScreen>
                         ),
                       ),
                       suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          weight: 30,
-                          size: 30,
-                        ),
-                        onPressed: _searchLocation,
-                      ),
+                          icon: const Icon(
+                            Icons.search,
+                            color: Colors.white,
+                            weight: 30,
+                            size: 30,
+                          ),
+                          onPressed: _searchLocation),
                     ),
                     textAlign: TextAlign.center,
                     onSubmitted: (_) {
@@ -837,35 +840,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
     //_showBottomSheet();
   }
 
-  void _searchLocation() async {
-    String searchText = _searchController.text;
-    if (searchText.isEmpty) return;
-
-    try {
-      List<Location> locations = await locationFromAddress(searchText);
-      if (locations.isNotEmpty) {
-        setState(() {
-          _searchedLocation =
-              LatLng(locations.first.latitude, locations.first.longitude);
-          mapController?.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: _searchedLocation!,
-                zoom: 14,
-              ),
-            ),
-          );
-        });
-      }
-    } catch (error, stackTrace) {
-      // Handle the error
-      await Sentry.captureException(
-        error,
-        stackTrace: stackTrace,
-      );
-    }
-  }
-
   void _showBottomSheet({String? name, String? imageString, String? location}) {
     showModalBottomSheet(
       context: context,
@@ -1111,7 +1085,9 @@ class _GoogleMapState extends State<GoogleMapScreen>
                   ),
                 ),
                 const SizedBox(height: 10),
-                const JHSearchField(),
+                JHSearchField(
+                    searchController: _searchController,
+                    searchLocation: _searchLocation),
                 const SizedBox(height: 20),
                 Row(
                   children: [
