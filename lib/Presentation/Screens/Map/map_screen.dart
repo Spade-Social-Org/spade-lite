@@ -94,7 +94,7 @@ class GoogleMapScreen extends StatefulWidget {
 
 class _GoogleMapState extends State<GoogleMapScreen>
     with SingleTickerProviderStateMixin {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   LatLng? _searchedLocation;
   late GoogleMapController? mapController;
 
@@ -137,7 +137,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   void _searchLocation() async {
     String searchText = _searchController.text;
     if (searchText.isEmpty) return;
-    print("Search Text: $searchText");
     try {
       List<Location> locations = await locationFromAddress(searchText);
       if (locations.isNotEmpty) {
@@ -200,10 +199,8 @@ class _GoogleMapState extends State<GoogleMapScreen>
                     decoration: InputDecoration(
                       labelText: 'Search',
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {
-                          print('Search button pressed');
-                        },
+                        icon: const Icon(Icons.search),
+                        onPressed: () {},
                       ),
                     ),
                   )),
@@ -567,7 +564,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   void fetchUsers() async {
     try {
       userSpade = await DiscoverRepo().checkoutUsers();
-      debugPrint("userSp =======> ${userSpade.toString()}");
       // Now you can use userSpade in your UI
       setState(() {
         // Update your UI if necessary
@@ -584,8 +580,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
   void fetchUser() async {
     try {
       user = await GetUser().getUser();
-      debugPrint("Spade User: =======> ${user.toString()}");
-      print('user after fetch: $user'); // Add this line
       // Now you can use user in your UI
       setState(() {
         // Update your UI if necessary
@@ -1113,10 +1107,10 @@ class _GoogleMapState extends State<GoogleMapScreen>
                     const SizedBox(width: 20),
                     Expanded(
                         child: Container(
-                            padding: EdgeInsets.all(
+                            padding: const EdgeInsets.all(
                                 12.5), // Set your desired padding
                             decoration: BoxDecoration(
-                              color: Color(
+                              color: const Color(
                                   0xFF2F2F2F), // Set your desired background color
                               borderRadius: BorderRadius.circular(
                                   15), // Set your desired border radius
@@ -1286,6 +1280,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
           builder: (BuildContext context, ScrollController scrollController) {
             return BlocBuilder<PlacesBloc, PlacesState>(
               builder: (context, state) {
+                print("I am here 2");
                 if (state is PlacesLoadingState) {
                   return _buildLoadingBottomSheet();
                 } else if (state is PlacesLoadedState) {
