@@ -11,7 +11,6 @@ import 'package:spade_lite/Presentation/Screens/messages/models/messages.dart';
 import 'package:spade_lite/Presentation/Screens/messages/models/on_add_new_message_data_model.dart';
 import 'package:spade_lite/Presentation/Screens/messages/models/user_matches_response_model.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
-import 'package:spade_lite/Presentation/Screens/notifications/models/notifications_model.dart';
 import 'package:spade_lite/prefs/pref_provider.dart';
 
 final messagesProvider = StateNotifierProvider<MessagesProvider, MessagesRepo>(
