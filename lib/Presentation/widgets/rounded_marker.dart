@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RoundedMarker extends StatelessWidget {
-  const RoundedMarker({
+  const RoundedMarker({super.key, 
     required this.imageUrl,
     required this.type,
   });
