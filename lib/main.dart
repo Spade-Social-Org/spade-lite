@@ -58,21 +58,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Spade',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<PlacesBloc>(
+            create: (context) => locator<PlacesBloc>(),
           ),
-          useMaterial3: true,
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Spade',
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+            ),
+            useMaterial3: true,
+          ),
+          navigatorKey: kNavigatorKey,
+          onGenerateRoute: RouteGenerator.onGenerateRoute,
+          onUnknownRoute: RouteGenerator.unKnownRoute,
+          home: const AuthStateChangeNotifier(),
         ),
-        navigatorKey: kNavigatorKey,
-        onGenerateRoute: RouteGenerator.onGenerateRoute,
-        onUnknownRoute: RouteGenerator.unKnownRoute,
-        home: const AuthStateChangeNotifier(),
       ),
     );
   }
