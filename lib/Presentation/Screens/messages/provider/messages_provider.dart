@@ -12,6 +12,7 @@ import 'package:spade_lite/Presentation/Screens/messages/models/on_add_new_messa
 import 'package:spade_lite/Presentation/Screens/messages/models/user_matches_response_model.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/models/notifications_model.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 
 final messagesProvider = StateNotifierProvider<MessagesProvider, MessagesRepo>(
   (ref) => MessagesProvider(ref),
@@ -48,7 +49,8 @@ class MessagesProvider extends StateNotifier<MessagesRepo> {
   }
 
   void onAddNewMessageData(OnAddNewMessageDataModel data) {
-    if (data.senderId.toString() != state.currentChatData?.id) return;
+    if (data.senderId.toString() != state.currentChatData?.id &&
+        data.senderId.toString() != ref.read(userIdProvider).value) return;
     state = state.copyWith(
       currentChat: state.currentChat!
         ..data = [
@@ -63,6 +65,17 @@ class MessagesProvider extends StateNotifier<MessagesRepo> {
         ],
     );
   }
+
+  // void onAddNewSentMessage(MessageData data) {
+  //   // if (data.senderId.toString() != state.currentChatData?.id) return;
+  //   state = state.copyWith(
+  //     currentChat: state.currentChat!
+  //       ..data = [
+  //         data,
+  //         ...state.currentChat!.data,
+  //       ],
+  //   );
+  // }
 
   refreshMatches() async {
     final res = await state.fetchUserMatches();
