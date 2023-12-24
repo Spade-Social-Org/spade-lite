@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
+import 'package:spade_lite/Common/constants.dart';
+import 'package:spade_lite/Presentation/Screens/messages/models/chat_model.dart';
 
 class MessageCard extends StatelessWidget {
-  final String messageLength;
-  final Color messageLengthColor;
-  final String sender;
-  final String message;
-  final Color indicatorColor;
-  final String timeSent;
+  final ChatsData chat;
   final VoidCallback onTap;
 
-  const MessageCard(
-      {super.key,
-      required this.messageLength,
-      required this.messageLengthColor,
-      required this.sender,
-      required this.message,
-      required this.indicatorColor,
-      required this.timeSent,
-      required this.onTap});
+  const MessageCard({super.key, required this.chat, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +23,10 @@ class MessageCard extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 25,
-                      backgroundImage: AssetImage('assets/images/avatar.png'),
+                      backgroundImage:
+                          NetworkImage(chat.image ?? AppConstants.defaultImage),
                     ),
                     Positioned(
                       right: -8,
@@ -45,13 +35,13 @@ class MessageCard extends StatelessWidget {
                         width: 25,
                         color: Colors.blueGrey,
                         padding: 2.0,
-                        child: const Text(
-                          '5',
-                          style: TextStyle(
-                              fontSize: 8,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        // child: const Text(
+                        //   '5',
+                        //   style: TextStyle(
+                        //       fontSize: 8,
+                        //       color: Colors.white,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
                       ),
                     ),
                   ],
@@ -65,37 +55,44 @@ class MessageCard extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          sender,
+                          chat.name ?? '',
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 8),
-                        Icon(Icons.circle, color: indicatorColor, size: 8)
+                        const Icon(
+                          Icons.circle,
+                          color: Color(0xff1AACFF),
+                          size: 8,
+                        ),
                       ],
                     ),
-                    Text(message)
+                    Text(chat.latestMessage ?? ''),
                   ],
                 ),
                 const Spacer(),
                 Column(
                   children: [
-                    Text(
-                      timeSent,
-                      style: const TextStyle(fontSize: 11, color: Colors.grey),
-                    ),
+                    // Text(
+                    //   timeSent,
+                    //   style: const TextStyle(fontSize: 11, color: Colors.grey),
+                    // ),
                     const SizedBox(height: 6),
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
                         Image.asset('assets/images/timer.png', height: 17),
                         const Positioned(
-                            right: 3,
-                            bottom: -3,
-                            child: Text(
-                              '5',
-                              style: TextStyle(
-                                  fontSize: 8, color: Color(0xff155332)),
-                            ))
+                          right: 3,
+                          bottom: -3,
+                          child: Text(
+                            '5',
+                            style: TextStyle(
+                              fontSize: 8,
+                              color: Color(0xff155332),
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],
@@ -104,9 +101,12 @@ class MessageCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child:
-                    LinearProgressIndicator(value: 0.6, color: indicatorColor))
+              borderRadius: BorderRadius.circular(50),
+              child: const LinearProgressIndicator(
+                value: 0.6,
+                color: Color(0xffC8192D),
+              ),
+            ),
           ],
         ),
       ),

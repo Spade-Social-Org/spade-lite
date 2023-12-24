@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:spade_lite/Presentation/Screens/messages/models/on_add_new_message_data_model.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
+import 'package:spade_lite/Presentation/Screens/messages/provider/messages_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 
 import 'package:spade_lite/prefs/pref_provider.dart';
@@ -15,7 +18,9 @@ final socketProvider = StateNotifierProvider<SocketProvider, SocketModel>(
 
 class SocketProvider extends StateNotifier<SocketModel> {
   final Ref ref;
-  SocketProvider(this.ref) : super(SocketModel());
+  SocketProvider(this.ref) : super(SocketModel()) {
+    initializeSocket();
+  }
   StreamSocket streamSocket = StreamSocket();
 
   Future<void> initializeSocket() async {
@@ -25,15 +30,19 @@ class SocketProvider extends StateNotifier<SocketModel> {
         IO.OptionBuilder().setTransports(['websocket']).setExtraHeaders(
             {...customHeader, 'authorization': 'Bearer $token'}).build());
     socket.onConnect((data) {});
+    socket.onAny((event, data) {
+      log('$event $data');
+    });
     socket.on('message.private', (data) {
-      streamSocket.addResponse;
-      ref.invalidate(messageFutureProvider);
-      ref.invalidate(chatListFutureProvider);
+      ref.read(messagesProvider.notifier).onAddNewMessageData(
+            OnAddNewMessageDataModel.fromJson(data),
+          );
     });
     state = state.copyWith(socket: socket);
   }
 
   Future<void> sendMessage({String? text, String? receiverId}) async {
+    log('send message $text $receiverId');
     state.socket!
         .emit('message.private', {'content': text, 'receiver_id': receiverId});
   }

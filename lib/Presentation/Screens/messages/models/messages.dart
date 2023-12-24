@@ -7,7 +7,7 @@ class Messages {
   });
 
   final String? statusCode;
-  final List<MessageData> data;
+  List<MessageData> data;
   final String? message;
   final String? devMessage;
 
@@ -31,7 +31,7 @@ class MessageData {
     required this.name,
     required this.userId,
     required this.image,
-    required this.gallery,
+    this.gallery,
   });
 
   final String? content;
@@ -39,7 +39,7 @@ class MessageData {
   final String? name;
   final int? userId;
   final dynamic image;
-  final dynamic gallery;
+  dynamic gallery;
 
   factory MessageData.fromJson(Map<String, dynamic> json) {
     return MessageData(

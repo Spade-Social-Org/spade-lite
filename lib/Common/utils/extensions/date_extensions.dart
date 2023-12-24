@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 
 extension DateExtension on DateTime {
   String get formatDate => DateFormat('dd/MM/yyyy').format(this);
+  String get formatDateWords => DateFormat('EEE MMM d, yyyy').format(this);
   String get formatDateAndTime => DateFormat('dd/MM/yyyy hh:mm').format(this);
   String get formatTime => DateFormat('hh:mm').format(this);
   String get formatTimeOnly24 => DateFormat('HH:mm').format(this);
