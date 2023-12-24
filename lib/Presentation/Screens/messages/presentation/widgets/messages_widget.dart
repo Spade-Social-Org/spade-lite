@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spade_lite/Common/navigator.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/group_screen.dart';
-import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/messages_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/custom_iconbutton.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/message_card.dart';
