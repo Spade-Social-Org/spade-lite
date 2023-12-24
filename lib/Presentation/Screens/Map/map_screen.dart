@@ -1280,7 +1280,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
           builder: (BuildContext context, ScrollController scrollController) {
             return BlocBuilder<PlacesBloc, PlacesState>(
               builder: (context, state) {
-                print("I am here 2");
                 if (state is PlacesLoadingState) {
                   return _buildLoadingBottomSheet();
                 } else if (state is PlacesLoadedState) {

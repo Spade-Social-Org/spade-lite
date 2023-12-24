@@ -153,9 +153,9 @@ final List<CardModel> cards = [
   CardModel(
       title: 'Activities',
       image: "assets/images/Rectangle 3383.png",
-      placeType: 'museum'),
+      placeType: 'park'),
   CardModel(
       title: 'Lodging',
       image: "assets/images/Rectangle 3384.png",
-      placeType: 'hotel'),
+      placeType: 'lodging'),
 ];
