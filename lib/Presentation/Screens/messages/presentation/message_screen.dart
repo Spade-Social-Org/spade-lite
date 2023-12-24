@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spade_lite/Common/constants.dart';
 import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
-import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
-import 'package:spade_lite/Presentation/Screens/messages/presentation/group_screen.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/widgets/matches_widget.dart';
 import 'package:spade_lite/Presentation/Screens/messages/presentation/widgets/messages_widget.dart';
-import 'package:spade_lite/Presentation/Screens/messages/provider/message_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/provider/messages_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
-import 'package:spade_lite/Common/navigator.dart';
 import '../widget/custom_iconbutton.dart';
-import '../widget/message_card.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessageScreen extends ConsumerStatefulWidget {
   const MessageScreen({super.key});

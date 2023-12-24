@@ -180,35 +180,77 @@ class _GoogleMapState extends State<GoogleMapScreen>
                 shape: BoxShape.rectangle),
           ),
         ),
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(user!.gallery![0]),
-                radius: 30,
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: user?.relationshipType == "single_searching"
+                          ? Colors.green
+                          : Colors
+                              .red, // Change this to your desired border color
+                      width: 3.0, // Change this to your desired border width
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: user?.gallery?[0] == null
+                        ? null
+                        : NetworkImage(user!.gallery![0]),
+                    radius: 30,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 2 * 4,
-            ),
-            Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Search',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () {},
+              const SizedBox(
+                width: 16,
+              ),
+              Expanded(
+                child: TextField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Search for places",
+                    hintStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    fillColor: const Color(0xFF333333),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2.0,
                       ),
                     ),
-                  )),
-            ),
-          ],
+                    suffixIcon: IconButton(
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          weight: 30,
+                          size: 30,
+                        ),
+                        onPressed: () {}),
+                  ),
+                  textAlign: TextAlign.center,
+                  onSubmitted: (_) {},
+                ),
+              ),
+            ],
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 2),
+          padding: const EdgeInsets.only(left: 2, right: 8),
           child: Row(
             children: [
               GestureDetector(
@@ -223,34 +265,48 @@ class _GoogleMapState extends State<GoogleMapScreen>
                   ),
                 ),
               ),
-              for (int i = 0; i < 3; i++)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF333333),
-                        borderRadius: BorderRadius.circular(20)),
-                    height: 29,
-                    width: 90,
-                    child: Row(
-                      children: [
-                        Icon(
-                          iconsRow[i],
-                          color: Colors.white,
-                          size: 15,
+              Expanded(
+                  child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for (int i = 0; i < 3; i++) ...[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF333333),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        Text(
-                          text[i].toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12,
-                          ),
+                        margin: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 14,
+                        ), // Padding for icon and text
+                        child: Row(
+                          children: [
+                            Icon(
+                              iconsRow[i],
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              text[i].toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                      if (i < 2)
+                        const SizedBox(
+                            width: 20), // Adjust based on your actual length
+                    ],
+                  ],
                 ),
+              )),
             ],
           ),
         ),
@@ -261,7 +317,6 @@ class _GoogleMapState extends State<GoogleMapScreen>
           shrinkWrap: true,
           itemBuilder: (context, index) {
             final place = places[index];
-            logger.d('Image URL for place ${place.name}: ${place.imageURL}');
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

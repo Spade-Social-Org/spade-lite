@@ -3,7 +3,6 @@ import 'package:spade_lite/Common/constants.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/messages_provider.dart';
 import 'package:spade_lite/Presentation/Screens/messages/widget/custom_iconbutton.dart';
-import 'package:spade_lite/resources/resources.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessagesAppBar extends ConsumerWidget implements PreferredSizeWidget {

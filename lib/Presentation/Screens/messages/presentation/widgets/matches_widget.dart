@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Common/constants.dart';
-import 'package:spade_lite/Common/navigator.dart';
-import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
-import 'package:spade_lite/Presentation/Screens/messages/presentation/chat_screen.dart';
 import 'package:spade_lite/Presentation/Screens/messages/provider/messages_provider.dart';
-import 'package:spade_lite/Presentation/Screens/messages/single/single_message.dart';
 
 class MatchesWidget extends ConsumerWidget {
   const MatchesWidget({
