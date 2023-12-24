@@ -66,10 +66,11 @@ class MessagesBody extends ConsumerWidget {
                   color: Colors.grey,
                   fontSize: 12,
                 ),
-              ),
+              ).pSymmetric(v: 10),
               for (var j in item.value.reversed)
                 ChatTile(
-                    isSender: j.userId == int.parse(userId ?? '0'), item: j),
+                        isSender: j.userId == int.parse(userId ?? '0'), item: j)
+                    .pOnly(b: 5),
             ],
           );
         },
