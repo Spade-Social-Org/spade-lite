@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spade_lite/Presentation/Screens/Profile/widget/custom_badge.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 List<StaggeredTile> generateStaggeredTiles(int length) {
   List<StaggeredTile> staggeredTiles = [];
@@ -64,7 +65,37 @@ class Profile extends StatefulWidget {
   State<StatefulWidget> createState() => _ProfileState();
 }
 
+final ScrollController _scrollController = ScrollController();
+bool _isLoading = false;
+
 class _ProfileState extends State<Profile> {
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _loadMoreData();
+      }
+    });
+  }
+
+  Future<void> _loadMoreData() async {
+    if (!_isLoading) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Fetch more data and add it to posts
+      // This is a placeholder, replace it with your actual data fetching code
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -273,6 +304,83 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3.5,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.white, // Set background color as transparent
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          side: const BorderSide(
+                              color: Colors.white), // Set border color as white
+                        ),
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/svgs/image.svg',
+                        width: 24,
+                        height: 24,
+                        color:
+                            Colors.black, // Optionally set the color of the SVG
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3.5,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors
+                            .transparent, // Set background color as transparent
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          side: const BorderSide(
+                              color: Colors.white), // Set border color as white
+                        ),
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/svgs/play.svg',
+                        width: 24,
+                        height: 24,
+                        color:
+                            Colors.white, // Optionally set the color of the SVG
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3.5,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors
+                            .transparent, // Set background color as transparent
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          side: const BorderSide(
+                              color: Colors.white), // Set border color as white
+                        ),
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/svgs/hash.svg',
+                        width: 24,
+                        height: 24,
+                        color:
+                            Colors.white, // Optionally set the color of the SVG
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 12),
                 child: StaggeredGridView.count(
