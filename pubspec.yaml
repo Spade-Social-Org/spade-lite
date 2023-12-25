@@ -24,6 +24,7 @@ dependencies:
   duration: ^3.0.13
   equatable: ^2.0.5
   expendable_fab: ^0.0.3
+
   firebase_core: ^2.23.0
   flip_card: ^0.7.0
   flutter:
@@ -86,6 +87,7 @@ dependencies:
   sentry: ^7.14.0
   widget_to_marker: ^1.0.4
   http_parser: ^4.0.2
+  staggered_grid_view_flutter: ^0.0.4
 
 dev_dependencies:
   custom_lint: ^0.5.3
