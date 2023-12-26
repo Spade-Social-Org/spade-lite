@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/qr_bottom_sheet.dart';
 import 'package:spade_lite/Presentation/Screens/Profile/widget/custom_badge.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
@@ -129,10 +130,19 @@ class _ProfileState extends State<Profile> {
                       Stack(
                         alignment: AlignmentDirectional.centerStart,
                         children: [
-                          const CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/Ellipse 368.png'),
+                          const SizedBox(
+                            // decoration: BoxDecoration(
+                            //   shape: BoxShape.circle,
+                            //   border: Border.all(
+                            //     color: Colors.blue,
+                            //     width: 2.0,
+                            //   ),
+                            // ),
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage:
+                                  AssetImage('assets/images/Ellipse 368.png'),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Positioned(
@@ -271,34 +281,46 @@ class _ProfileState extends State<Profile> {
                     ),
                   ]),
               const SizedBox(height: 20),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CustomBadge(
+                    const CustomBadge(
                       text: '20,067',
                       imagePath: 'assets/images/spade-gold.png',
                     ),
-                    SizedBox(width: 15),
-                    CustomBadge(
+                    const SizedBox(width: 15),
+                    const CustomBadge(
                       text: 'Virgo',
                       imagePath: 'assets/images/virgo.png',
                     ),
-                    SizedBox(width: 15),
-                    CustomBadge(
+                    const SizedBox(width: 15),
+                    const CustomBadge(
                       text: 'Add school',
-                      imagePath: 'assets/images/add.png',
+                      imagePath: 'assets/images/add-2.png',
                     ),
-                    SizedBox(width: 15),
-                    CustomBadge(
+                    const SizedBox(width: 15),
+                    const CustomBadge(
                       text: 'Job',
                       imagePath: 'assets/images/job.png',
                     ),
-                    SizedBox(width: 15),
-                    CustomBadge(
-                      text: 'Quick add',
-                      imagePath: 'assets/images/qr.png',
+                    const SizedBox(width: 15),
+                    GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              QRBottomSheet.buildQRBottomSheet(
+                                  MediaQuery.of(context).size.height, context),
+                          backgroundColor: Colors.transparent,
+                          isScrollControlled: true,
+                        );
+                      },
+                      child: const CustomBadge(
+                        text: 'Quick add',
+                        imagePath: 'assets/images/qr.png',
+                      ),
                     ),
                   ],
                 ),
@@ -331,6 +353,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.5,
                     child: ElevatedButton(
@@ -355,6 +378,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.5,
                     child: ElevatedButton(

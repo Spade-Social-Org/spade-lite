@@ -26,17 +26,18 @@ class CustomBadge extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    imagePath,
-                    width: 12,
-                    height: 12,
-                  ),
-                ],
-              ),
-              const SizedBox(width: 4),
+              if (imagePath.isNotEmpty)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      imagePath,
+                      width: 20,
+                      height: 20,
+                    ),
+                  ],
+                ),
+              if (text.isNotEmpty) const SizedBox(width: 4),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,

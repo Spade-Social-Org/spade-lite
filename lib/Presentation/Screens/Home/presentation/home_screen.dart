@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:spade_lite/Common/routes/app_routes.dart';
 import 'package:spade_lite/Common/theme.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
-import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/search_item.dart';
+import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/bottom_sheet_content.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/presentation/notification_screen.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:spade_lite/Presentation/Screens/Home/presentation/widgets/feed_body.dart';
@@ -140,77 +140,8 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget buildBottomSheetContent(double screenHeight) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topRight: Radius.circular(20),
-        topLeft: Radius.circular(20),
-      ),
-      child: Container(
-        height: screenHeight * 0.8,
-        width: double.infinity,
-        color: const Color(0xFF232323),
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-                decoration: InputDecoration(
-                  hintText: "Search for people",
-                  hintStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  fillColor: const Color(0xFF333333),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xFF333333),
-                      width: 2.0,
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        weight: 30,
-                        size: 30,
-                      ),
-                      onPressed: () {}),
-                ),
-                textAlign: TextAlign.center,
-                onSubmitted: (_) {},
-              ),
-              const Column(
-                children: [
-                  SearchItem(),
-                  SearchItem(),
-                  SearchItem(),
-                  SearchItem(),
-                  SearchItem(),
-                  SearchItem(),
-                  SearchItem(),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @widgetFactory
   Widget feedAppBar(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
     return Row(
       children: [
         Expanded(
@@ -224,8 +155,10 @@ class HomeScreen extends ConsumerWidget {
             showModalBottomSheet(
               context: context,
               builder: (BuildContext context) =>
-                  buildBottomSheetContent(screenHeight),
+                  BottomSearchSheet.buildBottomSheetContent(
+                      MediaQuery.of(context).size.height),
               backgroundColor: Colors.transparent,
+              isScrollControlled: true,
             );
           },
           child: Image.asset(
