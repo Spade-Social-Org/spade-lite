@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/discovery_repo.dart';
@@ -27,7 +26,10 @@ Widget _buildErrorBottomSheet(String errorMessage) {
   return Container(
     padding: const EdgeInsets.all(16),
     child: Center(
-      child: Text('Error: $errorMessage'),
+      child: Text(
+        'Error: $errorMessage',
+        style: const TextStyle(color: Colors.white),
+      ),
     ),
   );
 }

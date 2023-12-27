@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
+import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_times.dart';
 import '../../../../Domain/Entities/place.dart';
 import '../../../../Common/theme.dart';
 import '../widgets/horizontal_image_list.dart';
@@ -259,6 +260,18 @@ class BottomPlacesSheet extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pop();
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(20),
+                                        topLeft: Radius.circular(20),
+                                      ),
+                                      child: BottomTimes(id: place.id),
+                                    );
+                                  },
+                                );
                               },
                               child: Container(
                                 height: 30,
