@@ -17,7 +17,6 @@ class PlacesRepositoryImpl implements PlacesRepository {
     do {
       final data =
           await api.fetchPlaces(placeType, location, pageToken: nextPageToken);
-      logger.d('API Response Data: $data');
 
       // ignore: unnecessary_null_comparison
       if (data != null && data.containsKey('results')) {
@@ -25,12 +24,9 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
         places.addAll(await Future.wait(placesJson.map((placeJson) async {
           final details = await api.fetchPlaceDetails(placeJson['place_id']);
-          logger.d('API Response Data: $details');
           final placeDetails = details['result'] as Map<String, dynamic>;
-          logger.d('API Response Data: $placeDetails');
 
           final photoReferences = placeDetails['photos'] as List<dynamic>?;
-          logger.d('API Response Data: $photoReferences');
 
           final imageUrls = api.buildPhotoUrls(photoReferences
               ?.map((photo) => photo['photo_reference'] as String)
@@ -58,7 +54,6 @@ class PlacesRepositoryImpl implements PlacesRepository {
 
         nextPageToken = data['next_page_token'];
       } else {
-        logger.d('Invalid or missing API response data');
         break;
       }
     } while (nextPageToken != null);

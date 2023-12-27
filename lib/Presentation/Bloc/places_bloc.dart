@@ -60,7 +60,6 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
             nextPageToken: event.nextPageToken);
         emit(PlacesLoadedState(placesResult.places));
       } catch (e) {
-        logger.e('Failed to fetch places: $e');
         emit(const PlacesErrorState('Failed to fetch places.'));
       }
     });
@@ -70,7 +69,6 @@ class PlacesBloc extends Bloc<PlacesEvent, PlacesState> {
       {String? nextPageToken}) async {
     final places =
         await getPlaces(placeType, location, nextPageToken: nextPageToken);
-    logger.d('Fetched Places: $places');
 
     return places;
   }

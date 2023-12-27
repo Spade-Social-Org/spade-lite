@@ -25,8 +25,6 @@ class GooglePlacesApi {
     if (response.statusCode == 200) {
       final responseData = response.body;
 
-      logger.d('API Response Data: $responseData');
-
       return json.decode(responseData) as Map<String, dynamic>;
     } else {
       throw Exception('Failed to fetch data: ${response.statusCode}');
@@ -43,8 +41,8 @@ class GooglePlacesApi {
       final detailsData = detailsResponse.body;
       return json.decode(detailsData) as Map<String, dynamic>;
     } else {
-      logger.e('Failed to fetch place details with status code: ${detailsResponse.statusCode}');
-      throw Exception('Failed to fetch place details: ${detailsResponse.statusCode}');
+      throw Exception(
+          'Failed to fetch place details: ${detailsResponse.statusCode}');
     }
   }
 
