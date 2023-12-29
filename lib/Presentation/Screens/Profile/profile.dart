@@ -60,7 +60,7 @@ List<Widget> generateTiles() {
 }
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
 
   @override
   State<StatefulWidget> createState() => _ProfileState();

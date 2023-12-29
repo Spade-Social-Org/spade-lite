@@ -263,8 +263,8 @@ class BottomPlacesSheet extends StatelessWidget {
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return ClipRRect(
-                                      borderRadius: const BorderRadius.only(
+                                    return const ClipRRect(
+                                      borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(20),
                                         topLeft: Radius.circular(20),
                                       ),

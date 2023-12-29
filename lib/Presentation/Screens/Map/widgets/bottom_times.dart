@@ -5,7 +5,7 @@ import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_friends_list.
 class BottomTimes extends StatefulWidget {
   final String id;
 
-  BottomTimes({required this.id});
+  const BottomTimes({super.key, required this.id});
 
   @override
   _BottomTimesState createState() => _BottomTimesState();

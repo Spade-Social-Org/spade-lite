@@ -5,7 +5,7 @@ import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_times.dart';
 import 'package:spade_lite/Presentation/Screens/Map/widgets/date_set.dart';
 
 class BottomFriendsList extends StatefulWidget {
-  const BottomFriendsList({Key? key}) : super(key: key);
+  const BottomFriendsList({super.key});
 
   @override
   _BottomFriendsListState createState() => _BottomFriendsListState();
@@ -67,7 +67,7 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                           showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) =>
-                                BottomTimes(id: ''),
+                                const BottomTimes(id: ''),
                           );
                         },
                       ),
@@ -229,7 +229,7 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                 Navigator.pop(context, true);
                 showModalBottomSheet(
                     context: context,
-                    builder: (BuildContext context) => DateSet());
+                    builder: (BuildContext context) => const DateSet());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xffffffff),

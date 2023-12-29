@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HorizontalImageList extends StatelessWidget {
   final List<String> imageURLs;
 
-  const HorizontalImageList({
+  const HorizontalImageList({super.key, 
     required this.imageURLs,
   });
 
