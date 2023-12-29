@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spade_lite/Presentation/Screens/Calendar/calender_screen.dart';
+import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_friends_list.dart';
 
 class BottomTimes extends StatefulWidget {
   final String id;
@@ -105,7 +106,11 @@ class _BottomTimesState extends State<BottomTimes> {
                     width: 125,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add your button click logic here
+                        Navigator.pop(context);
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                const BottomFriendsList());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: selectedTime.isNotEmpty
