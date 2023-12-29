@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../Domain/Entities/place.dart';
 import '../../Domain/Usecase/get_places_use_case.dart';
-import '../widgets/jh_logger.dart';
 
 abstract class PlacesEvent extends Equatable {
   const PlacesEvent();

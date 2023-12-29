@@ -1,72 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:spade_lite/Presentation/Screens/Calendar/calender_screen.dart';
 
-class BottomTimes extends StatelessWidget {
+class BottomTimes extends StatefulWidget {
   final String id;
 
   BottomTimes({required this.id});
 
-  List<bool> getOpenStatusList(Map<String, dynamic> response) {
-    List<bool> openStatusList = List.filled(24, false);
+  @override
+  _BottomTimesState createState() => _BottomTimesState();
+}
 
-    // Extract opening hours data
-    final periods = response['result']['current_opening_hours']['periods'];
-
-    for (var period in periods) {
-      final open = period['open'];
-      final close = period['close'];
-
-      if (open != null && close != null) {
-        final openHour = int.parse(open['time'].substring(0, 2));
-        final closeHour = int.parse(close['time'].substring(0, 2));
-
-        // Increment count for the specified day and time range
-        for (int i = openHour; i < closeHour; i++) {
-          openStatusList[i] = true;
-        }
-      }
-    }
-
-    return openStatusList;
-  }
+class _BottomTimesState extends State<BottomTimes> {
+  String selectedTime = '';
+  int? selectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> response = {
-      "result": {
-        "current_opening_hours": {
-          "open_now": true,
-          "periods": [
-            {
-              "close": {"time": "1200"},
-              "open": {"time": "0800"}
-            },
-            {
-              "close": {"time": "1700"},
-              "open": {"time": "1300"}
-            }
-          ],
-        },
-      },
-    };
-
-    List<bool> openStatusList = getOpenStatusList(response);
     return Container(
-      color: Colors.black,
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
       height: MediaQuery.of(context).size.height * 0.7,
       padding: const EdgeInsets.all(20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
+              InkWell(
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          const CalenderScreen());
+                },
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
-              Text(
+              const Text(
                 "Twisted Root Burger co",
                 style: TextStyle(
                     color: Colors.white,
@@ -82,28 +63,41 @@ class BottomTimes extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.vertical,
               children: [
-                for (int i = 0; i < openStatusList.length; i++)
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      color: const Color(0xff2e2e2e),
-                    ),
-                    padding: const EdgeInsets.all(10.0),
-                    margin: const EdgeInsets.only(bottom: 14),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}',
-                          style: const TextStyle(
-                              fontSize: 20.0, color: Colors.white),
-                        ),
-                        Text(
-                          openStatusList[i] ? 'Available' : 'Unavailable',
-                          style: const TextStyle(
-                              fontSize: 20.0, color: Colors.white),
-                        ),
-                      ],
+                for (int i = 0; i < 24; i++)
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedTime =
+                            '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}';
+                        selectedIndex = i;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                            color: selectedIndex == i
+                                ? const Color(0xffffffff)
+                                : const Color(0xff2e2e2e)),
+                        color: const Color(0xff2e2e2e),
+                      ),
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.only(bottom: 14),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}',
+                            style: const TextStyle(
+                                fontSize: 20.0, color: Colors.white),
+                          ),
+                          const Text(
+                            'Available',
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 Center(
@@ -114,22 +108,26 @@ class BottomTimes extends StatelessWidget {
                         // Add your button click logic here
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: selectedTime.isNotEmpty
+                            ? const Color(0xffffffff)
+                            : const Color(0xff2e2e2e),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Next',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: selectedTime.isNotEmpty
+                              ? Colors.black
+                              : const Color(0xffb2afaf),
                         ),
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),

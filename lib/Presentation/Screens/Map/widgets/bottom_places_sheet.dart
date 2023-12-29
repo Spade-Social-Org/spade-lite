@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
-import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_times.dart';
+import 'package:spade_lite/Presentation/Screens/Calendar/calender_screen.dart';
 import '../../../../Domain/Entities/place.dart';
 import '../../../../Common/theme.dart';
 import '../widgets/horizontal_image_list.dart';
@@ -268,7 +268,7 @@ class BottomPlacesSheet extends StatelessWidget {
                                         topRight: Radius.circular(20),
                                         topLeft: Radius.circular(20),
                                       ),
-                                      child: BottomTimes(id: place.id),
+                                      child: CalenderScreen(),
                                     );
                                   },
                                 );
