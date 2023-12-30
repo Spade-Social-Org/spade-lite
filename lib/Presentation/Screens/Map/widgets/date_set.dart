@@ -92,8 +92,8 @@ class DateSet extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            top: 115,
-                            right: 100,
+                            top: 85,
+                            right: 90,
                             child: _buildHeartImage(),
                           ),
                         ],
