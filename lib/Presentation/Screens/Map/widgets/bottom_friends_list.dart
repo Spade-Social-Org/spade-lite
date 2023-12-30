@@ -229,9 +229,11 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                                   children: [
                                     CircleAvatar(
                                       radius: 40.0,
-                                      backgroundImage: NetworkImage(
+                                      backgroundImage: Image.network(
                                         friend.image[0],
-                                      ),
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.topCenter,
+                                      ).image,
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -307,9 +309,11 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               CircleAvatar(
                 radius: 165,
-                backgroundImage: NetworkImage(
+                backgroundImage: Image.network(
                   friend.image[0],
-                ),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ).image,
               ),
               const SizedBox(
                 height: 20,
@@ -329,6 +333,9 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context, true);
+                PrefProvider.saveInviteeId(friend.userId);
+                PrefProvider.saveInviteeName(friend.name);
+                PrefProvider.saveInviteeImage(friend.image[0]);
                 showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) => const DateSet());

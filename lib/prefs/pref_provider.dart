@@ -92,8 +92,8 @@ class PrefProvider {
     return await _storage.read(key: 'inviteeName');
   }
 
-  static Future saveInviteeId(String value) async {
-    await _storage.write(key: 'inviteeId', value: value);
+  static Future saveInviteeId(int value) async {
+    await _storage.write(key: 'inviteeId', value: value.toString());
   }
 
   static Future<String?> getInviteeId() async {
