@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spade_lite/Presentation/Screens/Home/providers/feed_provider.dart';
 import 'package:spade_lite/Presentation/Screens/onboarding/provider/notif_provider.dart';
 import 'package:spade_lite/core/push_notifications_utils.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 
 import '../Camera/camera_screen.dart';
 import '../Home/presentation/home_screen.dart';
@@ -75,6 +76,13 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
                 type: BottomNavigationBarType.fixed,
                 currentIndex: selectedIndex,
                 onTap: (index) {
+                  PrefProvider.saveDate("");
+                  PrefProvider.saveTime("");
+                  PrefProvider.savePlaceId("");
+                  PrefProvider.savePlaceName("");
+                  PrefProvider.saveInviteeId(0);
+                  PrefProvider.saveInviteeImage("");
+                  PrefProvider.saveInviteeName("");
                   setState(() {
                     selectedIndex = index;
                   });

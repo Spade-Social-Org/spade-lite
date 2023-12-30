@@ -74,171 +74,168 @@ class _BottomTimesState extends State<BottomTimes> {
             height: 20.0,
           ),
           FutureBuilder<String?>(
-              future: PrefProvider.getTime(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        for (int i = 0; i < 24; i++)
-                          GestureDetector(
-                            onTap: () {
+            future: PrefProvider.getTime(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Expanded(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      for (int i = 0; i < 24; i++)
+                        GestureDetector(
+                          onTap: () {
+                            PrefProvider.saveTime(
+                                '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}');
+                            setState(() {});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              border: Border.all(
+                                  color: snapshot.data ==
+                                          '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}'
+                                      ? const Color(0xffffffff)
+                                      : const Color(0xff2e2e2e)),
+                              color: const Color(0xff2e2e2e),
+                            ),
+                            padding: const EdgeInsets.all(10.0),
+                            margin: const EdgeInsets.only(bottom: 14),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}',
+                                  style: const TextStyle(
+                                      fontSize: 20.0, color: Colors.white),
+                                ),
+                                const Text(
+                                  'Available',
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      Center(
+                        child: SizedBox(
+                          width: 125,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (snapshot.data!.isNotEmpty) {
+                                Navigator.pop(context);
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        const BottomFriendsList());
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: snapshot.data!.isNotEmpty
+                                  ? const Color(0xffffffff)
+                                  : const Color(0xff2e2e2e),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                            ),
+                            child: Text(
+                              'Next',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: snapshot.data!.isNotEmpty
+                                    ? Colors.black
+                                    : const Color(0xffb2afaf),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      for (int i = 0; i < 24; i++)
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
                               PrefProvider.saveTime(
                                   '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}');
-                              setState(() {});
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                border: Border.all(
-                                    color: snapshot.data ==
-                                            '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}'
-                                        ? const Color(0xffffffff)
-                                        : const Color(0xff2e2e2e)),
-                                color: const Color(0xff2e2e2e),
-                              ),
-                              padding: const EdgeInsets.all(10.0),
-                              margin: const EdgeInsets.only(bottom: 14),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}',
-                                    style: const TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
-                                  ),
-                                  const Text(
-                                    'Available',
-                                    style: TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
-                                  ),
-                                ],
-                              ),
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              border: Border.all(
+                                  color: PrefProvider.getTime().toString() ==
+                                          '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}'
+                                      ? const Color(0xffffffff)
+                                      : const Color(0xff2e2e2e)),
+                              color: const Color(0xff2e2e2e),
+                            ),
+                            padding: const EdgeInsets.all(10.0),
+                            margin: const EdgeInsets.only(bottom: 14),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}',
+                                  style: const TextStyle(
+                                      fontSize: 20.0, color: Colors.white),
+                                ),
+                                const Text(
+                                  'Available',
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: Colors.white),
+                                ),
+                              ],
                             ),
                           ),
-                        Center(
-                          child: SizedBox(
-                            width: 125,
-                            child: ElevatedButton(
-                              onPressed: () {
+                        ),
+                      Center(
+                        child: SizedBox(
+                          width: 125,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (snapshot.data!.isNotEmpty) {
                                 Navigator.pop(context);
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext context) =>
                                         const BottomFriendsList());
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    PrefProvider.getTime().toString().isNotEmpty
-                                        ? const Color(0xffffffff)
-                                        : const Color(0xff2e2e2e),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                              ),
-                              child: Text(
-                                'Next',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: PrefProvider.getTime()
-                                          .toString()
-                                          .isNotEmpty
-                                      ? Colors.black
-                                      : const Color(0xffb2afaf),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        for (int i = 0; i < 24; i++)
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                PrefProvider.saveTime(
-                                    '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}');
-                              });
+                              }
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: snapshot.data!.isNotEmpty
+                                  ? const Color(0xffffffff)
+                                  : const Color(0xff2e2e2e),
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
-                                border: Border.all(
-                                    color: PrefProvider.getTime().toString() ==
-                                            '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}'
-                                        ? const Color(0xffffffff)
-                                        : const Color(0xff2e2e2e)),
-                                color: const Color(0xff2e2e2e),
                               ),
-                              padding: const EdgeInsets.all(10.0),
-                              margin: const EdgeInsets.only(bottom: 14),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${i >= 13 ? i - 12 : i == 0 ? 12 : i} ${i >= 12 ? 'PM' : 'AM'}',
-                                    style: const TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
-                                  ),
-                                  const Text(
-                                    'Available',
-                                    style: TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
-                                  ),
-                                ],
+                            ),
+                            child: Text(
+                              'Next',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: snapshot.data!.isNotEmpty
+                                    ? Colors.black
+                                    : const Color(0xffb2afaf),
                               ),
                             ),
                           ),
-                        Center(
-                          child: SizedBox(
-                            width: 125,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        const BottomFriendsList());
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    PrefProvider.getTime().toString().isNotEmpty
-                                        ? const Color(0xffffffff)
-                                        : const Color(0xff2e2e2e),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                              ),
-                              child: Text(
-                                'Next',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: PrefProvider.getTime()
-                                          .toString()
-                                          .isNotEmpty
-                                      ? Colors.black
-                                      : const Color(0xffb2afaf),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                }
-              }),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
         ],
       ),
     );
