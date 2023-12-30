@@ -57,7 +57,9 @@ class BSPlacesRouter {
     return Container(
       padding: const EdgeInsets.all(16),
       child: const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
       ),
     );
   }

@@ -128,7 +128,9 @@ class DateSet extends StatelessWidget {
           return Container(
             color: Colors.black,
             child: const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             ),
           );
         }

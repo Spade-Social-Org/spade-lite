@@ -261,7 +261,9 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                       return SizedBox(
                         height: MediaQuery.of(context).size.height * 0.3,
                         child: const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
                         ),
                       );
                     } else if (snapshot.data == []) {
