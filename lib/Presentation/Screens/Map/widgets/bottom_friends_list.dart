@@ -256,8 +256,11 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                       );
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     } else if (snapshot.data == []) {
                       return const Center(
@@ -271,7 +274,6 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                         ),
                       );
                     } else {
-                      print("Error: ${snapshot.error}");
                       return const Center(
                         child: Text(
                           'Failed to get friends list',

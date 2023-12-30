@@ -43,12 +43,29 @@ class _CalenderScreenState extends State<CalenderScreen> {
                 const SizedBox(
                   width: 20,
                 ),
-                Text(
-                  PrefProvider.getPlaceName().toString(),
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
+                FutureBuilder<String?>(
+                  future: PrefProvider.getPlaceName(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      );
+                    } else {
+                      return const Text(
+                        'Loading...',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
