@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:spade_lite/Presentation/Screens/Calendar/calender_screen.dart';
 import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_friends_list.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 
 class BottomTimes extends StatefulWidget {
-  final String id;
-
-  const BottomTimes({super.key, required this.id});
+  const BottomTimes({super.key});
 
   @override
   _BottomTimesState createState() => _BottomTimesState();
@@ -48,9 +47,9 @@ class _BottomTimesState extends State<BottomTimes> {
               const SizedBox(
                 width: 20,
               ),
-              const Text(
-                "Twisted Root Burger co",
-                style: TextStyle(
+              Text(
+                PrefProvider.getPlaceName().toString(),
+                style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
@@ -107,6 +106,7 @@ class _BottomTimesState extends State<BottomTimes> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        PrefProvider.saveTime(selectedTime);
                         showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) =>

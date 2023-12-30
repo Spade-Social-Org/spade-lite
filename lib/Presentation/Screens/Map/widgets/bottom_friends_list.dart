@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:spade_lite/Presentation/Screens/Map/models/FriendsModel.dart';
 import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_times.dart';
 import 'package:spade_lite/Presentation/Screens/Map/widgets/date_set.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
+import 'package:http/http.dart' as http;
 
 class BottomFriendsList extends StatefulWidget {
   const BottomFriendsList({super.key});
@@ -16,25 +20,52 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
 
   final TextEditingController searchController = TextEditingController();
 
-  final List<Map<String, dynamic>> friends = [
-    {"image": "assets/images/Ellipse 368.png", "name": "Aohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Bohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Cohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Dohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Eohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Fohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Gohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Hohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "Iohn Doe"},
-    {"image": "assets/images/Ellipse 368.png", "name": "John Doe"},
-  ];
+  List<dynamic> filteredFriends = [];
 
-  List<Map<String, dynamic>> filteredFriends = [];
+  List<Friend> friends = [];
 
   @override
   void initState() {
     super.initState();
-    filteredFriends = List.from(friends);
+    getMatches().then((friendList) {
+      setState(() {
+        friends = friendList;
+      });
+    });
+  }
+
+  Future<List<Friend>> getMatches() async {
+    String? token = await PrefProvider.getUserToken();
+    final response = await http.get(
+      Uri.parse(
+        'https://spade-backend-v3-production.up.railway.app/api/v1/users/matches',
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = json.decode(response.body);
+
+      if (data['statusCode'] == 'SUCCESS' && data['data'] is List) {
+        List<Friend> friendList = [];
+        for (var friendData in data['data']) {
+          if (friendData is Map<String, dynamic>) {
+            Friend friend = Friend(
+              userId: friendData['user_id'],
+              name: friendData['name'],
+              image: List<String>.from([friendData['image']]),
+            );
+            friendList.add(friend);
+          }
+        }
+        return friendList;
+      }
+    }
+
+    return [];
   }
 
   @override
@@ -43,6 +74,7 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
       children: [
         SingleChildScrollView(
           child: Container(
+            height: MediaQuery.of(context).size.height * 0.7,
             decoration: const BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.only(
@@ -67,20 +99,36 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                           showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) =>
-                                const BottomTimes(id: ''),
+                                const BottomTimes(),
                           );
                         },
                       ),
                       const SizedBox(
                         width: 20,
                       ),
-                      const Text(
-                        "Twisted Root Burger co",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                      FutureBuilder<String?>(
+                        future: PrefProvider.getPlaceName(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              snapshot.data.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            );
+                          } else {
+                            return const Text(
+                              'Loading...',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -92,11 +140,19 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      filteredFriends = friends
-                          .where((friend) => friend['name']
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
-                          .toList();
+                      filteredFriends.clear();
+                      if (value.isNotEmpty) {
+                        setState(() {
+                          filteredFriends.clear();
+                          if (value.isNotEmpty) {
+                            filteredFriends = friends
+                                .where((friend) => friend.name
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()))
+                                .toList();
+                          }
+                        });
+                      }
                     });
                   },
                   decoration: InputDecoration(
@@ -134,58 +190,100 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7 - 170,
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // Set the number of columns
-                    ),
-                    itemCount: filteredFriends.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedFriendIndex = index;
-                          });
-                          showDialog(
-                            context: context,
-                            builder: (context) => _buildPopOutDialog(
-                              context,
-                              filteredFriends[index],
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 40.0,
-                                backgroundImage: AssetImage(
-                                  filteredFriends[index]["image"],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  filteredFriends[index]["name"],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                FutureBuilder<List<Friend>>(
+                  future: getMatches(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      friends = snapshot.data!;
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7 - 170,
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                          ),
+                          itemCount: searchController.text.isNotEmpty
+                              ? filteredFriends.length
+                              : snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final friend = searchController.text.isNotEmpty
+                                ? filteredFriends[index]
+                                : snapshot.data![index];
+
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedFriendIndex = index;
+                                });
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => _buildPopOutDialog(
+                                    context,
+                                    friend,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 40.0,
+                                      backgroundImage: NetworkImage(
+                                        friend.image[0],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        friend.name,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            );
+                          },
+                        ),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.data == []) {
+                      return const Center(
+                        child: Text(
+                          'No friend found',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
                       );
-                    },
-                  ),
+                    } else {
+                      print("Error: ${snapshot.error}");
+                      return const Center(
+                        child: Text(
+                          'Failed to get friends list',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
@@ -195,7 +293,7 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
     );
   }
 
-  Widget _buildPopOutDialog(BuildContext context, Map<String, dynamic> friend) {
+  Widget _buildPopOutDialog(BuildContext context, Friend friend) {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
       child: Center(
@@ -207,13 +305,15 @@ class _BottomFriendsListState extends State<BottomFriendsList> {
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               CircleAvatar(
                 radius: 165,
-                backgroundImage: AssetImage(friend["image"]),
+                backgroundImage: NetworkImage(
+                  friend.image[0],
+                ),
               ),
               const SizedBox(
                 height: 20,
               ),
               Text(
-                friend["name"],
+                friend.name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,

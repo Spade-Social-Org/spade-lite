@@ -51,4 +51,60 @@ class PrefProvider {
     final pref = await SharedPreferences.getInstance();
     return pref.getStringList('loginData');
   }
+
+  static Future savePlaceName(String value) async {
+    await _storage.write(key: 'placeName', value: value);
+  }
+
+  static Future<String?> getPlaceName() async {
+    return await _storage.read(key: 'placeName');
+  }
+
+  static Future savePlaceId(String value) async {
+    await _storage.write(key: 'placeId', value: value);
+  }
+
+  static Future<String?> getPlaceId() async {
+    return await _storage.read(key: 'placeId');
+  }
+
+  static Future saveDate(String value) async {
+    await _storage.write(key: 'date', value: value);
+  }
+
+  static Future<String?> getDate() async {
+    return await _storage.read(key: 'date');
+  }
+
+  static Future saveTime(String value) async {
+    await _storage.write(key: 'time', value: value);
+  }
+
+  static Future<String?> getTime() async {
+    return await _storage.read(key: 'time');
+  }
+
+  static Future saveInviteeName(String value) async {
+    await _storage.write(key: 'inviteeName', value: value);
+  }
+
+  static Future<String?> getInviteeName() async {
+    return await _storage.read(key: 'inviteeName');
+  }
+
+  static Future saveInviteeId(String value) async {
+    await _storage.write(key: 'inviteeId', value: value);
+  }
+
+  static Future<String?> getInviteeId() async {
+    return await _storage.read(key: 'inviteeId');
+  }
+
+  static Future saveInviteeImage(String value) async {
+    await _storage.write(key: 'inviteeImage', value: value);
+  }
+
+  static Future<String?> getInviteeImage() async {
+    return await _storage.read(key: 'inviteeImage');
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Presentation/Screens/Calendar/calender_screen.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 import '../../../../Domain/Entities/place.dart';
 import '../../../../Common/theme.dart';
 import '../widgets/horizontal_image_list.dart';
@@ -259,6 +260,8 @@ class BottomPlacesSheet extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                PrefProvider.savePlaceName(place.name);
+                                PrefProvider.savePlaceId(place.id);
                                 Navigator.of(context).pop();
                                 showModalBottomSheet(
                                   context: context,

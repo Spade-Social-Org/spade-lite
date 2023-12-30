@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class JHCalenderWidget extends StatefulWidget {
@@ -11,6 +12,7 @@ class JHCalenderWidget extends StatefulWidget {
 class _JHCalenderWidgetState extends State<JHCalenderWidget> {
   DateTime today = DateTime.now();
   void _onDaySelected(DateTime day, DateTime focusedDay) {
+    PrefProvider.saveDate(day.toString());
     setState(() {
       today = day;
     });

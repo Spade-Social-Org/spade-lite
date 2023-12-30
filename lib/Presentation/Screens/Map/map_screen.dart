@@ -11,7 +11,7 @@ import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/discovery_repo.dart';
 import 'package:spade_lite/Domain/Repository/get_user_repo.dart';
 import 'package:spade_lite/Presentation/Screens/Map/map.dart';
-import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_sheet_manager.dart';
+import 'package:spade_lite/Presentation/Screens/Map/widgets/bs_places_manager.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
 import 'package:spade_lite/Presentation/widgets/rounded_marker.dart';
 import '../../widgets/jh_loader.dart';
@@ -870,7 +870,7 @@ class _GoogleMapState extends State<GoogleMapScreen>
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).pop();
-                                  BottomSheetManager(context, _initialPosition!)
+                                  BSPlacesRouter(context, _initialPosition!)
                                       .showBottomSheetForSelectedCard(
                                           cards[index], user);
                                 },

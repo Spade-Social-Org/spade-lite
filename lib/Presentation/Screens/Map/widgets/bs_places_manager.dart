@@ -6,12 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:spade_lite/Presentation/widgets/jh_places_items.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 
-class BottomSheetManager {
+class BSPlacesRouter {
   final BuildContext context;
   final LatLng
       _initialPosition; // Replace with your actual initial position type
 
-  BottomSheetManager(this.context, this._initialPosition);
+  BSPlacesRouter(this.context, this._initialPosition);
 
   void showBottomSheetForSelectedCard(CardModel card, DiscoverUserModel? user) {
     BlocProvider.of<PlacesBloc>(context)

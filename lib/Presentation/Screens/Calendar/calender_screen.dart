@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spade_lite/Presentation/Screens/Map/widgets/bottom_times.dart';
+import 'package:spade_lite/prefs/pref_provider.dart';
 import '../../widgets/jh_calender_widget.dart';
 
 class CalenderScreen extends StatefulWidget {
@@ -37,18 +38,14 @@ class _CalenderScreenState extends State<CalenderScreen> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // showModalBottomSheet(
-                    //     context: context,
-                    //     builder: (BuildContext context) =>
-                    //         const CalenderScreen());
                   },
                 ),
                 const SizedBox(
                   width: 20,
                 ),
-                const Text(
-                  "Twisted Root Burger co",
-                  style: TextStyle(
+                Text(
+                  PrefProvider.getPlaceName().toString(),
+                  style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20),
@@ -65,9 +62,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                   Navigator.pop(context);
                   showModalBottomSheet(
                       context: context,
-                      builder: (BuildContext context) => BottomTimes(
-                            id: id,
-                          ));
+                      builder: (BuildContext context) => const BottomTimes());
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffffffff),
