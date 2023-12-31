@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spade_lite/Data/Models/discover.dart';
 import 'package:spade_lite/Domain/Repository/get_user_repo.dart';
 import 'package:spade_lite/prefs/pref_provider.dart';
+import 'package:http/http.dart' as http;
 
 class DateSet extends StatelessWidget {
   const DateSet({super.key});
@@ -17,18 +18,33 @@ class DateSet extends StatelessWidget {
     String? userId = await PrefProvider.getUserId();
     DiscoverUserModel? user = await GetUser().getUser();
     String? userImage = user?.gallery?[0];
+    String? token = await PrefProvider.getUserToken();
 
-    return {
-      "placeName": placeName,
-      "placeId": placeId,
-      "date": date,
-      "time": time,
-      "inviteeName": inviteeName,
-      "inviteeId": inviteeId,
-      "inviteeImage": inviteeImage,
-      "userId": userId,
-      "userImage": userImage,
-    };
+    final response = await http.get(
+        Uri.parse(
+            'https://spade-date.onrender.com/schedule-date?inviteeId=$inviteeId&inviterId=$userId&placeName=$placeName&placeId=$placeId&date=$date&time=$time&inviteeName=$inviteeName&token=$token'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
+    print(
+        'https://spade-date.onrender.com/schedule-date?inviteeId=$inviteeId&inviterId=$userId&placeName=$placeName&placeId=$placeId&date=$date&time=$time&inviteeName=$inviteeName&token=$token');
+
+    if (response.statusCode == 200) {
+      return {
+        "placeName": placeName,
+        "placeId": placeId,
+        "date": date,
+        "time": time,
+        "inviteeName": inviteeName,
+        "inviteeId": inviteeId,
+        "inviteeImage": inviteeImage,
+        "userId": userId,
+        "userImage": userImage,
+      };
+    } else {
+      throw Exception('Failed to load invite user');
+    }
   }
 
   @override
@@ -36,8 +52,8 @@ class DateSet extends StatelessWidget {
     return FutureBuilder(
       future: fetchDateDetails(),
       builder: (context, snapshot) {
-        print(snapshot.data);
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
           return Container(
             height: MediaQuery.of(context).size.height * 0.8,
             padding: const EdgeInsets.only(
@@ -122,6 +138,16 @@ class DateSet extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Container(
+            color: Colors.black,
+            child: const Center(
+              child: Text(
+                'Error: Something went wrong',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           );
         } else {
