@@ -20,6 +20,7 @@ class _JHCalenderWidgetState extends State<JHCalenderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    PrefProvider.saveDate(today.toString());
     return TableCalendar(
       locale: "en_US",
       headerStyle: const HeaderStyle(
