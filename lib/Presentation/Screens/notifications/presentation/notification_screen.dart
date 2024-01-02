@@ -100,7 +100,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                       width: double.infinity,
                       height: 81,
                       padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 20),
+                          vertical: 16, horizontal: 16),
                       margin: const EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -122,18 +122,35 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                             height: 50,
                             width: 50,
                             fit: BoxFit.cover,
+                            repeat: ImageRepeat.noRepeat,
+                            alignment: Alignment.center,
                           ).rounded(30),
                           12.spacingW,
                           Expanded(
-                            child: Text(
-                              notifData.description ?? '',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                // fontWeight: FontWeight.w500,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  notifData.description ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                5.spacingH,
+                                const Text(
+                                  'Click to see details',
+                                  style: TextStyle(
+                                    color: Color(0xFF818181),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          15.spacingW,
+                          12.spacingW,
                           Text(
                             timeago.format(
                               notifData.createdAt ?? DateTime.now(),
