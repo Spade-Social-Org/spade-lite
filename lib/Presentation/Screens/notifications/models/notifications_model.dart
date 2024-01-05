@@ -66,6 +66,7 @@ class NotificationData {
   int? userId;
   List<Likenotification>? messagenotifications;
   List<Likenotification>? likenotifications;
+  List<Likenotification>? datenotifications;
 
   NotificationData({
     this.id,
@@ -76,6 +77,7 @@ class NotificationData {
     this.userId,
     this.messagenotifications,
     this.likenotifications,
+    this.datenotifications,
   });
 
   NotificationData copyWith({
@@ -87,6 +89,7 @@ class NotificationData {
     int? userId,
     List<Likenotification>? messagenotifications,
     List<Likenotification>? likenotifications,
+    List<Likenotification>? datenotifications,
   }) =>
       NotificationData(
         id: id ?? this.id,
@@ -97,6 +100,7 @@ class NotificationData {
         userId: userId ?? this.userId,
         messagenotifications: messagenotifications ?? this.messagenotifications,
         likenotifications: likenotifications ?? this.likenotifications,
+        datenotifications: datenotifications ?? this.datenotifications,
       );
 
   factory NotificationData.fromJson(Map<String, dynamic> json) =>
@@ -119,6 +123,10 @@ class NotificationData {
             ? []
             : List<Likenotification>.from(json["likenotifications"]!
                 .map((x) => Likenotification.fromJson(x))),
+        datenotifications: json["datenotifications"] == null
+            ? []
+            : List<Likenotification>.from(json["datenotifications"]!
+                .map((x) => Likenotification.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -134,6 +142,9 @@ class NotificationData {
         "likenotifications": likenotifications == null
             ? []
             : List<dynamic>.from(likenotifications!.map((x) => x.toJson())),
+        "datenotifications": datenotifications == null
+            ? []
+            : List<dynamic>.from(datenotifications!.map((x) => x.toJson())),
       };
 }
 

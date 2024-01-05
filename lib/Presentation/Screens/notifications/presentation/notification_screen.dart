@@ -5,6 +5,7 @@ import 'package:spade_lite/Common/constants.dart';
 import 'package:spade_lite/Common/utils/extensions/date_extensions.dart';
 import 'package:spade_lite/Common/utils/utils.dart';
 import 'package:spade_lite/Common/utils/extensions/widget_extensions.dart';
+import 'package:spade_lite/Presentation/Screens/DecideDate/decide_screen.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/models/notifications_model.dart';
 import 'package:spade_lite/Presentation/Screens/notifications/providers/notification_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -95,73 +96,90 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                   for (final notifData in <Likenotification>[
                     ...(notif.likenotifications ?? []),
                     ...(notif.messagenotifications ?? []),
+                    ...(notif.datenotifications ?? []),
                   ])
-                    Container(
-                      width: double.infinity,
-                      height: 81,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 16),
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x3FC1C1C1),
-                            blurRadius: 2.79,
-                            offset: Offset(0, 2.79),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Image.network(
-                            notifData.senderImageUrl ??
-                                AppConstants.defaultImage,
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
-                            repeat: ImageRepeat.noRepeat,
-                            alignment: Alignment.center,
-                          ).rounded(30),
-                          12.spacingW,
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  notifData.description ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                    GestureDetector(
+                      onTap: () {
+                        if (notif.type == 'date') {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DecideScreen(notification: notifData)),
+                          );
+                        }
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        constraints: const BoxConstraints(
+                          minHeight: 0,
+                          maxHeight: double.infinity,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 16),
+                        margin: const EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x3FC1C1C1),
+                              blurRadius: 2.79,
+                              offset: Offset(0, 2.79),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Image.network(
+                              notifData.senderImageUrl ??
+                                  AppConstants.defaultImage,
+                              height: 50,
+                              width: 50,
+                              fit: BoxFit.cover,
+                              repeat: ImageRepeat.noRepeat,
+                              alignment: Alignment.center,
+                            ).rounded(30),
+                            12.spacingW,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (notifData.description ?? '').length > 50
+                                        ? '${(notifData.description ?? '').substring(0, 50)}...'
+                                        : (notifData.description ?? ''),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                                5.spacingH,
-                                const Text(
-                                  'Click to see details',
-                                  style: TextStyle(
-                                    color: Color(0xFF818181),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+                                  2.5.spacingH,
+                                  const Text(
+                                    'Click to see details',
+                                    style: TextStyle(
+                                      color: Color(0xFF818181),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          12.spacingW,
-                          Text(
-                            timeago.format(
-                              notifData.createdAt ?? DateTime.now(),
+                            12.spacingW,
+                            Text(
+                              timeago.format(
+                                notifData.createdAt ?? DateTime.now(),
+                              ),
+                              style: const TextStyle(
+                                color: Color(0xFF818181),
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            style: const TextStyle(
-                              color: Color(0xFF818181),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
               ],
