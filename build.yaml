@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # Add any json_serializable options here if needed
+      build_obfuscation:
+        generate_for:
+          - lib/**.dart

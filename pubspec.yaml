@@ -90,8 +90,11 @@ dependencies:
   staggered_grid_view_flutter: ^0.0.4
 
 dev_dependencies:
+  build_runner: ^2.1.5
   custom_lint: ^0.5.3
+  flutter_launcher_icons: ^0.9.2
   flutter_lints: ^3.0.1
+  json_serializable: ^6.7.1
   flutter_test:
     sdk: flutter
 
